@@ -1,13 +1,18 @@
 import React from 'react'
-import{Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import Logo from './images/SB_logo.png';
+import "C:/Users/migue/OneDrive/Documents/CSCE_315/315Project3/CustomerGUI/frontend/src/style.scss"
 
-function mainlayout({children}) {
+function mainlayout({ children }) {
     return (
         <div>
             <header>
                 <nav className='navbar navbar-light bg-primary'>
                     < div className="container-fluid">
-                        <Link to="/" className="navbar-brand" >DevPos</Link>
+                        <div>
+                            <img style={{ width: "15%", height: "15%" }} src={Logo} alt="starbucks_logo" />
+                            <Link to="/" className="navbar-brand text-light" style={{ fontWeight: 800 }}>    STARBUCKS Self Checkout</Link>
+                        </div>
                     </div>
                 </nav>
             </header>
@@ -17,7 +22,15 @@ function mainlayout({children}) {
                 </div>
 
             </main>
+            <div>
+                <nav className=' navbar fixed-bottom  bg-primary'>
+                    
+                </nav>
+            </div>
         </div>
+
+
+
     )
 }
 

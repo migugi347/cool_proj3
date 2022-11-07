@@ -7,7 +7,7 @@ function homepage() {
         <Mainlayout>
 
             <div className='bg-light p-5 mt-4 rounded-5 '>
-                <h1>StarBucks Self Check-out</h1>
+                <h1>Starbucks Self Check-out</h1>
 
                 <Link to='/pos' className='btn btn-primary'> START ORDER</Link>
             </div>

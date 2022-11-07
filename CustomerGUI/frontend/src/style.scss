@@ -1,0 +1,41 @@
+$theme-colors: (
+    "primary": #00704A,
+
+    "secondary": #eac784,
+
+
+);
+
+
+.poop:hover {
+    transform: scale(1.05);
+}
+
+.poop {
+    transition: transform 0.2s ease;
+}
+
+
+.login-form-cont {
+    width: 100%;
+    max-width: 450px;
+    padding: 50px;
+    margin-left: 25vw;
+    margin-right: 15vw;
+    padding-top: 100px;
+    margin-bottom: 40px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0.05);
+
+    h3 {
+        font-weight: 500;
+        margin-bottom: 50px
+    }
+
+}
+
+.login-form {
+    margin: 20px;
+    padding: 10px;
+}
+
+@import "~bootstrap/scss/bootstrap"

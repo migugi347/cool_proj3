@@ -1,15 +1,15 @@
 const express = require('express');
 const { Pool } = require('pg');
 const dotenv = require('dotenv').config();
-
-// Create express app
 const app = express();
 const port = 3001;
-//const cors = require('cors');
+const cors = require('cors');
+const bodyParser = require("body-parser");
 
-//app.use(cors());
-//app.use(express.json());
-//app.use(bodyParser.urlencoded({extended:true}));
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({extended:true}));
+
 // Create pool
 const pool = new Pool({
     user: process.env.PSQL_USER,
@@ -21,18 +21,13 @@ const pool = new Pool({
 });
 
 //what to do when user tries to reach specific page "/etc."
-app.get('/', (req,res) => {
-    //res used to send response to frontend
-    res.send("hello wd");
-    //req used to get information from frontend
-});
-
+//res used to send response to frontend
+//req used to get information from frontend
 app.get('/server/getCategories', (req,res) =>{
-    res.send("getting categories");
-    const sqlGetCategories = "SELECT \"Category\" FROM recipe";
+    const sqlGetCategories = "SELECT * FROM recipe";
     pool.query(sqlGetCategories, (err, result) => {
-        console.log(result);
-    })
+        res.send(result.rows);
+    });
 });
 
 app.listen(3001, () => {

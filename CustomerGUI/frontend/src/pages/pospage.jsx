@@ -9,45 +9,104 @@ function Pospage() {
     const [cart, setCart] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
 
+    const [Order_ID, setOrderID] = useState([]);
+    const [lineNum, setlineNum] = useState([]);
+    const [Cust_Name, setCustName] = useState("");
+
+
 
     const fetchMenu = async () => {
         setIsLoading(true);
-        const result = await axios.get('menuitems');
+        const result = await axios.get('user');
         setProducts(await result.data);
         setIsLoading(false);
     }
 
+
+
     useEffect(() => {
-        axios.get("http://localhost:3000/api/get").then((response) => {
+        axios.get("http://localhost:3001/user").then((response) => {
             console.log(response.data);
         });
     }, []);
 
     const removeProduct = async (product) => {
-        const newCart = cart.filter(cartItem => cartItem.id !== product.id);
+        const newCart = cart.filter(cartItem => cartItem.Recipe_ID !== product.Recipe_ID);
         setCart(newCart);
     }
 
-    const checkoutPrompt = () => {
+
+
+    const fetchOrderID = async () => {
+        axios.get("http://localhost:3001/orderid").then((response) =>{
+            setOrderID(response.data);
+          });
+        // const result = await axios.get('orderid');
+        // setOrderID(await result.data);
+        
+       const { orderID : foo}= Order_ID.at(0);
+
+        console.log(foo);
+    }
+
+
+    const fetchLineNum = async () => {
+
+        const result = await axios.get('linenum');
+        setlineNum(await result.data);
+        const newLine = lineNum+ 1;
+        setlineNum(newLine);
+        //console.log(lineNum);
+    }
+
+    const checkoutItem = (cartItem) => {
+
+        fetchLineNum();
+
+        axios.post("http://localhost:3001/checkout", {
+
+            //fetch line
+            Line_Num: lineNum,
+            Order_ID: Order_ID,
+            Cust_Name: Cust_Name,
+            Recipe_ID: cartItem.Recipe_ID,
+          
+
+        });
+    };
+
+
+    const checkoutPrompt = async () => {
+
+        fetchOrderID();
+        cart.forEach(cartItem => {
+            //checkoutItem
+            //pass same order number 
+
+            setCustName("Steve");
+            checkoutItem(cartItem);
+            // console.log(Order_ID);
+            // console.log(cartItem.Name);
+        });
 
     }
 
     const addItemtoCart = async (product) => {
         let findItemInCart = await cart.find(i => {
-            return i.id === product.id
+            return i.Recipe_ID === product.Recipe_ID
         });
-        console.log(findItemInCart)
+        //console.log(findItemInCart)
         if (findItemInCart) {
 
             let newCart = [];
             let newItem;
 
             cart.forEach(cartItem => {
-                if (cartItem.id === product.id) {
+                if (cartItem.Recipe_ID === product.Recipe_ID) {
                     newItem = {
                         ...cartItem,
-                        quantity: cartItem.quantity + 1,
-                        totalAmount: cartItem.price * (cartItem.quantity + 1)
+                        orderQuantity: cartItem.orderQuantity + 1,
+                        totalAmount: cartItem.Price * (cartItem.orderQuantity + 1)
                     }
 
                     newCart.push(newItem);
@@ -63,8 +122,8 @@ function Pospage() {
         else {
             let addingItem = {
                 ...product,
-                'quantity': 1,
-                'totalAmount': product.price,
+                'orderQuantity': 1,
+                'totalAmount': product.Price,
             }
             setCart([...cart, addingItem]);
             console.log(cart)
@@ -101,9 +160,9 @@ function Pospage() {
                             <div key={key} className='col-lg-4  '>
 
                                 <div className='poop border text-center text-uppercase fw-bold bg-secondary rounded' onClick={() => addItemtoCart(product)}>
-                                    <p class="font-weight-bold" style={{ fontWeight: "600" }}>{product.name}</p>
-                                    <img src={product.image} className="img-fluid" alt={product.name} ></img>
-                                    <p>${product.price}</p>
+                                    <p className="font-weight-bold" style={{ fontWeight: "600" }}>{product.Name}</p>
+                                    <img src={product.image} className="img-fluid" alt={product.Name} ></img>
+                                    <p>${product.Price}</p>
                                 </div>
                             </div>
                         )}
@@ -127,10 +186,10 @@ function Pospage() {
                             </thead>
                             <tbody>
                                 {cart ? cart.map((cartItem, key) => <tr key={key}>
-                                    <td>{cartItem.id}</td>
-                                    <td>{cartItem.name}</td>
-                                    <td>{cartItem.price}</td>
-                                    <td>{cartItem.quantity}</td>
+                                    <td>{cartItem.Recipe_ID}</td>
+                                    <td>{cartItem.Name}</td>
+                                    <td>{cartItem.Price}</td>
+                                    <td>{cartItem.orderQuantity}</td>
                                     <td>{cartItem.totalAmount}</td>
                                     <td >
                                         <button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}> Remove</button>
@@ -145,15 +204,15 @@ function Pospage() {
                     </div>
 
 
-                                <div className="='mt-3">
-                                    { totalAmount !== 0 ? <div> 
-                                        <button className="btn btn-primary" onClick={checkoutPrompt} >
-                                            Check Out</button> 
-                                        
-                                        
-                                        
-                                        </div> : "Please add a product to the cart"}
-                                </div>
+                    <div className="='mt-3">
+                        {totalAmount !== 0 ? <div>
+                            <button className="btn btn-primary" onClick={() => checkoutPrompt()} >
+                                Check Out</button>
+
+
+
+                        </div> : "Please add a product to the cart"}
+                    </div>
 
                 </div>
             </div>

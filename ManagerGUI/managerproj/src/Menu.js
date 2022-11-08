@@ -5,7 +5,7 @@ import logo from './logo.png';
 import {BrowserRouter as Router,Routes, Route, Link} from 'react-router-dom';
 
 function Menu(){
-    const [team, teamnames] = useState([]);
+    const [menuitem, menu] = useState([]);
     const [name, setName] = useState("");
     const [recID, setrecID] = useState(0);
     const [price, setPrice] = useState(0);
@@ -16,8 +16,8 @@ function Menu(){
     }
   
     useEffect(() =>{
-      axios.get("http://localhost:3001/user").then((response) =>{
-        teamnames(response.data);
+      axios.get("http://localhost:3001/getMenu").then((response) =>{
+        menu(response.data);
       });
     });
   
@@ -41,9 +41,9 @@ return(
     <body>
       <div className = "header">
         <ul>
-          <li><Link to = '/inventory'>Menu</Link></li>
-          <li>Inventory</li>
-          <li>Reports</li>
+          <li><Link style={{ textDecoration: 'none', color: 'white' }}to = '/'>Menu</Link></li>
+          <li><Link style={{ textDecoration: 'none', color: 'white' }}to = '/inventory'>Inventory</Link></li>
+          <li><Link style={{ textDecoration: 'none', color: 'white' }}to = '/reports'>Reports</Link></li>
         </ul>
       </div>
       <div className = "logoname">
@@ -64,7 +64,7 @@ return(
               </tr>
             </thead>
             <tbody>
-              {team.map((val) => (
+              {menuitem.map((val) => (
                 <tr>
                   <td>{val.Recipe_ID}</td>
                   <td>{val.Name}</td>
@@ -93,6 +93,11 @@ return(
               <label>Recipe_ID:</label>
               <input type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}></input>
               <button id = "sub" type = "button" onClick={()=>dels()}>Delete Menu Item</button>
+            </form>
+        </div>
+        <div className = "updateForm">
+            <form>
+              <button id = "sub" type = "button"><Link to = '/updateMenu'>Update Menu Item</Link></button>
             </form>
         </div>
       </div>

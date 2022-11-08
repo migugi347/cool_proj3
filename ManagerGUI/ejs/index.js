@@ -17,13 +17,31 @@ const pool = new Pool({
     ssl: {rejectUnauthorized: false}
 });
 
-app.get('/user', (req, res) => {
+app.get('/getMenu', (req, res) => {
     teammembers = []
     pool
         .query('SELECT * FROM recipe ORDER BY "Recipe_ID" ASC;', (err, result) =>{
             res.send(result.rows);
         });
 });
+app.get('/getInventory', (req, res) => {
+    teammembers = []
+    pool
+        .query('SELECT * FROM inventory ORDER BY "Inventory_ID" ASC;', (err, result) =>{
+            res.send(result.rows);
+        });
+});
+
+app.get('/getMenuImage', (req, res) => {
+    const recID = req.body.recID;
+    console.log(req.body);
+
+    pool
+        .query('SELECT image FROM recipe WHERE "Recipe_ID" = '+ recID+';', (err, result) =>{
+            res.send(result.rows);
+        });
+});
+
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.post('/addMenu', (req, res) => {
@@ -42,9 +60,38 @@ app.post('/addMenu', (req, res) => {
     });
 });
 
+app.post('/addInventory', (req, res) => {
+    const inventoryID = req.body.inventoryID;
+    const name = req.body.name;
+    const quantity = req.body.quantity;
+    const onHand = req.body.onhand;
+    const orderDate = req.body.orderDate;
+    //console.log(name);
+    pool.query('INSERT INTO inventory (\"Inventory_ID\", \"Inventory\", \"Quantity\", \"OrderDate\", \"onhand\") VALUES ('+inventoryID+', \''+ name + '\',' +quantity+ ', \'' +orderDate+ '\',' +onHand+');', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('inserted');
+        }
+    });
+});
+
 app.post('/deleteMenu', (req, res) => {
     const recID = req.body.recipeID;
     pool.query('DELETE FROM recipe WHERE "Recipe_ID" = '+recID+';', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('deleted');
+        }
+    });
+});
+
+app.post('/deleteInventory', (req, res) => {
+    const invID = req.body.inventoryID;
+    pool.query('DELETE FROM inventory WHERE "Inventory_ID" = '+invID+';', (err, result) =>{
         if(err){
             console.log(err);
         }

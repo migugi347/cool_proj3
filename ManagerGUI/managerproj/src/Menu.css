@@ -21,7 +21,7 @@ body{
     margin:0;
     position:relative;
     display: inline-block;
-    width:80%;
+    width:100%;
 }
 .anotherContainer{
     margin-top:7rem;
@@ -30,11 +30,11 @@ body{
     margin-right:15%;
     text-align: center;
 }
-
 ul {
     list-style:none;
     padding:0;
     margin:0;
+    text-decoration: none;
 }
 ul li{
     display:inline-block; 
@@ -85,11 +85,11 @@ td {
     padding:20px;
     text-align:center;
 }
+
 .title{
     padding:0;
     margin:0;
 }
-
 
 h1{
     margin-bottom:1rem;
@@ -114,6 +114,14 @@ h3{
 .deleteForm{
     margin-top:1rem;
     text-align: right;
+}
+.updateForm{
+    margin-top: 1rem;
+    text-align: right;
+}
+
+.mid{
+    text-align: center;
 }
 label{
     padding-left: 1rem;

@@ -1,0 +1,22 @@
+.homeScreen button{
+    border-radius: 12%;
+    border: 3px solid rgb(1, 86, 58); 
+    background-color: rgb(211, 254, 240);
+    font-size: 20px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(0, 35, 24);
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 15vw;
+    width: 20vw;
+}
+
+.homeScreen button:hover{
+    border: 3px solid rgb(2, 224, 142);
+    font-size: 24px;
+    color: rgb(2, 152, 97);
+    height: 19vw;
+    width: 24vw;
+}

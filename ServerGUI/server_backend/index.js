@@ -26,8 +26,15 @@ const pool = new Pool({
 //res used to send response to frontend
 //req used to get information from frontend
 app.get('/server/getCategories', (req,res) =>{
-    const sqlGetCategories = "SELECT DISTINCT \"Category\" FROM recipe";
-    pool.query(sqlGetCategories, (err, result) => {
+    const getCategories = "SELECT DISTINCT \"Category\" FROM recipe";
+    pool.query(getCategories, (err, result) => {
+        res.send(result.rows);
+    });
+});
+
+app.get('/server/getMenuItems', (req,res) => {
+    const getItems = " SELECT \"Name\" FROM recipe";
+    pool.query(getItems, (err, result) => {
         res.send(result.rows);
     });
 });

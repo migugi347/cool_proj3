@@ -13,6 +13,7 @@ function Server_homescreen() {
 
     return (
         <body className = "homeScreen">
+            <h1>Home</h1>
             <div className = "menuItems">
                 {menuItems.map((val) => (
                     <button>{val.Name}</button>

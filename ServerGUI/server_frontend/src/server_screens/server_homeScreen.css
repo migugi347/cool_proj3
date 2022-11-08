@@ -4,6 +4,13 @@
     width: 70%;
 }
 
+h1 {
+    color: rgb(1, 39, 26);
+    font-size: 60px;
+    text-align: center;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
 .menuItems button{
     border-radius: 12%;
     border: 3px solid rgb(1, 86, 58); 

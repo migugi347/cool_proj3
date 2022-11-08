@@ -33,7 +33,7 @@ app.get('/server/getCategories', (req,res) =>{
 });
 
 app.get('/server/getMenuItems', (req,res) => {
-    const getItems = " SELECT \"Name\" FROM recipe";
+    const getItems = " SELECT * FROM recipe";
     pool.query(getItems, (err, result) => {
         res.send(result.rows);
     });

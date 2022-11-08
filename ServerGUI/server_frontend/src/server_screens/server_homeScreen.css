@@ -4,38 +4,6 @@
     width: 70%;
 }
 
-.orderSummary {
-    position: relative;
-    float: right;
-    width: 30%;
-}
-
-table {
-    border-collapse: collapse;
-    padding:0;
-    margin:0;
-    width: 100%;
-}
-
-th,td {
-    border: 1px solid #ffffff;
-    text-align: center;
-    padding: 5px;
-    font-size: 15px;
-}
-
-th {
-    background-color: rgb(1, 80, 54);
-    color: #ffffff;
-}
-
-td {
-    background-color: rgb(187, 237, 210);
-    color: rgb(1, 39, 26);
-    font-size: 20px;
-    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-}
-
 .menuItems button{
     border-radius: 12%;
     border: 3px solid rgb(1, 86, 58); 
@@ -57,43 +25,4 @@ td {
     color: rgb(2, 193, 123);
     height: 19vw;
     width: 24vw;
-}
-
-.customerName {
-    font-size: 20px;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: rgb(0, 35, 24);
-}
-
-.totalCost {
-    font-size: 20px;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: rgb(0, 35, 24);
-}
-
-.submitButton {
-    position: relative;
-    float: left;
-    width: 50%;
-}
-
-.cancelButton {
-    position: relative;
-    float: right;
-    width: 50%;
-}
-
-.orderSummary button {
-    background-color: rgb(219, 251, 241);
-    border-radius: 10%;
-    border: 2px solid rgb(1, 86, 58); 
-    color: rgb(0, 35, 24);
-    font-size: 18px;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-.orderSummary button:hover{
-    border: 3px solid rgb(2, 224, 142);
-    font-size: 20px;
-    color: rgb(2, 193, 123);
 }

@@ -185,3 +185,109 @@ process.on('SIGINT', function() {
     console.log('Application successfully shutdown');
     process.exit(0);
 });
+app.put('/updateItem', (req, res) => {
+    const recID = req.body.recID;
+    const name = req.body.name;
+    const price = req.body.price;
+    const category = req.body.category;
+    console.log(recID, name, price, category);
+    pool.query('UPDATE recipe SET "Name" = \''+name+'\' , "Price" = '+price+', \"Category\" = \''+category+'\' WHERE \"Recipe_ID\" = '+recID+';', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('updated');
+        }
+    });
+});
+
+app.post('/addInventory', (req, res) => {
+    const inventoryID = req.body.inventoryID;
+    const name = req.body.name;
+    const quantity = req.body.quantity;
+    const onHand = req.body.onhand;
+    const orderDate = req.body.orderDate;
+    //console.log(name);
+    pool.query('INSERT INTO inventory (\"Inventory_ID\", \"Inventory\", \"Quantity\", \"OrderDate\", \"onhand\") VALUES ('+inventoryID+', \''+ name + '\',' +quantity+ ', \'' +orderDate+ '\',' +onHand+');', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('inserted');
+        }
+    });
+});
+
+app.post('/addRecipeItem', (req, res) => {
+    const recID = req.body.recipeID;
+    const invenID = req.body.invenID;
+    const quantity = req.body.quantity;
+    pool.query('INSERT INTO menuinv VALUES('+recID+', '+invenID+', '+quantity+');', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('inserted');
+        }
+    });
+});
+app.post('/deleteRecipeItem', (req, res) => {
+    const recID = req.body.recipeID;
+    const invenID = req.body.invenID;
+    pool.query('DELETE FROM menuinv WHERE recipe_id = '+recID+' AND inventory_id = '+invenID+';', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('deleted');
+        }
+    });
+});
+app.post('/updateRecipeItem', (req, res) => {
+    const recID = req.body.recipeID;
+    const invenID = req.body.invenID;
+    const quantity = req.body.quantity;
+    pool.query('UPDATE menuinv SET quantity = '+quantity+' WHERE recipe_id = '+recID+' AND inventory_id = '+invenID+';', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('updated');
+        }
+    });
+});
+
+app.post('/deleteMenu', (req, res) => {
+    const recID = req.body.recipeID;
+    pool.query('DELETE FROM recipe WHERE "Recipe_ID" = '+recID+';', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('deleted');
+        }
+    });
+});
+
+app.post('/deleteInventory', (req, res) => {
+    const invID = req.body.inventoryID;
+    pool.query('DELETE FROM inventory WHERE "Inventory_ID" = '+invID+';', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('deleted');
+        }
+    });
+});
+
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
+});   
+app.set("view engine", "ejs");
+
+process.on('SIGINT', function() {
+    pool.end();
+    console.log('Application successfully shutdown');
+    process.exit(0);
+});

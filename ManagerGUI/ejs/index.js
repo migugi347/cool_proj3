@@ -1,124 +1,187 @@
-'use strict';
+const express = require('express');
+const { Pool } = require('pg');
+const dotenv = require('dotenv').config();
+const app = express();
+const port = 3001;
+const cors = require('cors');
+const bodyParser=require('body-parser');
 
-var GetIntrinsic = require('get-intrinsic');
-var callBound = require('call-bind/callBound');
-var inspect = require('object-inspect');
+app.use(cors());
+app.use(express.json());
+const pool = new Pool({
+    user: process.env.PSQL_USER,
+    host: process.env.PSQL_HOST,
+    database: process.env.PSQL_DATABASE,
+    password: process.env.PSQL_PASSWORD,
+    port: process.env.PSQL_PORT,
+    ssl: {rejectUnauthorized: false}
+});
 
-var $TypeError = GetIntrinsic('%TypeError%');
-var $WeakMap = GetIntrinsic('%WeakMap%', true);
-var $Map = GetIntrinsic('%Map%', true);
+app.get('/getMenu', (req, res) => {
+    teammembers = []
+    pool
+        .query('SELECT * FROM recipe ORDER BY "Recipe_ID" ASC;', (err, result) =>{
+            res.send(result.rows);
+        });
+});
+app.get('/getInventory', (req, res) => {
+    teammembers = []
+    pool
+        .query('SELECT * FROM inventory ORDER BY "Inventory_ID" ASC;', (err, result) =>{
+            res.send(result.rows);
+        });
+});
 
-var $weakMapGet = callBound('WeakMap.prototype.get', true);
-var $weakMapSet = callBound('WeakMap.prototype.set', true);
-var $weakMapHas = callBound('WeakMap.prototype.has', true);
-var $mapGet = callBound('Map.prototype.get', true);
-var $mapSet = callBound('Map.prototype.set', true);
-var $mapHas = callBound('Map.prototype.has', true);
+app.get('/getMenuItem', (req, res) => {
+    const recID = req.query.recID;
+    pool
+        .query('SELECT * FROM recipe WHERE "Recipe_ID" = '+ recID+';', (err, result) =>{
+            res.send(result.rows);
+        });
+});
+app.get('/getItemRecipe', (req, res) => {
+    const recID = req.query.recID;
+    pool
+        .query('SELECT * FROM menuinv INNER JOIN inventory ON inventory.\"Inventory_ID\" = menuinv.inventory_id WHERE recipe_id = '+ recID+' ORDER BY inventory_id ASC;', (err, result) =>{
+            res.send(result.rows);
+        });
+});
+app.get('/getSales', (req, res) => {
+    const date1 = req.query.date1;
+    const date2 = req.query.date2;
+    pool
+        .query('SELECT orders.\"Recipe_ID\", recipe.\"Name\", SUM(\"orderQuantity\") as Quantity, SUM(\"Price\" * orders.\"orderQuantity\") as Price FROM orders INNER JOIN recipe ON orders.\"Recipe_ID\" = Recipe.\"Recipe_ID" WHERE "Date" BETWEEN \''+date1+'\' and \''+date2+'\' GROUP BY orders.\"Recipe_ID\", recipe.\"Name\" ORDER BY orders.\"Recipe_ID\";', (err, result) =>{
+            res.send(result.rows);
+        });
+});
+app.get('/getRestock', (req, res) => {
+    pool
+        .query('SELECT * FROM inventory WHERE \"Quantity\" < onhand;', (err, result) =>{
+            res.send(result.rows);
+        });
+});
 
-/*
- * This function traverses the list returning the node corresponding to the
- * given key.
- *
- * That node is also moved to the head of the list, so that if it's accessed
- * again we don't need to traverse the whole list. By doing so, all the recently
- * used nodes can be accessed relatively quickly.
- */
-var listGetNode = function (list, key) { // eslint-disable-line consistent-return
-	for (var prev = list, curr; (curr = prev.next) !== null; prev = curr) {
-		if (curr.key === key) {
-			prev.next = curr.next;
-			curr.next = list.next;
-			list.next = curr; // eslint-disable-line no-param-reassign
-			return curr;
-		}
-	}
-};
+app.use(bodyParser.urlencoded({extended:true}));
 
-var listGet = function (objects, key) {
-	var node = listGetNode(objects, key);
-	return node && node.value;
-};
-var listSet = function (objects, key, value) {
-	var node = listGetNode(objects, key);
-	if (node) {
-		node.value = value;
-	} else {
-		// Prepend the new node to the beginning of the list
-		objects.next = { // eslint-disable-line no-param-reassign
-			key: key,
-			next: objects.next,
-			value: value
-		};
-	}
-};
-var listHas = function (objects, key) {
-	return !!listGetNode(objects, key);
-};
+app.post('/addMenu', (req, res) => {
+    const recID = req.body.recipeID;
+    const name = req.body.name;
+    const price = req.body.price;
+    const category = req.body.category;
+    //console.log(name);
+    pool.query('INSERT INTO recipe (\"Recipe_ID\", \"Name\", \"Price\", \"Category\") VALUES ('+recID+',\''+name+'\','+price+',\''+category+'\');', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('inserted');
+        }
+    });
+});
 
-module.exports = function getSideChannel() {
-	var $wm;
-	var $m;
-	var $o;
-	var channel = {
-		assert: function (key) {
-			if (!channel.has(key)) {
-				throw new $TypeError('Side channel does not contain ' + inspect(key));
-			}
-		},
-		get: function (key) { // eslint-disable-line consistent-return
-			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
-				if ($wm) {
-					return $weakMapGet($wm, key);
-				}
-			} else if ($Map) {
-				if ($m) {
-					return $mapGet($m, key);
-				}
-			} else {
-				if ($o) { // eslint-disable-line no-lonely-if
-					return listGet($o, key);
-				}
-			}
-		},
-		has: function (key) {
-			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
-				if ($wm) {
-					return $weakMapHas($wm, key);
-				}
-			} else if ($Map) {
-				if ($m) {
-					return $mapHas($m, key);
-				}
-			} else {
-				if ($o) { // eslint-disable-line no-lonely-if
-					return listHas($o, key);
-				}
-			}
-			return false;
-		},
-		set: function (key, value) {
-			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
-				if (!$wm) {
-					$wm = new $WeakMap();
-				}
-				$weakMapSet($wm, key, value);
-			} else if ($Map) {
-				if (!$m) {
-					$m = new $Map();
-				}
-				$mapSet($m, key, value);
-			} else {
-				if (!$o) {
-					/*
-					 * Initialize the linked list as an empty node, so that we don't have
-					 * to special-case handling of the first node: we can always refer to
-					 * it as (previous node).next, instead of something like (list).head
-					 */
-					$o = { key: {}, next: null };
-				}
-				listSet($o, key, value);
-			}
-		}
-	};
-	return channel;
-};
+app.put('/updateItem', (req, res) => {
+    const recID = req.body.recID;
+    const name = req.body.name;
+    const price = req.body.price;
+    const category = req.body.category;
+    console.log(recID, name, price, category);
+    pool.query('UPDATE recipe SET "Name" = \''+name+'\' , "Price" = '+price+', \"Category\" = \''+category+'\' WHERE \"Recipe_ID\" = '+recID+';', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('updated');
+        }
+    });
+});
+
+app.post('/addInventory', (req, res) => {
+    const inventoryID = req.body.inventoryID;
+    const name = req.body.name;
+    const quantity = req.body.quantity;
+    const onHand = req.body.onhand;
+    const orderDate = req.body.orderDate;
+    //console.log(name);
+    pool.query('INSERT INTO inventory (\"Inventory_ID\", \"Inventory\", \"Quantity\", \"OrderDate\", \"onhand\") VALUES ('+inventoryID+', \''+ name + '\',' +quantity+ ', \'' +orderDate+ '\',' +onHand+');', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('inserted');
+        }
+    });
+});
+
+app.post('/addRecipeItem', (req, res) => {
+    const recID = req.body.recipeID;
+    const invenID = req.body.invenID;
+    const quantity = req.body.quantity;
+    pool.query('INSERT INTO menuinv VALUES('+recID+', '+invenID+', '+quantity+');', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('inserted');
+        }
+    });
+});
+app.post('/deleteRecipeItem', (req, res) => {
+    const recID = req.body.recipeID;
+    const invenID = req.body.invenID;
+    pool.query('DELETE FROM menuinv WHERE recipe_id = '+recID+' AND inventory_id = '+invenID+';', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('deleted');
+        }
+    });
+});
+app.post('/updateRecipeItem', (req, res) => {
+    const recID = req.body.recipeID;
+    const invenID = req.body.invenID;
+    const quantity = req.body.quantity;
+    pool.query('UPDATE menuinv SET quantity = '+quantity+' WHERE recipe_id = '+recID+' AND inventory_id = '+invenID+';', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('updated');
+        }
+    });
+});
+
+app.post('/deleteMenu', (req, res) => {
+    const recID = req.body.recipeID;
+    pool.query('DELETE FROM recipe WHERE "Recipe_ID" = '+recID+';', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('deleted');
+        }
+    });
+});
+
+app.post('/deleteInventory', (req, res) => {
+    const invID = req.body.inventoryID;
+    pool.query('DELETE FROM inventory WHERE "Inventory_ID" = '+invID+';', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('deleted');
+        }
+    });
+});
+
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
+});   
+app.set("view engine", "ejs");
+
+process.on('SIGINT', function() {
+    pool.end();
+    console.log('Application successfully shutdown');
+    process.exit(0);
+});

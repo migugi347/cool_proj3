@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Mainlayout from '../layouts/Mainlayout'
+import PopUp from "../components/PopUp";
 import axios from "axios"
 
 function Pospage() {
@@ -8,8 +9,10 @@ function Pospage() {
     const [isLoading, setIsLoading] = useState(false);
     const [cart, setCart] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
+    const [buttonPopup, setButtonPopup] = useState(false);
 
-    const [Order_ID, setOrderID] = useState([]);
+
+    const [Order_ID, setOrderID] = useState(0);
     const [lineNum, setlineNum] = useState([]);
     const [Cust_Name, setCustName] = useState("");
 
@@ -38,15 +41,15 @@ function Pospage() {
 
 
     const fetchOrderID = async () => {
-        axios.get("http://localhost:3001/orderid").then((response) =>{
+        axios.get("http://localhost:3001/orderid").then((response) => {
             setOrderID(response.data);
-          });
-        // const result = await axios.get('orderid');
-        // setOrderID(await result.data);
-        
-       const { orderID : foo}= Order_ID.at(0);
+        });
+        const result = await axios.get('orderid');
+        setOrderID(await result.data.var_order);
 
-        console.log(foo);
+
+
+        console.log(Order_ID);
     }
 
 
@@ -54,7 +57,7 @@ function Pospage() {
 
         const result = await axios.get('linenum');
         setlineNum(await result.data);
-        const newLine = lineNum+ 1;
+        const newLine = lineNum + 1;
         setlineNum(newLine);
         //console.log(lineNum);
     }
@@ -63,21 +66,24 @@ function Pospage() {
 
         fetchLineNum();
 
-        axios.post("http://localhost:3001/checkout", {
+        // axios.post("http://localhost:3001/checkout", {
 
-            //fetch line
-            Line_Num: lineNum,
-            Order_ID: Order_ID,
-            Cust_Name: Cust_Name,
-            Recipe_ID: cartItem.Recipe_ID,
-          
+        //     //fetch line
+        //     Line_Num: lineNum,
+        //     Order_ID: Order_ID,
+        //     Cust_Name: Cust_Name,
+        //     Recipe_ID: cartItem.Recipe_ID,
 
-        });
+
+        // });
     };
+
+
 
 
     const checkoutPrompt = async () => {
 
+        setButtonPopup(true)
         fetchOrderID();
         cart.forEach(cartItem => {
             //checkoutItem
@@ -101,12 +107,16 @@ function Pospage() {
             let newCart = [];
             let newItem;
 
+
             cart.forEach(cartItem => {
                 if (cartItem.Recipe_ID === product.Recipe_ID) {
-                    newItem = {
+
+                    newItem =
+                    {
                         ...cartItem,
                         orderQuantity: cartItem.orderQuantity + 1,
                         totalAmount: cartItem.Price * (cartItem.orderQuantity + 1)
+
                     }
 
                     newCart.push(newItem);
@@ -142,10 +152,11 @@ function Pospage() {
 
     useEffect(() => {
         let newTotalAmount = 0;
+
         cart.forEach(icart => {
-            newTotalAmount = newTotalAmount + parseInt(icart.totalAmount);
+            newTotalAmount = newTotalAmount + parseFloat(icart.totalAmount);
         })
-        setTotalAmount(newTotalAmount);
+        setTotalAmount(newTotalAmount.toFixed(2));
     }, [cart]);
 
     return (
@@ -190,7 +201,7 @@ function Pospage() {
                                     <td>{cartItem.Name}</td>
                                     <td>{cartItem.Price}</td>
                                     <td>{cartItem.orderQuantity}</td>
-                                    <td>{cartItem.totalAmount}</td>
+                                    <td>{cartItem.totalAmount.toFixed(2)}</td>
                                     <td >
                                         <button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}> Remove</button>
                                     </td>
@@ -217,7 +228,41 @@ function Pospage() {
                 </div>
             </div>
 
-        </Mainlayout>
+            <PopUp trigger={buttonPopup} setTrigger={setButtonPopup} ><h3>Order Complete! <br></br>
+                Your Order Number is #{Order_ID}</h3>
+
+                <p>ORDER SUMMARY</p>
+                <div className="table-responsive bg-secondary rounded">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {cart ? cart.map((cartItem, key) => <tr key={key}>
+                                <td>{cartItem.Recipe_ID}</td>
+                                <td>{cartItem.Name}</td>
+                                <td>{cartItem.Price}</td>
+                                <td>{cartItem.orderQuantity}</td>
+                                <td>{cartItem.totalAmount}</td>
+
+                            </tr>)
+
+                                : "No Item In Cart"}
+
+                        </tbody>
+                    </table>
+                    <h2 className="px-2">Total Amount Due ${totalAmount}</h2>
+                </div>
+            </PopUp>
+
+        </Mainlayout >
 
     )
 }

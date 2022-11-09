@@ -14,7 +14,7 @@ export default function CustomerLogin(props) {
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        navigate("/", { replace: true });
+        navigate("/home", { replace: true });
     };
 
     const switchLogin = () => {

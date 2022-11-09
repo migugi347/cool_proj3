@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Logo from './images/SB_logo.png';
-import "C:/Users/migue/OneDrive/Documents/CSCE_315/315Project3/CustomerGUI/frontend/src/style.scss"
+import "../style.scss"
 
 function mainlayout({ children }) {
     return (

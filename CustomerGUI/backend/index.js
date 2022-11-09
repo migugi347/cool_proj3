@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 app.get('/orderid', (req,res) => {
     pool
-        .query('SELECT MAX( \"Order_ID\") +1 FROM orders;', (err, result) => {
+        .query('SELECT MAX( \"Order_ID\") +1  AS var_line FROM orders;', (err, result) => {
             res.send(result.rows);
         })
 });
@@ -37,7 +37,7 @@ app.get('/orderid', (req,res) => {
 
 app.get('/linenum', (req,res) => {
     pool
-        .query('SELECT MAX( \"Line_Num\") +1 FROM orders;', (err, result) => {
+        .query('SELECT MAX( \"Line_Num\") +1 AS var_order FROM orders;', (err, result) => {
             res.send(result.rows);
             //console.log(result);
         })

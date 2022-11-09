@@ -11,10 +11,6 @@ function Menu(){
     const [price, setPrice] = useState(0);
     const [category, setCategory] = useState("");
   
-    function myFunction(){
-        console.log('Button is clicked')
-    }
-  
     useEffect(() =>{
       axios.get("http://localhost:3001/getMenu").then((response) =>{
         menu(response.data);

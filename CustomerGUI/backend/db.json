@@ -1,0 +1,29 @@
+{
+  "menuitems": [
+    {
+      "id": 4,
+      "name": "Latte",
+      "price": "4.00",
+      "image": "https://globalassets.starbucks.com/assets/b635f407bbcd49e7b8dd9119ce33f76e.jpg?impolicy=1by1_wide_topcrop_630"
+    },
+    {
+      "id": 5,
+      "name": "latte",
+      "price": "4.00",
+      "image": "https://globalassets.starbucks.com/assets/b635f407bbcd49e7b8dd9119ce33f76e.jpg?impolicy=1by1_wide_topcrop_630"
+    },
+    {
+      "id": 6,
+      "name": "mocha",
+      "price": "4.00",
+      ""
+      "image": "https://globalassets.starbucks.com/assets/915736da018842e788147f7eab73db73.jpg?impolicy=1by1_wide_topcrop_630"
+    },
+    {
+      "id": 7,
+      "name": "mocha",
+      "price": "4.00",
+      "image": "https://globalassets.starbucks.com/assets/915736da018842e788147f7eab73db73.jpg?impolicy=1by1_wide_topcrop_630"
+    }
+  ]
+}

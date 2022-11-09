@@ -16,9 +16,9 @@ function Reports(){
         });
     }
     const getRestock = ()=>{
-        // axios.get("http://localhost:3001/getSales", {params: {date1: date1, date2:date2}}).then((response) =>{
-        //     sales(response.data);
-        // });
+        axios.get("http://localhost:3001/getRestock", {params: {}}).then((response) =>{
+            sales(response.data);
+        });
     }
     const getExcess = ()=>{
         // let date1 = prompt("Please enter date one:");

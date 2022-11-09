@@ -54,6 +54,12 @@ app.get('/getSales', (req, res) => {
             res.send(result.rows);
         });
 });
+app.get('/getRestock', (req, res) => {
+    pool
+        .query('SELECT * FROM inventory WHERE \"Quantity\" < onhand;', (err, result) =>{
+            res.send(result.rows);
+        });
+});
 
 app.use(bodyParser.urlencoded({extended:true}));
 

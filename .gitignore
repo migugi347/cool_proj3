@@ -5,6 +5,7 @@ ManagerGUI/ejs/node_modules
 ManagerGUI/ejs/.pnp
 ServerGUI/server_backend/node_modules
 CustomerGUI/backend/node_modules
+CustomerGUI/frontend/node_modules
 .pnp.js
 
 # testing

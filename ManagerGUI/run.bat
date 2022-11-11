@@ -1,9 +1,9 @@
 @echo off
 pushd .\ejs
-start /min node index.js
+start "backend" /min cmd /C "node index.js"
 popd
 pushd .\managerproj
-start "frontend" /min cmd.exe /C "npm start & exit"
+start "frontend" /min cmd /C "npm start"
 popd
 echo Press ENTER to kill web servers
 pause >nul

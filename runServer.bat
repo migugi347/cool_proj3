@@ -1,5 +1,5 @@
 @echo off
-pushd .\server_backend
+pushd .\backend
 start "backend" /min cmd /C "node index.js"
 popd
 pushd .\server_frontend

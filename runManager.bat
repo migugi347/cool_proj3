@@ -1,5 +1,5 @@
 @echo off
-pushd .\ejs
+pushd .\backend
 start "backend" /min cmd /C "node index.js"
 popd
 pushd .\managerproj

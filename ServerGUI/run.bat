@@ -1,8 +1,11 @@
 @echo off
-cd server_backend
-start /b node index.js 2> nul > nul
-cd ../server_frontend
-start /b npm start > nul
-cd ..
-set /p DUMMY=Hit ENTER to continue...
-taskkill /f /im node.exe
+pushd .\server_backend
+start /min node index.js
+popd
+pushd .\server_frontend
+start "frontend" /min cmd.exe /C "npm start & exit"
+popd
+echo Press ENTER to kill web servers
+pause >nul
+taskkill /f /im node.exe > nul
+GOTO :EOF

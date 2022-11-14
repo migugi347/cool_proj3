@@ -1,8 +1,8 @@
 @echo off
-pushd .\server_backend
+pushd .\backend
 start "backend" /min cmd /C "node index.js"
 popd
-pushd .\server_frontend
+pushd .\managerproj
 start "frontend" /min cmd /C "npm start"
 popd
 echo Press ENTER to kill web servers

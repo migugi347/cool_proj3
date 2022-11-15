@@ -1,8 +1,7 @@
 import React, {useState} from "react";
-import "./Menu.css";
+import Mainlayout from '../../layouts/Mainlayout';
 import axios from "axios";
-import logo from './logo.png';
-import {BrowserRouter as Router,Routes, Route, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 function UpdateMenu(){
     const [image, images] = useState([]);
@@ -69,24 +68,20 @@ function UpdateMenu(){
 
 
     return(
-        <body>
+        <Mainlayout>
             <div className = "header">
-            <ul>
-                <li><Link style={{ textDecoration: 'none', color: 'white' }}to = '/'>Menu</Link></li>
-                <li><Link style={{ textDecoration: 'none', color: 'white' }}to = '/inventory'>Inventory</Link></li>
-                <li><Link style={{ textDecoration: 'none', color: 'white' }}to = '/reports'>Reports</Link></li>
-            </ul>
-            </div>
-            <div className = "logoname">
-                <img alt=""  className = "logo" src={logo} />
-                <h1 >Starbucks</h1>
+                <ul>
+                <Link to='/menu' className='btn btn-primary'> Menu</Link>
+                <Link to='/inventory' className='btn btn-primary'> Inventory</Link>
+                <Link to='/reports' className='btn btn-primary'> Reports</Link>
+                </ul>
             </div>
             
             <div className = "mid">
                 <form>
                     <label>Recipe_ID:</label>
                     <input type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}></input>
-                    <button id = "sub" type = "button" onClick={()=>subs()}>SELECT</button>
+                    <button className='btn btn-primary' onClick={()=>subs()}>SELECT</button>
                 </form>
             </div>
 
@@ -104,13 +99,13 @@ function UpdateMenu(){
                         <input type="text" name="price" placeholder={val.Price} onChange = {(e)=>{setPrice(e.target.value);}}></input>
                         <label>Category:</label>
                         <input type="text" name="category" placeholder={val.Category} onChange = {(e)=>{setCategory(e.target.value);}}></input>
-                        <button id = "sub" type = "button" onClick={()=>updateItem()} >Update Menu Item</button>
+                        <button className='btn btn-primary' onClick={()=>updateItem()}>Update Menu Item</button>
                     </form>
                 ))}
             </div>
             <h3>Recipe Table</h3>
-            <div className="recipetable"> 
-                <table>
+            <div className="table-responsive bg-secondary rounded"> 
+                <table className="table">
                     <thead>
                     <tr>
                         <th>INVENTORY ID</th>
@@ -128,11 +123,11 @@ function UpdateMenu(){
                     ))}
                     </tbody>
                 </table>
-                <button onClick = {()=>recipeInsert()}>Insert</button>
-                <button onClick = {()=>recipeDelete()}>Delete</button>
-                <button onClick = {()=>recipeUpdate()}>Update</button>
+                <button className='btn btn-primary' onClick={()=>recipeInsert()}>Insert</button>
+                <button className='btn btn-primary' onClick={()=>recipeDelete()}>Delete</button>
+                <button className='btn btn-primary' onClick={()=>recipeUpdate()}>Update</button>
             </div>
-        </body>
+        </Mainlayout>
     )
 };
 export default UpdateMenu;

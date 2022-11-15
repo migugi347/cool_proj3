@@ -31,14 +31,26 @@ function Menu(){
     }); 
   };
 
+  const google = window.google;
+  useEffect(() => {
+      var addScript = document.createElement('script');
+      addScript.setAttribute('src', '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit');
+      document.body.appendChild(addScript);
+      window.googleTranslateElementInit = googleTranslateElementInit;
+  }, [])
 
+  const googleTranslateElementInit = () => {
+      new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+  }
 return(
   <Mainlayout>
       <div className = "header">
+      
         <ul>
           <Link to='/menu' className='btn btn-primary'> Menu</Link>
           <Link to='/inventory' className='btn btn-primary'> Inventory</Link>
           <Link to='/reports' className='btn btn-primary'> Reports</Link>
+          <div id="google_translate_element"></div>
         </ul>
       </div>
 

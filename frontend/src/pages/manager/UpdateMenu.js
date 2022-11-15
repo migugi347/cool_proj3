@@ -1,5 +1,6 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Mainlayout from '../../layouts/Mainlayout';
+import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import {Link} from 'react-router-dom';
 
@@ -12,17 +13,29 @@ function UpdateMenu(){
     const [category, setCategory] = useState(image.Category);
    
 
+    useEffect(() =>{
+        var x = document.getElementById("recipeTable");
+        x.style.display = "none";
+    },[]);
+
+    const displayRecipe = () =>{
+        var x = document.getElementById("recipeTable");
+        x.style.display = "block";
+    };
+    
     const subs = () =>{
         axios.get("http://localhost:3001/getMenuItem", {params: {recID: recID}}).then((response) =>{
             images(response.data);
         });
         axios.get("http://localhost:3001/getItemRecipe", {params: {recID: recID}}).then((response) =>{
             recipes(response.data);
-        });  
+        });
+        displayRecipe();  
     };
 
     const updateItem = () =>{
        var a,b,c;
+       // eslint-disable-next-line 
         image.map(val => {
            a = val.Name;
            b = val.Price;
@@ -68,7 +81,7 @@ function UpdateMenu(){
 
 
     return(
-        <Mainlayout>
+       <Mainlayout>
             <div className = "header">
                 <ul>
                 <Link to='/menu' className='btn btn-primary'> Menu</Link>
@@ -77,20 +90,21 @@ function UpdateMenu(){
                 </ul>
             </div>
             
-            <div className = "mid">
-                <form>
+            <div>
+                <Form>
                     <label>Recipe_ID:</label>
                     <input type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}></input>
-                    <button className='btn btn-primary' onClick={()=>subs()}>SELECT</button>
-                </form>
+                </Form>
+                <Button className='btn btn-primary' onClick={()=>subs()}> SELECT</Button>
             </div>
-
-            <div className = "image">
+            <div>
                 {image.map((val) => (
-                    <img src = {val.image}></img>
+                    // eslint-disable-next-line 
+                    <img src = {val.image} className="img"></img>
                 ))}
             </div>
-            <div className = "updateForm">
+            
+            <div>
                 {image.map((val) => (
                     <form>
                         <label>Name:</label>
@@ -103,26 +117,29 @@ function UpdateMenu(){
                     </form>
                 ))}
             </div>
-            <h3>Recipe Table</h3>
-            <div className="table-responsive bg-secondary rounded"> 
-                <table className="table">
-                    <thead>
-                    <tr>
-                        <th>INVENTORY ID</th>
-                        <th>INGREDIENT NAME</th>
-                        <th>QUANTITY</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {recipe.map((val) => (
+
+            <div className = "recipeTable" id ="recipeTable">
+                <h3>Recipe Table</h3>
+                <div className="table-responsive bg-secondary rounded"> 
+                    <table className="table">
+                        <thead>
                         <tr>
-                            <td>{val.inventory_id}</td>
-                            <td>{val.Inventory}</td>
-                            <td>{val.quantity}</td>
+                            <th>INVENTORY ID</th>
+                            <th>INGREDIENT NAME</th>
+                            <th>QUANTITY</th>
                         </tr>
-                    ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {recipe.map((val) => (
+                            <tr>
+                                <td>{val.inventory_id}</td>
+                                <td>{val.Inventory}</td>
+                                <td>{val.quantity}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
                 <button className='btn btn-primary' onClick={()=>recipeInsert()}>Insert</button>
                 <button className='btn btn-primary' onClick={()=>recipeDelete()}>Delete</button>
                 <button className='btn btn-primary' onClick={()=>recipeUpdate()}>Update</button>

@@ -11,7 +11,7 @@ function mainlayout({ children }) {
                     < div className="container-fluid">
                         <div>
                             <img style={{ width: "15%", height: "15%" }} src={Logo} alt="starbucks_logo" />
-                            <Link to="/" className="navbar-brand text-light" style={{ fontWeight: 800 }}>    STARBUCKS Self Checkout</Link>
+                            <Link to="/" className="navbar-brand text-light" style={{ fontWeight: 800 }}>    STARBUCKS</Link>
                         </div>
                     </div>
                 </nav>

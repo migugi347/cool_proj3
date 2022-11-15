@@ -75,5 +75,9 @@ $theme-colors: (
 
 }
 
+.header{
+    background-color: #00704A;
+    text-align: center;
+}
 
 @import "~bootstrap/scss/bootstrap"

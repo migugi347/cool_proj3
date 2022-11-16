@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react"
 import Mainlayout from '../layouts/Mainlayout'
 import PopUp from "../components/PopUp";
+import logo from '../layouts/images/coffee.gif';
 import axios from "axios"
 
 function Pospage() {
 
     const [products, setProducts] = useState([]);
+    const [menu, setMenu] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [cart, setCart] = useState([]);
+
     const [totalAmount, setTotalAmount] = useState(0);
     const [buttonPopup, setButtonPopup] = useState(false);
 
@@ -16,15 +20,24 @@ function Pospage() {
     const [lineNum, setlineNum] = useState([]);
     const [Cust_Name, setCustName] = useState("");
 
-
+    const uniCate = [...new Map(categories.map((m) => [m.Category, m])).values()];
 
     const fetchMenu = async () => {
         setIsLoading(true);
         const result = await axios.get('user');
         setProducts(await result.data);
+        setMenu(await result.data);
         setIsLoading(false);
     }
 
+
+    const fetchCategory = async () => {
+        setIsLoading(true);
+        const result = await axios.get('user');
+        setCategories(await result.data);
+
+        setIsLoading(false);
+    }
 
 
     useEffect(() => {
@@ -34,11 +47,17 @@ function Pospage() {
     }, []);
 
     const removeProduct = async (product) => {
+        setIsLoading(true);
         const newCart = cart.filter(cartItem => cartItem.Recipe_ID !== product.Recipe_ID);
         setCart(newCart);
+        setIsLoading(false);
     }
 
+    const removeMenu = async (product) => {
 
+        const newProducts = products.filter(menuItem => menuItem.Category === product.Category);
+        setMenu(newProducts);
+    }
 
     const fetchOrderID = async () => {
         axios.get("http://localhost:3001/orderid").then((response) => {
@@ -66,16 +85,16 @@ function Pospage() {
 
         fetchLineNum();
 
-        // axios.post("http://localhost:3001/checkout", {
+        axios.post("http://localhost:3001/checkout", {
 
-        //     //fetch line
-        //     Line_Num: lineNum,
-        //     Order_ID: Order_ID,
-        //     Cust_Name: Cust_Name,
-        //     Recipe_ID: cartItem.Recipe_ID,
+            //fetch line
+            Line_Num: lineNum,
+            Order_ID: Order_ID,
+            Cust_Name: Cust_Name,
+            Recipe_ID: cartItem.Recipe_ID,
 
 
-        // });
+        });
     };
 
 
@@ -140,9 +159,16 @@ function Pospage() {
         }
     }
 
+
+
     useEffect(() => {
 
         fetchMenu();
+
+
+        fetchCategory();
+
+
     }, []);
 
     useEffect(() => {
@@ -160,13 +186,13 @@ function Pospage() {
     }, [cart]);
 
     return (
-        <Mainlayout>
+        <Mainlayout >
             <div className='row'>
                 <div className='col-lg-8' >
 
-                    {isLoading ? 'Loading' : <div className='row'>
+                    {isLoading ? <img src={logo} style={{ width: "800px" }} alt="loading .. " /> : <div className='row'>
 
-                        {products.map((product, key) =>
+                        {menu.map((product, key) =>
 
                             <div key={key} className='col-lg-4  '>
 
@@ -260,7 +286,22 @@ function Pospage() {
                     </table>
                     <h2 className="px-2">Total Amount Due ${totalAmount}</h2>
                 </div>
+
             </PopUp>
+
+            <nav className=' navbar  fixed-bottom  justify-content-center'>
+                <button className=" poop btn m-2  rounded-circle  my-2   bg-secondary" style={{ fontWeight: "600" }} onClick={() => fetchMenu()}>All Products</button>
+                {uniCate.map((product, key) =>
+                    <div>
+                        <button className="  btn m-2 h-100  rounded-circle  my-2  bg-secondary " key={product.Category} onClick={() => removeMenu(product)}>
+                            <img src={product.image} className="poop-2 icon-nav" alt={product.Category} ></img>
+
+                        </button>
+                        <p className="icon-labels ">    {product.Category}</p>
+                    </div>
+                )}
+
+            </nav>
 
         </Mainlayout >
 

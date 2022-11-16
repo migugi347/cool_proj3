@@ -208,49 +208,50 @@ function Pospage() {
 
                 </div>
 
-                <div className="col-lg-4 ">
-                    <div className="table-responsive bg-secondary rounded">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Qty</th>
-                                    <th>Total</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {cart ? cart.map((cartItem, key) => <tr key={key}>
-                                    <td>{cartItem.Recipe_ID}</td>
-                                    <td>{cartItem.Name}</td>
-                                    <td>{cartItem.Price}</td>
-                                    <td>{cartItem.orderQuantity}</td>
-                                    <td>{cartItem.totalAmount.toFixed(2)}</td>
-                                    <td >
-                                        <button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}> Remove</button>
-                                    </td>
-                                </tr>)
+                <div className=" col-lg-4 ">
+                    <div className="position-fixed">
+                        <div className="table-responsive bg-secondary rounded">
+                            <table className="table ">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                        <th>Total</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {cart ? cart.map((cartItem, key) => <tr key={key}>
+                                        <td>{cartItem.Recipe_ID}</td>
+                                        <td>{cartItem.Name}</td>
+                                        <td>{cartItem.Price}</td>
+                                        <td>{cartItem.orderQuantity}</td>
+                                        <td>{cartItem.totalAmount.toFixed(2)}</td>
+                                        <td >
+                                            <button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}> Remove</button>
+                                        </td>
+                                    </tr>)
 
-                                    : "No Item In Cart"}
+                                        : "No Item In Cart"}
 
-                            </tbody>
-                        </table>
-                        <h2 className="px-2">Total Amount: ${totalAmount}</h2>
+                                </tbody>
+                            </table>
+                            <h2 className="px-2">Total Amount: ${totalAmount}</h2>
+                        </div>
+
+
+                        <div className="mt-3">
+                            {totalAmount !== 0 ? <div>
+                                <button className="btn btn-primary" onClick={() => checkoutPrompt()} >
+                                    Check Out</button>
+
+
+
+                            </div> : "Please add a product to the cart"}
+                        </div>
                     </div>
-
-
-                    <div className="='mt-3">
-                        {totalAmount !== 0 ? <div>
-                            <button className="btn btn-primary" onClick={() => checkoutPrompt()} >
-                                Check Out</button>
-
-
-
-                        </div> : "Please add a product to the cart"}
-                    </div>
-
                 </div>
             </div>
 
@@ -293,7 +294,7 @@ function Pospage() {
                 <button className=" poop btn m-2  rounded-circle  my-2   bg-secondary" style={{ fontWeight: "600" }} onClick={() => fetchMenu()}>All Products</button>
                 {uniCate.map((product, key) =>
                     <div>
-                        <button className="  btn m-2 h-100  rounded-circle  my-2  bg-secondary " key={product.Category} onClick={() => removeMenu(product)}>
+                        <button className="  btn m-2 h-100  rounded-circle  my-2  bg-secondary " key={key} onClick={() => removeMenu(product)}>
                             <img src={product.image} className="poop-2 icon-nav" alt={product.Category} ></img>
 
                         </button>

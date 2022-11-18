@@ -38,6 +38,8 @@ export default function CustomerLogin(props) {
             switchLogin();
         else if(account[0].type === "manager")
             navigate("/menu", { replace: true });
+        else if(account[0].type === "server")
+            navigate("/server", {replace: true});
         else
             navigate("/home", { replace: true });
     };

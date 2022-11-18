@@ -13,6 +13,8 @@ import UpdateMenu from './pages/manager/UpdateMenu';
 import Menu from './pages/manager/Menu';
 import Reports from './pages/manager/Reports';
 import ServerHomeScreen from './pages/server/server_screens/server_homescreen';
+import Map from './pages/map'
+
 
 function App() {
   return (
@@ -27,6 +29,7 @@ function App() {
           <Route path ='/updateMenu' element={<UpdateMenu/>} />
           <Route path ='/reports' element={<Reports/>} />
           <Route path = "/server" element = {<ServerHomeScreen/>} />
+		  <Route path='/map' element={<Map />} />
         </Routes>
       </Router>
       </>

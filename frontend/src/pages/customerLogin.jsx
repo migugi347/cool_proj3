@@ -1,11 +1,35 @@
+
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Form, Button } from "react-bootstrap";
 import { Link } from 'react-router-dom'
+import { useEffect } from "react"
+import jwt_decode from "jwt-decode";
+
 import Mainlayout from '../layouts/Mainlayout'
 
 
 export default function CustomerLogin(props) {
+
+    function handleCallbackResponse(response) {
+
+        var userObject = jwt_decode(response.credential);
+        console.log(userObject);
+    }
+
+    useEffect(() => {
+        /* global google  */
+        google.accounts.id.initialize({
+            client_id: "704019936455-s2sdsnf3jc47qljoduocgo6ufla51qbn.apps.googleusercontent.com",
+            callback: handleCallbackResponse
+
+        });
+        google.accounts.id.renderButton(
+            document.getElementById("signInDiv"),
+            { theme: "outline", size: "large" }
+        );
+
+    }, []);
 
 
     let [authMode, setAuthMode] = useState("signin");
@@ -54,6 +78,7 @@ export default function CustomerLogin(props) {
                                 <Button size="md" className="d-grid gap-2 mt-4 mb-3 btn-block bg-primary text-white" type="submit" style={{ fontWeight: 800 }}>
                                     SUBMIT
                                 </Button>
+                                <div id="signInDiv"></div>
                                 <Link to='/home' className='btn btn-primary'> START ORDER</Link>
                             </div>
                             <div className="text-center">

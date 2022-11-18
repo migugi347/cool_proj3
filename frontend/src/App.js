@@ -9,21 +9,15 @@ import {
 import Homepage from './pages/homepage';
 import Pospage from './pages/pospage'
 import CustomerLogin from './pages/customerLogin';
+import { useEffect, useState } from "react"
 
-// const theme = createTheme({
 
-//   palette: {
-//     primary: {
-//       main: '#00704A',
-//     },
-//     secondary: {
-//       main: '#eac784',
-//     },
-//   },
-
-// });
 
 function App() {
+
+ const  [user ,setUser] =useState([]);
+
+ 
   return (
 
     

@@ -1,20 +1,47 @@
-import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import React, { useState,useEffect } from "react"
+import {useNavigate } from "react-router-dom"
 import { Form, Button } from "react-bootstrap";
+import axios from "axios";
 import { Link } from 'react-router-dom'
-import Mainlayout from '../layouts/Mainlayout'
+import Mainlayout from '../../layouts/Mainlayout'
 
 
 export default function CustomerLogin(props) {
 
 
-    let [authMode, setAuthMode] = useState("signin");
+    const [authMode, setAuthMode] = useState("signin");
+    const [email, setEmail] = useState("");
+    const [account, setAccount] = useState([]);
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        (async () => {
+          try {
+            axios.get("http://localhost:3001/getAccountType", {params: {email: email}}).then((response) =>{
+                setAccount(response.data);
+            });
+          } catch (error) {
+            console.log('error');
+          }
+        })();
+      }, [email]);
+
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        navigate("/home", { replace: true });
+        // axios.get("http://localhost:3001/getAccountType", {params: {email: email}}).then((response) =>{
+        //     setAccount(response.data);
+        // });
+        // setEmail(""+email);
+        //console.log(account);
+        if(account.length === 0)
+            switchLogin();
+        else if(account[0].type === "manager")
+            navigate("/menu", { replace: true });
+        else if(account[0].type === "server")
+            navigate("/server", {replace: true});
+        else
+            navigate("/home", { replace: true });
     };
 
     const switchLogin = () => {
@@ -38,6 +65,7 @@ export default function CustomerLogin(props) {
                                     type="email"
                                     className="form-control mt-1"
                                     placeholder="name@email.com"
+                                    onChange = {(e)=>{setEmail(""+e.target.value);}}
                                     required
                                 />
                             </div>

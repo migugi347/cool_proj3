@@ -1,42 +1,35 @@
 import React from 'react';
-// import { createTheme, ThemeProvider } from '@mui/material'
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from 'react-router-dom';
 
-import Homepage from './pages/homepage';
-import Pospage from './pages/pospage'
-import CustomerLogin from './pages/customerLogin';
-
-// const theme = createTheme({
-
-//   palette: {
-//     primary: {
-//       main: '#00704A',
-//     },
-//     secondary: {
-//       main: '#eac784',
-//     },
-//   },
-
-// });
+import Homepage from './pages/customer/homepage';
+import Pospage from './pages/customer/pospage'
+import CustomerLogin from './pages/customer/customerLogin';
+import Inventory from './pages/manager/Inventory';
+import UpdateMenu from './pages/manager/UpdateMenu';
+import Menu from './pages/manager/Menu';
+import Reports from './pages/manager/Reports';
+import ServerHomeScreen from './pages/server/server_screens/server_homescreen';
 
 function App() {
   return (
-
-    
+    <>
       <Router>
         <Routes>
-        <Route path='/' element={<CustomerLogin />} />
-          <Route path='/home' element={<Homepage />} />
-          <Route path='/pos' element={<Pospage />} />
-
+          <Route path ='/' element={<CustomerLogin />} />
+          <Route path ='/home' element={<Homepage />} />
+          <Route path ='/pos' element={<Pospage />} />
+          <Route path = '/menu' element = {<Menu/>}/>
+          <Route path ='/inventory' element={<Inventory/>} />
+          <Route path ='/updateMenu' element={<UpdateMenu/>} />
+          <Route path ='/reports' element={<Reports/>} />
+          <Route path = "/server" element = {<ServerHomeScreen/>} />
         </Routes>
       </Router>
-   
+      </>
   );
-
 }
 export default App;

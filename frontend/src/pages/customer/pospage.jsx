@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import Mainlayout from '../layouts/Mainlayout'
-import PopUp from "../components/PopUp";
+import Mainlayout from '../../layouts/Mainlayout'
+import PopUp from "../../components/PopUp";
 import axios from "axios"
 
 function Pospage() {

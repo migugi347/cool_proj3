@@ -4,6 +4,15 @@ import Logo from './images/SB_logo.png';
 import "../style.scss"
 
 function mainlayout({ children }) {
+    // const [account, setAccount] = useState([]);
+    // useEffect(() => {
+    //     const loggedInUser = localStorage.getItem("user");
+    //     if (loggedInUser) {
+
+    //         setAccount(foundUser);
+    //     }
+    // }, []);
+
     return (
         <div>
             <header>
@@ -13,6 +22,7 @@ function mainlayout({ children }) {
                             <img style={{ width: "15%", height: "15%" }} src={Logo} alt="starbucks_logo" />
                             <Link to="/" className="navbar-brand text-light" style={{ fontWeight: 800 }}>    STARBUCKS</Link>
                         </div>
+                        <div >   </div>
                     </div>
                 </nav>
             </header>
@@ -24,7 +34,7 @@ function mainlayout({ children }) {
             </main>
             <div>
                 <nav className=' navbar fixed-bottom  bg-primary'>
-                    
+
                 </nav>
             </div>
         </div>

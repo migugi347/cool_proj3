@@ -17,14 +17,14 @@ export default function CustomerLogin(props) {
     const navigate = useNavigate();
 
     function handleCallbackResponse(response) {
-
+        console.log(response)
         var userObject = jwt_decode(response.credential);
         console.log(userObject);
 
         setEmail(userObject.email);
         setAccount(userObject);
 
-
+        localStorage.setItem('user', userObject);
     }
 
 

@@ -2,8 +2,6 @@ $theme-colors: (
     "primary": #00704A,
 
     "secondary": #eac784,
-
-
 );
 
 
@@ -20,17 +18,16 @@ $theme-colors: (
     width: 100%;
     max-width: 450px;
     padding: 50px;
-    margin-left: 25vw;
-    margin-right: 15vw;
+    border-radius: 10px;
+
     padding-top: 100px;
-    margin-bottom: 40px;
+    margin: auto;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0.05);
 
     h3 {
         font-weight: 500;
         margin-bottom: 50px
     }
-
 }
 
 .login-form {
@@ -129,5 +126,68 @@ $theme-colors: (
 }
 
 
+.icon-nav {
+    width: 70px;
+    height: 70px;
+    border-radius: 50px;
+    object-fit: cover;
+    object-position: 100% 0;
+
+
+}
+
+.poop-2:hover {
+    transform: scale(1.40);
+}
+
+.poop-2 {
+    transition: transform 0.2s ease;
+}
+
+.icon-labels {
+    background-color: #eac784;
+    border-radius: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 5px 5px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.icon-shape {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+.icon-sm {
+    width: 2rem;
+    height: 2rem;
+}
+
+.input-group {
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    width: 20px;
+}
+
+.header {
+    background-color: #00704A;
+    text-align: center;
+}
+
+/*google translate Dropdown */
+.goog-te-gadget-simple {
+    border-radius: 25px;
+    font-size: 20px !important;
+}
+
+main{
+    padding-bottom:10rem;
+}
 
 @import "~bootstrap/scss/bootstrap"

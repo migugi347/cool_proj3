@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from "react"
-import Mainlayout from '../layouts/Mainlayout'
-import PopUp from "../components/PopUp";
+import React, { useState, useEffect} from "react";
+import axios from "axios";
+import Mainlayout from '../../../layouts/Mainlayout';
+import PopUp from "../../../components/PopUp";
 import Collapse from 'react-bootstrap/Collapse';
 import Button from 'react-bootstrap/Button';
 import Cart from '../layouts/images/cart.svg';
 import logo from '../layouts/images/coffee.gif';
-import axios from "axios"
+import logo from '../../../layouts/images/coffee.gif';
 
-function Pospage() {
-
+function Server_homescreen() {
     const [products, setProducts] = useState([]);
+    const [menu, setMenu] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [menu, setMenu] = useState([]);
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [cart, setCart] = useState([]);
-
     const [totalAmount, setTotalAmount] = useState(0);
     const [buttonPopup, setButtonPopup] = useState(false);
     // const [open, setOpen] = useState(false);
@@ -24,12 +25,13 @@ function Pospage() {
     const [Cust_Name, setCustName] = useState("");
 
     const uniCate = [...new Map(categories.map((m) => [m.Category, m])).values()];
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false);    const uniCate = [...new Map(categories.map((m) => [m.Category, m])).values()];
 
     const fetchMenu = async () => {
         setIsLoading(true);
         const result = await axios.get('user');
         setProducts(await result.data);
+        setMenu(await result.data);
         setMenu(await result.data);
         setIsLoading(false);
     }
@@ -43,6 +45,13 @@ function Pospage() {
         setIsLoading(false);
     }
 
+    const fetchCategory = async () => {
+        setIsLoading(true);
+        const result = await axios.get('user');
+        setCategories(await result.data);
+
+        setIsLoading(false);
+    }
 
     useEffect(() => {
         axios.get("http://localhost:3001/user").then((response) => {
@@ -51,6 +60,7 @@ function Pospage() {
     }, []);
 
     const removeProduct = async (product) => {
+        setIsLoading(true);
         setIsLoading(true);
         const newCart = cart.filter(cartItem => cartItem.Recipe_ID !== product.Recipe_ID);
         setCart(newCart);
@@ -105,9 +115,13 @@ function Pospage() {
         }
 
 
+        setIsLoading(false);
     }
 
-
+    const removeMenu = async (product) => {
+        const newProducts = products.filter(menuItem => menuItem.Category === product.Category);
+        setMenu(newProducts);
+    }
     const removeMenu = async (product) => {
 
         const newProducts = products.filter(menuItem => menuItem.Category === product.Category);
@@ -122,40 +136,32 @@ function Pospage() {
             const ord = response.data;
             setOrderID(ord[0].var_order);
         });
-        // const result = await axios.get('orderid');
+        const result = await axios.get('orderid');
+        setOrderID(await result.data.var_order);
 
 
 
+        console.log(Order_ID);
     }
 
 
     const fetchLineNum = async () => {
-
         const result = await axios.get('linenum');
         setlineNum(await result.data);
         const newLine = lineNum + 1;
         setlineNum(newLine);
-        //console.log(lineNum);
     }
 
     const checkoutItem = (cartItem) => {
-
         fetchLineNum();
-
-        // axios.post("http://localhost:3001/checkout", {
-
-        //     //fetch line
-        //     Line_Num: lineNum,
-        //     Order_ID: Order_ID,
-        //     Cust_Name: Cust_Name,
-        //     Recipe_ID: cartItem.Recipe_ID,
-
-
-        // });
+        axios.post("http://localhost:3001/checkout", {
+            //fetch line
+            Line_Num: lineNum,
+            Order_ID: Order_ID,
+            Cust_Name: Cust_Name,
+            Recipe_ID: cartItem.Recipe_ID,
+        });
     };
-
-
-
 
     const checkoutPrompt = async () => {
 
@@ -180,16 +186,11 @@ function Pospage() {
         let findItemInCart = await cart.find(i => {
             return i.Recipe_ID === product.Recipe_ID
         });
-        //console.log(findItemInCart)
         if (findItemInCart) {
-
             let newCart = [];
             let newItem;
-
-
             cart.forEach(cartItem => {
                 if (cartItem.Recipe_ID === product.Recipe_ID) {
-
                     newItem =
                     {
                         ...cartItem,
@@ -197,16 +198,13 @@ function Pospage() {
                         totalAmount: cartItem.Price * (cartItem.orderQuantity + 1)
 
                     }
-
                     newCart.push(newItem);
                 }
                 else {
                     newCart.push(cartItem);
                 }
             });
-
             setCart(newCart);
-
         }
         else {
             let addingItem = {
@@ -235,17 +233,10 @@ function Pospage() {
     }
 
     useEffect(() => {
-
         fetchMenu();
-
-        fetchOrderID();
-        fetchCategory();
-
-
     }, []);
 
     useEffect(() => {
-
         // console.log(products)
     }, [products]);
 
@@ -269,84 +260,53 @@ function Pospage() {
                         {menu.map((product, key) =>
 
                             <div key={key} className='col-lg-4  '>
-
                                 <div className='poop border text-center text-uppercase fw-bold bg-secondary rounded' onClick={() => addItemtoCart(product)}>
-                                    <p className="font-weight-bold" style={{ fontWeight: "600" }}>{product.Name}</p>
-                                    <img src={product.image} className="img-fluid" alt={product.Name} ></img>
-                                    <p>${product.Price}</p>
+                                    <p className="font-weight-bold" style={{ fontWeight: "900" }}>{product.Name}</p>
                                 </div>
                             </div>
                         )}
                     </div>}
-
-
                 </div>
 
+                <div className=" col-lg-4 ">
+                    <div className="position-fixed">
+                        <div className="table-responsive bg-secondary rounded">
+                            <table className="table ">
+                                <thead>
+                                    <tr>
+                                        <th>Menu Item</th>
+                                        <th>Decrease</th>
+                                        <th>Quantity</th>
+                                        <th>Increase</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {cart ? cart.map((cartItem, key) => <tr key={key}>
+                                        <td>{cartItem.Name}</td>
+                                        <td ><button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>-</button></td>
+                                        <td>{cartItem.orderQuantity}</td>
+                                        <td ><button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>+</button></td>
+                                        <td ><button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>X</button></td>
+                                    </tr>)
+
+                                        : "No Item In Cart"}
+
+                            </tbody>
+                        </table>
+                        <h2 className="px-2">Total Amount: ${totalAmount}</h2>
+                    </div>
 
 
-                <div className="col-lg-2 " id="sideBar">
-                    <Button className=" bg-primary sticky-top " onClick={() => reSizeView(open)}
-                        aria-controls="example-collapse-text"
-                        aria-expanded={open}>
-                        VIEW CART
-                        <img src={Cart} alt="cart" />
-                    </Button>
-
-                    {cart.length !== 0 ? <Collapse in={open} dimension="width" >
-                        <div className="position-sticky sticky-top top-30 mt-2" id="example-collapse-text">
-                            <div className="table-responsive bg-secondary rounded" >
-                                <table className="table " >
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Price</th>
-                                            <th >Qty</th>
-                                            <th>Total</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {cart ? cart.map((cartItem, key) => <tr key={key}>
-                                            <td>{cartItem.Recipe_ID}</td>
-                                            <td>{cartItem.Name}</td>
-                                            <td>{cartItem.Price}</td>
-                                            <td>
-                                                <div className="input-group   w-auto justify-content-space-evenly align-items-center  ">
-                                                    <input type="button" onClick={() => decrementHandler(cartItem)} value="-" className="button-minus bg-primary border rounded-circle  icon-shape icon-sm text-white " data-field="quantity"></input>
-
-                                                    <div className=" flex-fill  mx-2"> {cartItem.orderQuantity}</div>
-
-                                                    <input type="button" onClick={() => incrementHandler(cartItem)} value="+" className="button-plus bg-primary border rounded-circle  icon-shape icon-sm  text-white " data-field="quantity"></input>
-                                                </div>
-                                            </td>
-                                            <td>{cartItem.totalAmount.toFixed(2)}</td>
-                                            <td >
-                                                <button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}> Remove</button>
-                                            </td>
-                                        </tr>) : ""}
-
-                                    </tbody>
-                                </table>
-                                <h2 className="px-2">Total Amount: ${totalAmount}</h2>
-                            </div>
-
-                            <div className="mt-3">
-                                {totalAmount !== 0 ? <div>
-                                    <button className="btn btn-primary" onClick={() => checkoutPrompt()} >
-                                        Check Out</button>
+                    <div className="='mt-3">
+                        {totalAmount !== 0 ? <div>
+                            <button className="btn btn-primary" onClick={() => checkoutPrompt()} >
+                                Check Out</button>
 
 
 
-                                </div> : "Please add a product to the cart"}
-                            </div>
-
-
-                        </div>
-
-                    </Collapse> : "No Items In Cart"}
-
-
+                        </div> : "Please add a product to the cart"}
+                    </div>
 
                 </div>
 
@@ -387,25 +347,8 @@ function Pospage() {
 
             </PopUp>
 
-            {
-                buttonPopup !== true ? <nav className=' navbar  fixed-bottom  justify-content-center  '  >
-                    <button className=" poop btn m-2  rounded-circle  my-2   bg-secondary" style={{ fontWeight: "600" }} onClick={() => fetchMenu()}>All Products</button>
-
-                    {uniCate.map((product, key) => <div key={key}>
-                        <button className="  btn m-2 h-100  rounded-circle  my-2  bg-secondary"
-                            onClick={() => removeMenu(product)}>
-                            <img src={product.image} className="poop-2 icon-nav" alt={product.Category} ></img>
-                        </button>
-                        <p className="icon-labels ">    {product.Category}</p>
-                    </div>
-                    )}
-
-                </nav> : ""
-            }
-
         </Mainlayout >
-
     )
 }
 
-export default Pospage
+export default Server_homescreen;

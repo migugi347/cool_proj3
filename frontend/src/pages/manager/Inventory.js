@@ -1,8 +1,7 @@
 import React, {useState,useEffect} from "react";
-import "./Menu.css";
+import Mainlayout from '../../layouts/Mainlayout';
 import axios from "axios";
-import logo from './logo.png';
-import {BrowserRouter as Router,Routes, Route, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 function Inventory(){
     const [inventoryitem, inventory] = useState([]);
@@ -36,23 +35,20 @@ function Inventory(){
 
 
 return(
-    <body>
+    <Mainlayout>
       <div className = "header">
-      <ul>
-          <li><Link style={{ textDecoration: 'none', color: 'white' }}to = '/'>Menu</Link></li>
-          <li><Link style={{ textDecoration: 'none', color: 'white' }}to = '/inventory'>Inventory</Link></li>
-          <li><Link style={{ textDecoration: 'none', color: 'white' }}to = '/reports'>Reports</Link></li>
+        <ul>
+          <Link to='/menu' className='btn btn-primary'> Menu</Link>
+          <Link to='/inventory' className='btn btn-primary'> Inventory</Link>
+          <Link to='/reports' className='btn btn-primary'> Reports</Link>
+          <Link to='/orders' className='btn btn-primary'> Orders</Link>
         </ul>
-      </div>
-      <div className = "logoname">
-          <img alt=""  className = "logo" src={logo} />
-          <h1 >Starbucks</h1>
-      </div>
+      </div> 
 
       <div className = "anotherContainer">
         <h3>Inventory</h3>
-        <div className="app-container"> 
-          <table>
+        <div className="table-responsive bg-secondary rounded"> 
+          <table className="table">
             <thead>
               <tr>
                 <th>ID</th>
@@ -87,18 +83,18 @@ return(
               <input type="text" name="orderDate" onChange = {(e)=>{setOrderDate(e.target.value);}}></input>
               <label>On Hand:</label>
               <input type="text" name="onHand" onChange = {(e)=>{setOnHand(e.target.value);}}></input>
-              <button id = "sub" type = "button" onClick={()=>subs()} >Add New Inv Item</button>
+              <button className='btn btn-primary' onClick={()=>subs()}>Add New Inv Item</button>
             </form>
         </div>
         <div className = "deleteForm">
             <form>
               <label>Inventory_ID:</label>
               <input type="text" name="recID" onChange = {(e)=>{setinvID(e.target.value);}}></input>
-              <button id = "sub" type = "button" onClick={()=>dels()}>Delete Inventory Item</button>
+              <button className='btn btn-primary' onClick={()=>dels()}>Delete Inventory Item</button>
             </form>
         </div>
       </div>
-    </body>
+      </Mainlayout>
     );
 }
 export default Inventory;

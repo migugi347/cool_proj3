@@ -6,7 +6,9 @@ import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  
-    <App />
-  
+    // <GoogleOAUTH clientId="704019936455-s2sdsnf3jc47qljoduocgo6ufla51qbn.apps.googleusercontent.com">
+    // onUpdateSigninStatus = { Function }
+    //     onInitFailure = { Function } >
+    < App />
+    //{/* </GoogleOAUTH> */ }
 );

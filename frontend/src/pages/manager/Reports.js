@@ -35,6 +35,7 @@ function Reports(){
               <Link to='/menu' className='btn btn-primary'> Menu</Link>
               <Link to='/inventory' className='btn btn-primary'> Inventory</Link>
               <Link to='/reports' className='btn btn-primary'> Reports</Link>
+              <Link to='/orders' className='btn btn-primary'> Orders</Link>
             </ul>
           </div>
         <div className = "anotherContainer">

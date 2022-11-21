@@ -58,7 +58,7 @@ function Mainlayout({ children }) {
     return (
         <div>
             <header>
-                <nav className='navbar navbar-light bg-primary'>
+                <nav className='navbar navbar-light bg-primary mb-2'>
                     < div className="container-fluid">
                         <div>
                             <img style={{ width: "15%", height: "15%" }} src={Logo} alt="starbucks_logo" />

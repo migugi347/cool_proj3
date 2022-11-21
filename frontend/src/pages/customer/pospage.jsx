@@ -5,6 +5,7 @@ import Collapse from 'react-bootstrap/Collapse';
 import Button from 'react-bootstrap/Button';
 import Cart from '../../layouts/images/cart.svg';
 import logo from '../../layouts/images/coffee.gif';
+import Magnifier from "react-magnifier";
 import axios from "axios"
 
 function Pospage() {
@@ -128,7 +129,6 @@ function Pospage() {
 
     }
 
-
     const fetchLineNum = async () => {
 
         const result = await axios.get('linenum');
@@ -153,8 +153,6 @@ function Pospage() {
 
         // });
     };
-
-
 
 
     const checkoutPrompt = async () => {
@@ -272,7 +270,7 @@ function Pospage() {
 
                                 <div className='poop border text-center text-uppercase fw-bold bg-secondary rounded' onClick={() => addItemtoCart(product)}>
                                     <p className="font-weight-bold" style={{ fontWeight: "600" }}>{product.Name}</p>
-                                    <img src={product.image} className="img-fluid" alt={product.Name} ></img>
+                                    <Magnifier  src={product.image} className="img-fluid" alt={product.Name} ></Magnifier>
                                     <p>${product.Price}</p>
                                 </div>
                             </div>

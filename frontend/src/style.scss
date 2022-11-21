@@ -2,8 +2,6 @@ $theme-colors: (
     "primary": #00704A,
 
     "secondary": #eac784,
-
-
 );
 
 
@@ -20,17 +18,16 @@ $theme-colors: (
     width: 100%;
     max-width: 450px;
     padding: 50px;
-    margin-left: 25vw;
-    margin-right: 15vw;
+    border-radius: 10px;
+
     padding-top: 100px;
-    margin-bottom: 40px;
+    margin: auto;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0.05);
 
     h3 {
         font-weight: 500;
         margin-bottom: 50px
     }
-
 }
 
 .login-form {
@@ -116,21 +113,27 @@ $theme-colors: (
 .icon-sm {
     width: 2rem;
     height: 2rem;
-
-
-
 }
 
 .input-group {
     background-color: #FFFFFF;
     border-radius: 20px;
     width: 20px;
-
 }
 
-.header{
+.header {
     background-color: #00704A;
     text-align: center;
+}
+
+/*google translate Dropdown */
+.goog-te-gadget-simple {
+    border-radius: 25px;
+    font-size: 20px !important;
+}
+
+main{
+    padding-bottom:10rem;
 }
 
 @import "~bootstrap/scss/bootstrap"

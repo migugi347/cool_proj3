@@ -52,9 +52,6 @@ app.post('/checkout', (req, res) => {
     const custName = req.body.Cust_Name;
     const recID = req.body.Recipe_ID;
     const quanity = req.body.orderQuantity;
-   
-   
-
     //need to get order number 
     //increment line number everytime
 
@@ -238,6 +235,20 @@ app.get('/server/getCategories', (req,res) =>{
 app.get('/server/getMenuItems', (req,res) => {
     const getItems = " SELECT * FROM recipe";
     pool.query(getItems, (err, result) => {
+        res.send(result.rows);
+    });
+});
+
+app.get('/getAccountType', (req,res) => {
+    const email = req.query.email;
+    //console.log(email);
+    pool.query("SELECT type FROM accounts WHERE email = \'" +email+"\';", (err, result) => {
+        res.send(result.rows);
+    });
+});
+
+app.get('/getOrders', (req,res) => {
+    pool.query("SELECT * FROM orders ORDER BY \"Line_Num\" DESC LIMIT 100;", (err, result) => {
         res.send(result.rows);
     });
 });

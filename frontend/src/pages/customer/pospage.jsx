@@ -344,7 +344,7 @@ function Pospage() {
 
                         </div>
 
-                    </Collapse> : "No Items In Cart"}
+                    </Collapse> : ""}
 
 
 

@@ -28,8 +28,7 @@ function Mainlayout({ children }) {
     //     new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
     // }
     const googleTranslateElementInit = () => {
-        new window.google.translate.TranslateElement(
-            {
+        new window.google.translate.TranslateElement({
                 pageLanguage: "en",
                 autoDisplay: false,
                 includedLanguages: 'ar,en,es,jv,ko,pa,pt,ru,zh-CN',
@@ -80,20 +79,17 @@ function Mainlayout({ children }) {
                     )}
             </header>
             <main>
-                <div className='container mt-3 '>
+                <div className='container mt-3'>
                     {children}
                 </div>
 
             </main>
             <div>
-                <nav className=' navbar fixed-bottom  bg-primary'>
+                <nav className='navbar fixed-bottom  bg-primary'>
 
                 </nav>
             </div>
         </div>
-
-
-
     )
 }
 

@@ -79,14 +79,14 @@ function Mainlayout({ children }) {
                     )}
             </header>
             <main>
-                <div className='container mt-3'>
+                <div className='container mt-3 mb-5'>
                     {children}
                 </div>
 
             </main>
             <div>
-                <nav className='navbar fixed-bottom  bg-primary'>
-
+                <nav className=' navbar fixed-bottom  bg-primary'>
+                    
                 </nav>
             </div>
         </div>

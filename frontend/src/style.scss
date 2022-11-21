@@ -113,6 +113,60 @@ $theme-colors: (
 .icon-sm {
     width: 2rem;
     height: 2rem;
+
+
+
+}
+
+.input-group {
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    width: 20px;
+
+}
+
+
+.icon-nav {
+    width: 70px;
+    height: 70px;
+    border-radius: 50px;
+    object-fit: cover;
+    object-position: 100% 0;
+
+
+}
+
+.poop-2:hover {
+    transform: scale(1.40);
+}
+
+.poop-2 {
+    transition: transform 0.2s ease;
+}
+
+.icon-labels {
+    background-color: #eac784;
+    border-radius: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 5px 5px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.icon-shape {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+.icon-sm {
+    width: 2rem;
+    height: 2rem;
 }
 
 .input-group {

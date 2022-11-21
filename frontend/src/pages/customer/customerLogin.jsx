@@ -28,6 +28,7 @@ export default function CustomerLogin(props) {
         setAccount(userObject);
 
         localStorage.setItem('user', userObject);
+
     }
 
     useEffect(() => {
@@ -46,12 +47,18 @@ export default function CustomerLogin(props) {
         /* global google  */
         google.accounts.id.initialize({
             client_id: "704019936455-s2sdsnf3jc47qljoduocgo6ufla51qbn.apps.googleusercontent.com",
-            callback: handleCallbackResponse
+            callback: handleCallbackResponse,
+            ux_mode: "redirect",
+
 
         });
         google.accounts.id.renderButton(
             document.getElementById("signInDiv"),
-            { theme: "outline", size: "large" }
+            {
+                theme: "outline",
+                width: 300,
+                size: "large"
+            }
         );
 
     }, []);
@@ -79,11 +86,11 @@ export default function CustomerLogin(props) {
 
     if (authMode === "signin") {
         return (
-            <Mainlayout className="align-items-center flex-direction-column">
+            <Mainlayout className=" align-items-center   ">
 
-                <div className="login-form-cont" >
+                <div className="login-form-cont " >
 
-                    <Form className="login-form" onSubmit={onSubmitHandler}>
+                    <Form className="login-form " onSubmit={onSubmitHandler}>
                         <div className="login-form-content">
                             <h3 >Log In</h3>
 
@@ -107,7 +114,7 @@ export default function CustomerLogin(props) {
                                 />
                             </div>
                             <div className="d-grid gap-2 mt-3">
-                                <Button size="md" className="d-grid gap-2 mt-4 mb-3 btn-block bg-primary text-white" type="submit" style={{ fontWeight: 800 }}>
+                                <Button size="md" className="d-grid gap-2 mt-4 mb-2 btn-block bg-primary text-white" type="submit" style={{ fontWeight: 800 }}>
                                     SUBMIT
                                 </Button>
                                 <div id="signInDiv" ></div>

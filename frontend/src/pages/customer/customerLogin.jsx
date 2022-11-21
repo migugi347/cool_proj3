@@ -27,10 +27,6 @@ export default function CustomerLogin(props) {
         localStorage.setItem('user', userObject);
     }
 
-
-
-
-
     useEffect(() => {
         (async () => {
             try {
@@ -63,15 +59,12 @@ export default function CustomerLogin(props) {
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        // axios.get("http://localhost:3001/getAccountType", {params: {email: email}}).then((response) =>{
-        //     setAccount(response.data);
-        // });
-        // setEmail(""+email);
-        //console.log(account);
         if (account.length === 0)
             switchLogin();
         else if (account[0].type === "manager")
             navigate("/menu", { replace: true });
+        else if (account[0].type === "server")
+            navigate("/server", { replace: true });
         else
             navigate("/home", { replace: true });
     };

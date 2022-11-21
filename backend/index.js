@@ -31,7 +31,7 @@ app.get('/user', (req, res) => {
 
 app.get('/orderid', (req,res) => {
     pool
-        .query('SELECT MAX( \"Order_ID\") +1  AS var_line FROM orders;', (err, result) => {
+        .query('SELECT MAX( \"Order_ID\") +1  AS var_order FROM orders;', (err, result) => {
             res.send(result.rows);
         })
 });
@@ -39,7 +39,7 @@ app.get('/orderid', (req,res) => {
 
 app.get('/linenum', (req,res) => {
     pool
-        .query('SELECT MAX( \"Line_Num\") +1 AS var_order FROM orders;', (err, result) => {
+        .query('SELECT MAX( \"Line_Num\") +1 AS var_line FROM orders;', (err, result) => {
             res.send(result.rows);
             //console.log(result);
         })
@@ -238,14 +238,6 @@ app.get('/server/getCategories', (req,res) =>{
 app.get('/server/getMenuItems', (req,res) => {
     const getItems = " SELECT * FROM recipe";
     pool.query(getItems, (err, result) => {
-        res.send(result.rows);
-    });
-});
-
-app.get('/getAccountType', (req,res) => {
-    const email = req.query.email;
-    //console.log(email);
-    pool.query("SELECT type FROM accounts WHERE email = \'" +email+"\';", (err, result) => {
         res.send(result.rows);
     });
 });

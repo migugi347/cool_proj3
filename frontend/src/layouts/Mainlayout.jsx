@@ -68,7 +68,8 @@ function Mainlayout({ children }) {
                         <div className=" my-lg-0" id="google_translate_element"></div>
 
                     </div>
-                    <button className='btn btn-secondary' onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}>
+                </nav>
+                <button className='btn btn-secondary' onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}>
                         {showColorPicker ? 'Close' : 'Pick a color'}
                     </button>
                     {showColorPicker && (
@@ -77,7 +78,6 @@ function Mainlayout({ children }) {
                             onChange={updatedColor => colorchange(updatedColor.hex)}
                         />
                     )}
-                </nav>
             </header>
             <main>
                 <div className='container mt-3 '>

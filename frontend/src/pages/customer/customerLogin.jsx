@@ -63,10 +63,6 @@ export default function CustomerLogin(props) {
 
     }, []);
 
-
-
-
-
     const onSubmitHandler = (e) => {
         e.preventDefault();
         if (account.length === 0)

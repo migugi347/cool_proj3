@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { GoogleOAUTH } from 'react-google-oauth'
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -10,5 +10,5 @@ root.render(
     // onUpdateSigninStatus = { Function }
     //     onInitFailure = { Function } >
     < App />
-    {/* </GoogleOAUTH> */ }
+    //{/* </GoogleOAUTH> */ }
 );

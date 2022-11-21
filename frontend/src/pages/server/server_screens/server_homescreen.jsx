@@ -2,29 +2,36 @@ import React, { useState, useEffect} from "react";
 import axios from "axios";
 import Mainlayout from '../../../layouts/Mainlayout';
 import PopUp from "../../../components/PopUp";
+import Collapse from 'react-bootstrap/Collapse';
+import Button from 'react-bootstrap/Button';
+import Cart from '../layouts/images/cart.svg';
+import logo from '../layouts/images/coffee.gif';
 import logo from '../../../layouts/images/coffee.gif';
 
 function Server_homescreen() {
     const [products, setProducts] = useState([]);
     const [menu, setMenu] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [menu, setMenu] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [cart, setCart] = useState([]);
-
     const [totalAmount, setTotalAmount] = useState(0);
     const [buttonPopup, setButtonPopup] = useState(false);
-
+    // const [open, setOpen] = useState(false);
 
     const [Order_ID, setOrderID] = useState(0);
     const [lineNum, setlineNum] = useState([]);
     const [Cust_Name, setCustName] = useState("");
 
     const uniCate = [...new Map(categories.map((m) => [m.Category, m])).values()];
+    const [open, setOpen] = useState(false);    const uniCate = [...new Map(categories.map((m) => [m.Category, m])).values()];
 
     const fetchMenu = async () => {
         setIsLoading(true);
         const result = await axios.get('user');
         setProducts(await result.data);
+        setMenu(await result.data);
         setMenu(await result.data);
         setIsLoading(false);
     }
@@ -38,16 +45,76 @@ function Server_homescreen() {
         setIsLoading(false);
     }
 
+    const fetchCategory = async () => {
+        setIsLoading(true);
+        const result = await axios.get('user');
+        setCategories(await result.data);
+
+        setIsLoading(false);
+    }
+
     useEffect(() => {
         axios.get("http://localhost:3001/user").then((response) => {
-            console.log(response.data);
+            //console.log(response.data);
         });
     }, []);
 
     const removeProduct = async (product) => {
         setIsLoading(true);
+        setIsLoading(true);
         const newCart = cart.filter(cartItem => cartItem.Recipe_ID !== product.Recipe_ID);
         setCart(newCart);
+        setIsLoading(false);
+    }
+
+    const incrementHandler = (itemID) => {
+
+
+
+        addItemtoCart(itemID);
+
+        console.log("INCREMNT")
+    }
+
+    const decrementHandler = async (itemID) => {
+
+        console.log("DECREMTN")
+
+
+
+        if (itemID.orderQuantity === 1) {
+            removeProduct(itemID);
+        }
+        else {
+
+            let newCart = [];
+            let newItem;
+
+
+            cart.forEach(cartItem => {
+                if (cartItem.Recipe_ID === itemID.Recipe_ID) {
+
+                    newItem =
+                    {
+                        ...cartItem,
+                        orderQuantity: cartItem.orderQuantity - 1,
+                        totalAmount: cartItem.Price * (cartItem.orderQuantity - 1)
+
+                    }
+
+                    newCart.push(newItem);
+
+                }
+                else {
+                    newCart.push(cartItem);
+                }
+            });
+
+            setCart(newCart);
+
+        }
+
+
         setIsLoading(false);
     }
 
@@ -55,13 +122,25 @@ function Server_homescreen() {
         const newProducts = products.filter(menuItem => menuItem.Category === product.Category);
         setMenu(newProducts);
     }
+    const removeMenu = async (product) => {
+
+        const newProducts = products.filter(menuItem => menuItem.Category === product.Category);
+        setMenu(newProducts);
+    }
 
     const fetchOrderID = async () => {
-        axios.get("http://localhost:3001/orderid").then((response) => {
-            setOrderID(response.data);
+
+
+        await axios.get("http://localhost:3001/orderid").then((response) => {
+            // setOrderID(response.data);
+            const ord = response.data;
+            setOrderID(ord[0].var_order);
         });
         const result = await axios.get('orderid');
         setOrderID(await result.data.var_order);
+
+
+
         console.log(Order_ID);
     }
 
@@ -85,12 +164,22 @@ function Server_homescreen() {
     };
 
     const checkoutPrompt = async () => {
-        setButtonPopup(true)
-        fetchOrderID();
-        cart.forEach(cartItem => {
-            setCustName("Steve");
-            checkoutItem(cartItem);
-        });
+
+        setButtonPopup(true);
+
+
+        console.log(cart);
+        console.log(Order_ID)
+        // cart.forEach(cartItem => {
+        //     //checkoutItem
+        //     //pass same order number 
+
+        //     setCustName("Steve");
+        //     checkoutItem(cartItem);
+        //     console.log(Order_ID);
+        //     console.log(cartItem.Name);
+        // });
+
     }
 
     const addItemtoCart = async (product) => {
@@ -128,13 +217,27 @@ function Server_homescreen() {
         }
     }
 
+    const reSizeView = async (open) => {
+
+
+        if (open) {
+            document.getElementById('mainContent').className = "col-lg-10";
+
+            document.getElementById('sideBar').className = "col-lg-2";
+        }
+        else {
+            document.getElementById('mainContent').className = "col-lg-7";
+            document.getElementById('sideBar').className = "col-lg-5";
+        }
+        setOpen(!open);
+    }
+
     useEffect(() => {
         fetchMenu();
-        fetchCategory();
     }, []);
 
     useEffect(() => {
-        console.log(products)
+        // console.log(products)
     }, [products]);
 
     useEffect(() => {
@@ -148,18 +251,14 @@ function Server_homescreen() {
 
     return (
         <Mainlayout >
-            <nav className=' navbar justify-content-center'>
-            <button className=" poop btn m-2  my-2   bg-secondary" style={{ fontWeight: "600" }} onClick={() => fetchMenu()}>All Products</button>
-                {uniCate.map((product, key) =>
-                    <div>
-                        <button className="  btn m-2 h-100 my-2  bg-secondary " key={key} onClick={() => removeMenu(product)}>{product.Category}</button>
-                    </div>
-                )}
-            </nav>
-            <div className='row'>
-                <div className='col-lg-8' >
+            <div className="row">
+
+                <div className='col-lg-10 ' id="mainContent" >
+
                     {isLoading ? <img src={logo} style={{ width: "800px" }} alt="loading .. " /> : <div className='row'>
+
                         {menu.map((product, key) =>
+
                             <div key={key} className='col-lg-4  '>
                                 <div className='poop border text-center text-uppercase fw-bold bg-secondary rounded' onClick={() => addItemtoCart(product)}>
                                     <p className="font-weight-bold" style={{ fontWeight: "900" }}>{product.Name}</p>
@@ -193,33 +292,38 @@ function Server_homescreen() {
 
                                         : "No Item In Cart"}
 
-                                </tbody>
-                            </table>
-                            <div className="mt-3">
-                                {totalAmount !== 0 ? <div>
-                                    <button className="btn btn-primary" onClick={() => checkoutPrompt()} >Submit Order</button>
-                                </div> : "Please add a product to the cart"}
-                            </div>
-                            <button className="btn btn-primary" onClick={() => checkoutPrompt()} >Cancel Order</button>
-                            <h2 className="px-2">Total: ${totalAmount}</h2>
-                        </div>
-
+                            </tbody>
+                        </table>
+                        <h2 className="px-2">Total Amount: ${totalAmount}</h2>
                     </div>
+
+
+                    <div className="='mt-3">
+                        {totalAmount !== 0 ? <div>
+                            <button className="btn btn-primary" onClick={() => checkoutPrompt()} >
+                                Check Out</button>
+
+
+
+                        </div> : "Please add a product to the cart"}
+                    </div>
+
                 </div>
-            </div>
+
+            </div >
 
             <PopUp trigger={buttonPopup} setTrigger={setButtonPopup} ><h3>Order Complete! <br></br>
-                Your Order Number is #{Order_ID}</h3>
+                Your Order Number is #</h3>
 
                 <p>ORDER SUMMARY</p>
                 <div className="table-responsive bg-secondary rounded">
                     <table className="table">
-                        <thead>
+                        <thead >
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>Price</th>
-                                <th>Qty</th>
+                                <th > Qty </th>
                                 <th>Total</th>
 
                             </tr>
@@ -229,7 +333,7 @@ function Server_homescreen() {
                                 <td>{cartItem.Recipe_ID}</td>
                                 <td>{cartItem.Name}</td>
                                 <td>{cartItem.Price}</td>
-                                <td>{cartItem.orderQuantity}</td>
+                                <td >{cartItem.orderQuantity}</td>
                                 <td>{cartItem.totalAmount}</td>
 
                             </tr>)
@@ -240,7 +344,9 @@ function Server_homescreen() {
                     </table>
                     <h2 className="px-2">Total Amount Due ${totalAmount}</h2>
                 </div>
+
             </PopUp>
+
         </Mainlayout >
     )
 }

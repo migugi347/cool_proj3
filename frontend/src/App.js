@@ -13,7 +13,7 @@ import UpdateMenu from './pages/manager/UpdateMenu';
 import Menu from './pages/manager/Menu';
 import Reports from './pages/manager/Reports';
 import Orders from './pages/manager/Orders';
-import ServerHomeScreen from './pages/server/server_screens/server_homescreen';
+import ServerHomeScreen from './pages/server/server_homescreen';
 
 function App() {
   return (

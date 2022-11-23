@@ -190,4 +190,101 @@ main{
     padding-bottom:10rem;
 }
 
+//server design and laout
+.serverNavBar {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: fixed;
+    top: 124px;
+    left: 0px;
+    width: 15%;
+    height: 85%;
+    background-color: #00704A;
+}
+
+.serverNavBar h2 {
+    width: 15vw;
+    font-size: 28px;
+    margin-top: 15px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.serverNavBar button{
+    text-transform: uppercase;
+    color: white;
+    background-color: #00704A;
+    text-align: center;
+    position: relative;
+    left: -32px;
+    width: 15vw;
+    list-style: none;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    padding: 22px;
+    border-bottom: 1px solid #013f2a;
+    border-top: 1px solid  #003d29;
+    border-right: 1px solid rgba(0,0,0,0);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 16px;
+}
+
+.serverNavBar button:hover{
+    font-size: 17px;
+    background-color: #00281a;
+    border-bottom: 1px solid #03e99c;
+    border-top: 1px solid  #03e89b;
+}
+
+.navbarArea{
+    color: rgba(0,0,0,0);
+    float: left;
+    width: 15%;
+}
+
+.menuItems{
+    width: 56%;
+    float: left;
+}
+
+.menuItems button {
+    height: 5.5vw;
+    width: 16vw;
+    margin-top: 5px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 5px;
+}
+
+.orderSummary{
+    float: left;
+    width: 24%;
+    margin-left: 1%;
+}
+
+.orderSummary table{
+    overflow-y:scroll;
+    display:block;
+    height: 450px;
+}
+
+.orderSummary thead, td {
+    text-align: center;
+}
+
+.submitButton {
+    float: left;
+    margin-bottom: 30px;
+    margin-left: 30px;
+}
+
+.cancelButton {
+    float: right;
+    margin-bottom: 30px;
+    margin-right: 30px;
+}
+
 @import "~bootstrap/scss/bootstrap"

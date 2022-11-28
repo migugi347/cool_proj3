@@ -5,6 +5,7 @@ import axios from "axios";
 import { Link } from 'react-router-dom'
 import jwt_decode from "jwt-decode";
 import Mainlayout from "../../layouts/Mainlayout";
+import {API_URL} from "../../API";
 
 
 
@@ -34,7 +35,7 @@ export default function CustomerLogin(props) {
     useEffect(() => {
         (async () => {
             try {
-                axios.get("http://localhost:3001/getAccountType", { params: { email: email } }).then((response) => {
+                axios.get(API_URL + "/getAccountType", { params: { email: email } }).then((response) => {
                     setAccount(response.data);
                 });
             } catch (error) {

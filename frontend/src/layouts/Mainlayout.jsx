@@ -29,11 +29,11 @@ function Mainlayout({ children }) {
     // }
     const googleTranslateElementInit = () => {
         new window.google.translate.TranslateElement({
-                pageLanguage: "en",
-                autoDisplay: false,
-                includedLanguages: 'ar,en,es,jv,ko,pa,pt,ru,zh-CN',
-                layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-            },
+            pageLanguage: "en",
+            autoDisplay: false,
+            includedLanguages: 'ar,en,es,jv,ko,pa,pt,ru,zh-CN',
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+        },
             "google_translate_element"
         );
     };
@@ -86,7 +86,7 @@ function Mainlayout({ children }) {
             </main>
             <div>
                 <nav className=' navbar fixed-bottom  bg-primary'>
-                    
+
                 </nav>
             </div>
         </div>

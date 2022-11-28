@@ -6,7 +6,8 @@ import Button from 'react-bootstrap/Button';
 import Cart from '../../layouts/images/cart.svg';
 import logo from '../../layouts/images/coffee.gif';
 import Magnifier from "react-magnifier";
-import axios from "axios"
+import axios from "axios";
+import { API_URL } from "../../API";
 
 function Pospage() {
 
@@ -46,7 +47,7 @@ function Pospage() {
 
 
     useEffect(() => {
-        axios.get("http://localhost:3001/user").then((response) => {
+        axios.get(API_URL + "/user").then((response) => {
             //console.log(response.data);
         });
     }, []);
@@ -118,7 +119,7 @@ function Pospage() {
     const fetchOrderID = async () => {
 
 
-        await axios.get("http://localhost:3001/orderid").then((response) => {
+        await axios.get(API_URL + "/orderid").then((response) => {
             // setOrderID(response.data);
             const ord = response.data;
             setOrderID(ord[0].var_order);
@@ -142,7 +143,7 @@ function Pospage() {
 
         fetchLineNum();
 
-        // axios.post("http://localhost:3001/checkout", {
+        // axios.post(API_URL+"/checkout", {
 
         //     //fetch line
         //     Line_Num: lineNum,
@@ -162,15 +163,15 @@ function Pospage() {
 
         console.log(cart);
         console.log(Order_ID)
-        // cart.forEach(cartItem => {
-        //     //checkoutItem
-        //     //pass same order number 
+        cart.forEach(cartItem => {
+            //checkoutItem
+            //pass same order number 
 
-        //     setCustName("Steve");
-        //     checkoutItem(cartItem);
-        //     console.log(Order_ID);
-        //     console.log(cartItem.Name);
-        // });
+            setCustName("Steve");
+            checkoutItem(cartItem);
+            console.log(Order_ID);
+            console.log(cartItem.Name);
+        });
 
     }
 
@@ -270,7 +271,7 @@ function Pospage() {
 
                                 <div className='poop border text-center text-uppercase fw-bold bg-secondary rounded' onClick={() => addItemtoCart(product)}>
                                     <p className="font-weight-bold" style={{ fontWeight: "600" }}>{product.Name}</p>
-                                    <Magnifier  src={product.image} className="img-fluid" alt={product.Name} ></Magnifier>
+                                    <Magnifier src={product.image} className="img-fluid" alt={product.Name} ></Magnifier>
                                     <p>${product.Price}</p>
                                 </div>
                             </div>

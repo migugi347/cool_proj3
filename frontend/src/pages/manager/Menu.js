@@ -1,41 +1,42 @@
-import React, {useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Mainlayout from '../../layouts/Mainlayout';
 import axios from "axios";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { API_URL } from "../../API";
 
-function Menu(){
-    const [menuitem, menu] = useState([]);
-    const [name, setName] = useState("");
-    const [recID, setrecID] = useState(0);
-    const [price, setPrice] = useState(0);
-    const [category, setCategory] = useState("");
-  
-    useEffect(() =>{
-      axios.get("http://localhost:3001/getMenu").then((response) =>{
-        menu(response.data);
-      });
+function Menu() {
+  const [menuitem, menu] = useState([]);
+  const [name, setName] = useState("");
+  const [recID, setrecID] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [category, setCategory] = useState("");
+
+  useEffect(() => {
+    axios.get(API_URL + "/getMenu").then((response) => {
+      menu(response.data);
     });
-  
-    const subs = () =>{
-        axios.post("http://localhost:3001/addMenu",{
-        recipeID: recID,
-        name: name,
-        price: price,
-        category: category
-      }); 
-    };
-  
-    const dels = () =>{
-      axios.post("http://localhost:3001/deleteMenu",{
-      recipeID: recID
-    }); 
+  });
+
+  const subs = () => {
+    axios.post(API_URL + "/addMenu", {
+      recipeID: recID,
+      name: name,
+      price: price,
+      category: category
+    });
   };
 
-  
-return(
-  <Mainlayout>
-      <div className = "header">
-      
+  const dels = () => {
+    axios.post(API_URL + "/deleteMenu", {
+      recipeID: recID
+    });
+  };
+
+
+  return (
+    <Mainlayout>
+      <div className="header">
+
         <ul>
           <Link to='/menu' className='btn btn-primary'> Menu</Link>
           <Link to='/inventory' className='btn btn-primary'> Inventory</Link>
@@ -44,9 +45,9 @@ return(
         </ul>
       </div>
 
-      <div className = "anotherContainer">
+      <div className="anotherContainer">
         <h3>Menu</h3>
-        <div className="table-responsive bg-secondary rounded"> 
+        <div className="table-responsive bg-secondary rounded">
           <table className="table">
             <thead>
               <tr>
@@ -68,33 +69,33 @@ return(
             </tbody>
           </table>
         </div>
-        <div className = "addForm">
-            <form>
-              <label>Recipe_ID:</label>
-              <input type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}></input>
-              <label>Name:</label>
-              <input type="text" name="name" onChange = {(e)=>{setName(e.target.value);}}></input>
-              <label>Price:</label>
-              <input type="text" name="price" onChange = {(e)=>{setPrice(e.target.value);}}></input>
-              <label>Category:</label>
-              <input type="text" name="category" onChange = {(e)=>{setCategory(e.target.value);}}></input>
-              <button className='btn btn-primary' onClick={()=>subs()}> Add New Menu Item</button>
-            </form>
+        <div className="addForm">
+          <form>
+            <label>Recipe_ID:</label>
+            <input type="text" name="recID" onChange={(e) => { setrecID(e.target.value); }}></input>
+            <label>Name:</label>
+            <input type="text" name="name" onChange={(e) => { setName(e.target.value); }}></input>
+            <label>Price:</label>
+            <input type="text" name="price" onChange={(e) => { setPrice(e.target.value); }}></input>
+            <label>Category:</label>
+            <input type="text" name="category" onChange={(e) => { setCategory(e.target.value); }}></input>
+            <button className='btn btn-primary' onClick={() => subs()}> Add New Menu Item</button>
+          </form>
         </div>
-        <div className = "deleteForm">
-            <form>
-              <label>Recipe_ID:</label>
-              <input type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}></input>
-              <button className='btn btn-primary' onClick={()=>dels()}> Delete Menu Item</button>
-            </form>
+        <div className="deleteForm">
+          <form>
+            <label>Recipe_ID:</label>
+            <input type="text" name="recID" onChange={(e) => { setrecID(e.target.value); }}></input>
+            <button className='btn btn-primary' onClick={() => dels()}> Delete Menu Item</button>
+          </form>
         </div>
-        <div className = "updateForm">
-            <form>
-              <Link to='/updateMenu' className='btn btn-primary'> Update Menu Item</Link>
-            </form>
+        <div className="updateForm">
+          <form>
+            <Link to='/updateMenu' className='btn btn-primary'> Update Menu Item</Link>
+          </form>
         </div>
       </div>
     </Mainlayout>
-    );
+  );
 }
 export default Menu;

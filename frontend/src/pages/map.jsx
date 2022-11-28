@@ -47,12 +47,12 @@ class AddressInput extends React.Component {
 					{ this.state.errorMsg && <h3 className="error"> { this.state.errorMsg } </h3> }
 					<p> City:  <input float="right" placeholder="City" /> </p>
 					<p> State: <input float="right" placeholder="State" /> </p>
-					<div text-align="center"> <p> <button id="GetOriginCityState"> City and State </button> </p> </div>
+					<p> <button className="buttonGeoLocate" id="GetOriginCityState"> City and State </button> </p>
 					<p> OR </p>
 					<p> Zip:   <input float="right" placeholder="Zip Code" /> </p>
-					<p> <button id="GetOriginZip"> Zip Code </button> </p>
+					<p> <button className="buttonGeoLocate" id="GetOriginZip"> Zip Code </button> </p>
 					<p> OR </p>
-					<p> <button id="GetOriginAuto" onClick={this.props.findMe}> Get Position Automatically </button> </p>
+					<p> <button className="buttonGeoLocate" id="GetOriginAuto" onClick={this.props.findMe}> Get Position Automatically </button> </p>
 					
 				</>
 			);

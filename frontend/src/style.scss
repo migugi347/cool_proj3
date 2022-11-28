@@ -196,10 +196,10 @@ main{
     padding: 0;
     box-sizing: border-box;
     position: fixed;
-    top: 124px;
+    top: 145px;
     left: 0px;
     width: 15%;
-    height: 85%;
+    height: 80%;
     background-color: #00704A;
 }
 
@@ -268,7 +268,7 @@ main{
 .orderSummary table{
     overflow-y:scroll;
     display:block;
-    height: 450px;
+    height: 300px;
 }
 
 .orderSummary thead, td {

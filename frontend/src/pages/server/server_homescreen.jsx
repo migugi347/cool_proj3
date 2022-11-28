@@ -128,6 +128,36 @@ function Server_homescreen() {
         }
     }
 
+    const decrementHandler = async (itemID) => {
+        if (itemID.orderQuantity === 1) {
+            removeProduct(itemID);
+        }
+        else {
+            let newCart = [];
+            let newItem;
+            cart.forEach(cartItem => {
+                if (cartItem.Recipe_ID === itemID.Recipe_ID) {
+                    newItem =
+                    {
+                        ...cartItem,
+                        orderQuantity: cartItem.orderQuantity - 1,
+                        totalAmount: cartItem.Price * (cartItem.orderQuantity - 1)
+
+                    }
+                    newCart.push(newItem);
+                }
+                else {
+                    newCart.push(cartItem);
+                }
+            });
+            setCart(newCart);
+        }
+    }
+
+    const incrementHandler = (itemID) => {
+        addItemtoCart(itemID);
+    }
+
     useEffect(() => {
         fetchMenu();
         fetchCategory();
@@ -189,17 +219,11 @@ function Server_homescreen() {
                             <tbody>
                                 {cart ? cart.map((cartItem, key) => <tr key={key}>
                                     <td>{cartItem.Name}</td>
-                                    <td ><button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>-</button></td>
+                                    <td> <button onClick={() => decrementHandler(cartItem)} value="+" className="button-plus bg-primary border rounded-circle  icon-shape icon-sm  text-white " data-field="quantity">+</button></td>
                                     <td>{cartItem.orderQuantity}</td>
+                                    <td> <button onClick={() => incrementHandler(cartItem)} value="+" className="button-plus bg-primary border rounded-circle  icon-shape icon-sm  text-white " data-field="quantity">+</button></td>
                                     <td ><button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>X</button></td>
-                                </tr>)
-
-                                    : "No Item In Cart"}
-
-                                {menu.map((product, key) => <tr key={key}>
-                                    <td><button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => addItemtoCart(product)}>+</button></td>
-                                </tr>)}
-
+                                </tr>) : "No Item In Cart"}
                             </tbody>
                         </table>
                         <div className="submitButton">

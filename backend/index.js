@@ -243,6 +243,9 @@ app.get('/getAccountType', (req,res) => {
     const email = req.query.email;
     //console.log(email);
     pool.query("SELECT type FROM accounts WHERE email = \'" +email+"\';", (err, result) => {
+        if(err){
+            console.log(err);
+        }
         res.send(result.rows);
     });
 });

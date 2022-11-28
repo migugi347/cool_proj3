@@ -24,12 +24,12 @@ function App() {
           <Route path ='/' element={<CustomerLogin />} />
           <Route path ='/home' element={<Homepage />} />
           <Route path ='/pos' element={<Pospage />} />
-          <Route path = '/menu' element = {<Menu/>}/>
+          <Route path ='/menu' element = {<Menu/>}/>
           <Route path ='/inventory' element={<Inventory/>} />
           <Route path ='/updateMenu' element={<UpdateMenu/>} />
           <Route path ='/reports' element={<Reports/>} />
-          <Route path = "/server" element = {<ServerHomeScreen/>} />
-		  <Route path='/map' element={<Map />} />
+          <Route path ='/server' element = {<ServerHomeScreen/>} />
+		  <Route path ='/map' element={<Map />} />
         </Routes>
       </Router>
       </>

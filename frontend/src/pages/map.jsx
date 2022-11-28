@@ -3,6 +3,63 @@ import { Link } from 'react-router-dom';
 import Mainlayout from '../layouts/Mainlayout';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
+
+class AddressInput extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			origin: GoogleMap.LatLng,
+			errorMsg: "",
+		};
+	}
+	
+	findMe() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					const pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude,
+					};
+					
+					this.setState({origin: pos});
+				},
+				() => {
+					this.setState({errorMsg: "Error: The Geolocation service failed."});
+				}
+			);
+		} else {
+			this.setState({errorMsg: "Error: Your browser doesn't support geolocation."});
+		}
+	}
+	
+	render() {
+		if (false/*address construct is filled out*/) {
+			document.getElementByID("map").setCenter(this.state.origin);
+			return (
+				<h1> List of Starbucks Restraunts </h1>
+			);
+		} else {
+			return (
+				<>
+					<h1> Address Input Options </h1>
+					{ /*this error thing is totally broken, and I have no idea why*/ }
+					{ this.state.errorMsg && <h3 className="error"> { this.state.errorMsg } </h3> }
+					<p> City:  <input float="right" placeholder="City" /> </p>
+					<p> State: <input float="right" placeholder="State" /> </p>
+					<div text-align="center"> <p> <button id="GetOriginCityState"> City and State </button> </p> </div>
+					<p> OR </p>
+					<p> Zip:   <input float="right" placeholder="Zip Code" /> </p>
+					<p> <button id="GetOriginZip"> Zip Code </button> </p>
+					<p> OR </p>
+					<p> <button id="GetOriginAuto" onClick={this.props.findMe}> Get Position Automatically </button> </p>
+					
+				</>
+			);
+		}
+	}
+}
+
 const Maptest = () => {
 
   const mapStyles = {
@@ -17,7 +74,7 @@ const Maptest = () => {
   return (
   <Mainlayout>
 	<div className="textSide">
-		<h1> Text Side </h1>
+		<AddressInput />
 	</div>
 	<div className="mapcontainer">
 		<LoadScript

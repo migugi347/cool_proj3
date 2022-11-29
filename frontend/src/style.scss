@@ -78,8 +78,6 @@ $theme-colors: (
     border-radius: 50px;
     object-fit: cover;
     object-position: 100% 0;
-
-
 }
 
 .poop-2:hover {
@@ -182,8 +180,10 @@ $theme-colors: (
 
 /*google translate Dropdown */
 .goog-te-gadget-simple {
-    border-radius: 25px;
+    border-radius: 15px;
     font-size: 20px !important;
+    margin:0;
+    padding:0;
 }
 
 main{

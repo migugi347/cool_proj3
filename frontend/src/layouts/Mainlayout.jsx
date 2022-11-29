@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Logo from './images/SB_logo.png';
 import { ChromePicker } from 'react-color'
 import "../style.scss"
+import Dropdown from 'react-bootstrap/Dropdown';
 
 function Mainlayout({ children }) {
 
@@ -60,23 +61,37 @@ function Mainlayout({ children }) {
             <header>
                 <nav className='navbar navbar-light bg-primary mb-2'>
                     < div className="container-fluid">
-                        <div>
+                        <div style={{}}>
                             <img style={{ width: "15%", height: "15%" }} src={Logo} alt="starbucks_logo" />
-                            <Link to="/" className="navbar-brand text-light" style={{ fontWeight: 800 }}>    STARBUCKS</Link>
+                            <Link to="/home" className="navbar-brand text-light" style={{ fontWeight: 800 }}>    STARBUCKS</Link>
                         </div>
-                        <div className=" my-lg-0" id="google_translate_element"></div>
-
+                        <div style={{display:"flex"}}>
+                        <div id="google_translate_element"></div>
+                        <Link to='/' className='btn btn-secondary'>Login</Link>
+                            <Dropdown>
+                                <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: '#eac784', color:"#000000", marginLeft:"10px"}}>Settings</Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item >
+                                        <button className='btn btn-secondary' onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}>
+                                            {showColorPicker ? 'Close' : 'Change Background'}
+                                        </button>
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </div>
+                        
                     </div>
-                    <button className='btn btn-secondary' onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}>
-                        {showColorPicker ? 'Close' : 'Pick a color'}
-                    </button>
+                   
+                </nav>
+                <div>
                     {showColorPicker && (
                         <ChromePicker
                             color={color}
                             onChange={updatedColor => colorchange(updatedColor.hex)}
                         />
                     )}
-                </nav>
+                </div>
+
             </header>
             <main>
                 <div className='container mt-3 mb-5'>

@@ -143,23 +143,23 @@ function Pospage() {
 
         fetchLineNum();
 
-        // axios.post(API_URL+"/checkout", {
+        axios.post(API_URL + "/checkout", {
 
-        //     //fetch line
-        //     Line_Num: lineNum,
-        //     Order_ID: Order_ID,
-        //     Cust_Name: Cust_Name,
-        //     Recipe_ID: cartItem.Recipe_ID,
+            //fetch line
+            Line_Num: lineNum,
+            Order_ID: Order_ID,
+            Cust_Name: Cust_Name,
+            Recipe_ID: cartItem.Recipe_ID,
 
 
-        // });
+        });
     };
 
 
     const checkoutPrompt = async () => {
 
         setButtonPopup(true);
-
+        reSizeView(open);
 
         console.log(cart);
         console.log(Order_ID)
@@ -185,6 +185,7 @@ function Pospage() {
             let newCart = [];
             let newItem;
 
+            
 
             cart.forEach(cartItem => {
                 if (cartItem.Recipe_ID === product.Recipe_ID) {
@@ -287,7 +288,7 @@ function Pospage() {
                     <Button className=" bg-primary sticky-top " onClick={() => reSizeView(open)}
                         aria-controls="example-collapse-text"
                         aria-expanded={open}>
-                        VIEW CART
+                        VIEW CART - {cart.length}
                         <img src={Cart} alt="cart" />
                     </Button>
 

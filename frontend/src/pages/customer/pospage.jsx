@@ -30,7 +30,7 @@ function Pospage() {
 
     const fetchMenu = async () => {
         setIsLoading(true);
-        const result = await axios.get('user');
+        const result = await axios.get(API_URL + '/user');
         setProducts(await result.data);
         setMenu(await result.data);
         setIsLoading(false);
@@ -39,7 +39,7 @@ function Pospage() {
 
     const fetchCategory = async () => {
         setIsLoading(true);
-        const result = await axios.get('user');
+        const result = await axios.get(API_URL + '/user');
         setCategories(await result.data);
 
         setIsLoading(false);
@@ -185,7 +185,7 @@ function Pospage() {
             let newCart = [];
             let newItem;
 
-            
+
 
             cart.forEach(cartItem => {
                 if (cartItem.Recipe_ID === product.Recipe_ID) {

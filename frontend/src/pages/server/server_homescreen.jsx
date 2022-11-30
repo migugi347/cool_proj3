@@ -1,25 +1,27 @@
 import React, { useState, useEffect} from "react";
 import axios from "axios";
 import Mainlayout from '../../layouts/Mainlayout';
-import PopUp from "../../components/PopUp";
 import logo from '../../layouts/images/coffee.gif';
+import SubmitPopUp from './submitPopUp';
+import CancelPopUp from './cancelPopUp';
 
 function Server_homescreen() {
     const [products, setProducts] = useState([]);
     const [menu, setMenu] = useState([]);
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState([]); //clear
 
-    const [totalAmount, setTotalAmount] = useState(0);
-    const [buttonPopup, setButtonPopup] = useState(false);
-
+    const [totalAmount, setTotalAmount] = useState(0); //clear
 
     const [Order_ID, setOrderID] = useState(0);
     const [lineNum, setlineNum] = useState([]);
-    const [Cust_Name, setCustName] = useState("");
+    const [Cust_Name, setCustName] = useState(""); //clear
 
     const uniCate = [...new Map(categories.map((m) => [m.Category, m])).values()];
+
+    const[submitOpen, setSubmitOpen] = useState(false);
+    const[cancelOpen, setCancelOpen] = useState(false);
 
     const fetchMenu = async () => {
         setIsLoading(true);
@@ -83,15 +85,6 @@ function Server_homescreen() {
             Recipe_ID: cartItem.Recipe_ID,
         });
     };
-
-    const checkoutPrompt = async () => {
-        setButtonPopup(true)
-        fetchOrderID();
-        cart.forEach(cartItem => {
-            setCustName("Steve");
-            checkoutItem(cartItem);
-        });
-    }
 
     const addItemtoCart = async (product) => {
         let findItemInCart = await cart.find(i => {
@@ -158,6 +151,23 @@ function Server_homescreen() {
         addItemtoCart(itemID);
     }
 
+    const getCustomerName = (customerName) => {
+        console.log(customerName.target.value);
+        setCustName(customerName.target.value);
+    }
+
+    const cancelOrder = () => {
+        setCart([]);
+        setTotalAmount(0);
+        setCustName("");
+    }
+
+    const submitOrder = () => {
+        setCart([]);
+        setTotalAmount(0);
+        setCustName("");
+    }
+
     useEffect(() => {
         fetchMenu();
         fetchCategory();
@@ -202,76 +212,44 @@ function Server_homescreen() {
                 </div>}
             </div>
             <div className="orderSummary">
-                <div className="position-fixed">
-                    <h2 className="px-2">Customer Name: </h2>
-                    <h2 className="px-2" contentEditable>Name</h2>
-                    <div className="table-responsive bg-secondary rounded">
-                        <table className="table ">
-                            <thead>
-                                <tr>
-                                    <th>Menu Item</th>
-                                    <th>Decrease</th>
-                                    <th>Quantity</th>
-                                    <th>Increase</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {cart ? cart.map((cartItem, key) => <tr key={key}>
-                                    <td>{cartItem.Name}</td>
-                                    <td> <button onClick={() => decrementHandler(cartItem)} value="+" className="button-plus bg-primary border rounded-circle  icon-shape icon-sm  text-white " data-field="quantity">+</button></td>
-                                    <td>{cartItem.orderQuantity}</td>
-                                    <td> <button onClick={() => incrementHandler(cartItem)} value="+" className="button-plus bg-primary border rounded-circle  icon-shape icon-sm  text-white " data-field="quantity">+</button></td>
-                                    <td ><button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>X</button></td>
-                                </tr>) : "No Item In Cart"}
-                            </tbody>
-                        </table>
-                        <div className="submitButton">
-                            {totalAmount !== 0 ? <div>
-                                <button className="btn btn-primary" onClick={() => checkoutPrompt()} >Submit Order</button>
-                            </div> : "Please add a product to the cart"}
-                        </div>
-                        <div className="cancelButton">
-                            <button className="btn btn-primary" onClick={() => checkoutPrompt()} >Cancel Order</button>
-                        </div>
-                    </div>
-                    <h2 className="px-2">Total: ${totalAmount}</h2>
-                </div>
-            </div>
-
-            <PopUp trigger={buttonPopup} setTrigger={setButtonPopup} ><h3>Order Complete! <br></br>
-                Your Order Number is #{Order_ID}</h3>
-
-                <p>ORDER SUMMARY</p>
+                <h2 className="px-2">Customer Name: </h2>
+                <input type = "text" id = "customerName" onChange={getCustomerName} value = {Cust_Name}/>
                 <div className="table-responsive bg-secondary rounded">
-                    <table className="table">
+                    <table className="table ">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Qty</th>
-                                <th>Total</th>
-
+                                <th>Menu Item</th>
+                                <th>Decrease</th>
+                                <th>Quantity</th>
+                                <th>Increase</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                             {cart ? cart.map((cartItem, key) => <tr key={key}>
-                                <td>{cartItem.Recipe_ID}</td>
                                 <td>{cartItem.Name}</td>
-                                <td>{cartItem.Price}</td>
+                                <td> <button onClick={() => decrementHandler(cartItem)} value="+" className="button-plus bg-primary border rounded-circle  icon-shape icon-sm  text-white " data-field="quantity">-</button></td>
                                 <td>{cartItem.orderQuantity}</td>
-                                <td>{cartItem.totalAmount}</td>
-
-                            </tr>)
-
-                                : "No Item In Cart"}
-
+                                <td> <button onClick={() => incrementHandler(cartItem)} value="+" className="button-plus bg-primary border rounded-circle  icon-shape icon-sm  text-white " data-field="quantity">+</button></td>
+                                <td ><button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>X</button></td>
+                            </tr>) : "No Item In Cart"}
                         </tbody>
                     </table>
-                    <h2 className="px-2">Total Amount Due ${totalAmount}</h2>
+                    <div id = "submit" className="submitButton">
+                        <button className="btn btn-primary" onClick={() => {setSubmitOpen(true); submitOrder()}}>Submit Order</button>
+                            <SubmitPopUp open={submitOpen} onClose={() => setSubmitOpen(false)}>
+                                <h1>Order Submitted!</h1>
+                            </SubmitPopUp>
+                    </div>
+                    <div className="cancelButton">
+                        <button className="btn btn-primary" onClick={() => {setCancelOpen(true); cancelOrder()}}>Cancel Order</button>
+                            <CancelPopUp open={cancelOpen} onClose={() => setCancelOpen(false)}>
+                                <h1>Order Cancelled!</h1>
+                            </CancelPopUp>
+                    </div>
                 </div>
-            </PopUp>
+                <h2 className="px-2">Total: ${totalAmount}</h2>
+            </div>
         </Mainlayout >
     )
 }

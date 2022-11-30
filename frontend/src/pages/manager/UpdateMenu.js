@@ -3,6 +3,7 @@ import Mainlayout from '../../layouts/Mainlayout';
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import {Link} from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 function UpdateMenu(){
     const [image, images] = useState([]);
@@ -83,12 +84,23 @@ function UpdateMenu(){
     return(
        <Mainlayout>
             <div className = "header">
-                <ul>
+                <Dropdown style={{}}>
                 <Link to='/menu' className='btn btn-primary'> Menu</Link>
                 <Link to='/inventory' className='btn btn-primary'> Inventory</Link>
-                <Link to='/reports' className='btn btn-primary'> Reports</Link>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: '#00704A', color:"#FFFFFF", marginLeft:"10px"}}>Reports</Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item >
+                        <Link to='/reports' className='btn btn-primary' style={{width:'150px'}}> Sales Report</Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                        <Link to='/exreports' className='btn btn-primary' style={{width:'150px'}}> Excess Report</Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                        <Link to='/rereports' className='btn btn-primary' style={{width:'150px'}}> Restock Report</Link>
+                    </Dropdown.Item>
+                </Dropdown.Menu>
                 <Link to='/orders' className='btn btn-primary'> Orders</Link>
-                </ul>
+                </Dropdown>
             </div>
             
             <div>

@@ -26,7 +26,7 @@ function homepage() {
                 <Magnifier style={{width:'84vw', marginTop:'15px'}} src ={home3}></Magnifier>
                 <Magnifier style={{width:'84vw', marginTop:'15px'}} src ={home4}></Magnifier>
             </div>
-            <ul>
+            <ul style={{  height: '100%', width: '100%',display: 'flex',justifyContent: 'center', alignItems: 'center', marginTop:'7vh',marginBottom:'-20vh'}}>
                 <a href='https://www.instagram.com/starbucks/'><img src = {instagram} className='footerImage'></img></a>
                 <a href='https://www.facebook.com/Starbucks/'><img src = {facebook} className='footerImage'></img></a>
                 <a href='https://twitter.com/starbucks/'><img src = {twitter} className='footerImage'></img></a>

@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Mainlayout from '../../layouts/Mainlayout';
 import axios from "axios";
 import {Link} from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 function Reports(){
     const [sale, sales] = useState([]);
@@ -30,14 +31,25 @@ function Reports(){
 
     return(
       <Mainlayout>
-          <div className = "header">
-            <ul>
+        <div className = "header">
+            <Dropdown style={{}}>
               <Link to='/menu' className='btn btn-primary'> Menu</Link>
               <Link to='/inventory' className='btn btn-primary'> Inventory</Link>
-              <Link to='/reports' className='btn btn-primary'> Reports</Link>
+              <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: '#00704A', color:"#FFFFFF", marginLeft:"10px"}}>Reports</Dropdown.Toggle>
+              <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <Link to='/reports' className='btn btn-primary' style={{width:'150px'}}> Sales Report</Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link to='/exreports' className='btn btn-primary' style={{width:'150px'}}> Excess Report</Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link to='/rereports' className='btn btn-primary' style={{width:'150px'}}> Restock Report</Link>
+                  </Dropdown.Item>
+              </Dropdown.Menu>
               <Link to='/orders' className='btn btn-primary'> Orders</Link>
-            </ul>
-          </div>
+            </Dropdown>
+        </div>
         <div className = "anotherContainer">
         <h3>Sales Report</h3>
         <div className="table-responsive bg-secondary rounded"> 
@@ -62,9 +74,6 @@ function Reports(){
             </tbody>
           </table>
         </div>
-        <button className='btn btn-primary' onClick={()=>getSales()}>Sales Report</button>
-        <button className='btn btn-primary' onClick={()=>getRestock()}>Restock Report</button>
-        <button className='btn btn-primary' onClick={()=>getExcess()}>Excess Report</button>
         </div>
         </Mainlayout>
     );

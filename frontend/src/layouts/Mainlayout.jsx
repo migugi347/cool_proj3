@@ -65,16 +65,16 @@ function Mainlayout({ children }) {
                             <img style={{ width: "15%", height: "15%" }} src={Logo} alt="starbucks_logo" />
                             <Link to="/home" className="navbar-brand text-light" style={{ fontWeight: 800 }}>    STARBUCKS</Link>
                         </div>
-                        <div style={{display:"flex"}}>
-                        <Link to='/' className='btn btn-secondary' style={{marginLeft:"10px"}}>Locate Store</Link>
-                        <Link to='/' className='btn btn-secondary' style={{marginLeft:"10px", marginRight:"10px"}}>Login</Link>
-                        <div id="google_translate_element"></div>
+                            <div style={{display:"flex"}}>
+                            <Link to='/' className='btn btn-secondary' style={{marginLeft:"10px"}}>Locate Store</Link>
+                            <Link to='/' className='btn btn-secondary' style={{marginLeft:"10px", marginRight:"10px"}}>Login</Link>
+                            <div id="google_translate_element"></div>
                             <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: '#eac784', color:"#000000", marginLeft:"10px"}}>Settings</Dropdown.Toggle>
                                 <Dropdown.Menu>
                                     <Dropdown.Item >
-                                        <button className='btn btn-secondary' onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}>
-                                            {showColorPicker ? 'Close' : 'Change Background'}
+                                        <button className='btn btn-secondary' style={{width:'200px'}} onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}>
+                                            {showColorPicker ? 'Close Color Changer' : 'Change Background'}
                                         </button>
                                     </Dropdown.Item>
                                 </Dropdown.Menu>

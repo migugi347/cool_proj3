@@ -12,6 +12,8 @@ import Inventory from './pages/manager/Inventory';
 import UpdateMenu from './pages/manager/UpdateMenu';
 import Menu from './pages/manager/Menu';
 import Reports from './pages/manager/Reports';
+import ExReports from './pages/manager/ExReports';
+import ReReports from './pages/manager/ReReports';
 import Orders from './pages/manager/Orders';
 import ServerHomeScreen from './pages/server/server_homescreen';
 
@@ -28,6 +30,8 @@ function App() {
           <Route path ='/inventory' element={<Inventory/>} />
           <Route path ='/updateMenu' element={<UpdateMenu/>} />
           <Route path ='/reports' element={<Reports/>} />
+          <Route path ='/exreports' element={<ExReports/>} />
+          <Route path ='/rereports' element={<ReReports/>} />
           <Route path = "/server" element = {<ServerHomeScreen/>} />
         </Routes>
       </Router>

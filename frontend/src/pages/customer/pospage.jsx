@@ -6,7 +6,6 @@ import Button from 'react-bootstrap/Button';
 import Cart from '../../layouts/images/cart.svg';
 import logo from '../../layouts/images/coffee.gif';
 import Magnifier from "react-magnifier";
-import axios from "axios";
 import { API_URL } from "../../API";
 
 function Pospage() {
@@ -30,7 +29,7 @@ function Pospage() {
 
     const fetchMenu = async () => {
         setIsLoading(true);
-        const result = await axios.get('user');
+        const result = await API_URL.get('user');
         setProducts(await result.data);
         setMenu(await result.data);
         setIsLoading(false);
@@ -39,7 +38,7 @@ function Pospage() {
 
     const fetchCategory = async () => {
         setIsLoading(true);
-        const result = await axios.get('user');
+        const result = await API_URL.get('user');
         setCategories(await result.data);
 
         setIsLoading(false);
@@ -47,7 +46,7 @@ function Pospage() {
 
 
     useEffect(() => {
-        axios.get(API_URL + "/user").then((response) => {
+        API_URL.get("/user").then((response) => {
             //console.log(response.data);
         });
     }, []);
@@ -119,7 +118,7 @@ function Pospage() {
     const fetchOrderID = async () => {
 
 
-        await axios.get(API_URL + "/orderid").then((response) => {
+        await API_URL.get("/orderid").then((response) => {
             // setOrderID(response.data);
             const ord = response.data;
             setOrderID(ord[0].var_order);
@@ -132,7 +131,7 @@ function Pospage() {
 
     const fetchLineNum = async () => {
 
-        const result = await axios.get('linenum');
+        const result = await API_URL.get('linenum');
         setlineNum(await result.data);
         const newLine = lineNum + 1;
         setlineNum(newLine);
@@ -143,7 +142,7 @@ function Pospage() {
 
         fetchLineNum();
 
-        axios.post(API_URL + "/checkout", {
+        API_URL.post("/checkout", {
 
             //fetch line
             Line_Num: lineNum,
@@ -185,7 +184,7 @@ function Pospage() {
             let newCart = [];
             let newItem;
 
-            
+
 
             cart.forEach(cartItem => {
                 if (cartItem.Recipe_ID === product.Recipe_ID) {

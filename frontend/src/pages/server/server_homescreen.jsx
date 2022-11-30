@@ -24,7 +24,7 @@ function Server_homescreen() {
 
     const fetchMenu = async () => {
         setIsLoading(true);
-        const result = await axios.get('user');
+        const result = await axios.get(API_URL + '/user');
         setProducts(await result.data);
         setMenu(await result.data);
         setIsLoading(false);
@@ -33,7 +33,7 @@ function Server_homescreen() {
 
     const fetchCategory = async () => {
         setIsLoading(true);
-        const result = await axios.get('user');
+        const result = await axios.get(API_URL + '/user');
         setCategories(await result.data);
 
         setIsLoading(false);

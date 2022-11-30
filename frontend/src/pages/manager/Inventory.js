@@ -1,8 +1,9 @@
-import React, {useState,useEffect} from "react";
+import React, {useState,useEffect,useRef} from "react";
 import Mainlayout from '../../layouts/Mainlayout';
 import axios from "axios";
 import {Link} from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 function Inventory(){
     const [inventoryitem, inventory] = useState([]);
@@ -11,6 +12,7 @@ function Inventory(){
     const [quantity, setQuantity] = useState(0);
     const [orderDate, setOrderDate] = useState("");
     const [onhand, setOnHand] = useState(0);
+    const tableRef = useRef(null);
   
     useEffect(() =>{
       axios.get("http://localhost:3001/getInventory").then((response) =>{
@@ -27,7 +29,16 @@ function Inventory(){
         onhand:onhand
       }); 
     };
-  
+    
+    const getDates =(x) => {
+      const date = new Date(x);
+      console.log(x);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      return [year, month, day].join('/');
+   };
+
     const dels = () =>{
       axios.post("http://localhost:3001/deleteInventory",{
       inventoryID: inventoryID
@@ -59,8 +70,9 @@ return(
 
       <div className = "anotherContainer">
         <h3>Inventory</h3>
+        <div style={{height:'80vh', overflowX:'hidden',overflowY:'scroll'}}>
         <div className="table-responsive bg-secondary rounded"> 
-          <table className="table">
+          <table ref={tableRef} className="table" style={{textAlign:'center'}}>
             <thead>
               <tr>
                 <th>ID</th>
@@ -76,13 +88,15 @@ return(
                   <td>{val.Inventory_ID}</td>
                   <td>{val.Inventory}</td>
                   <td>{val.Quantity}</td>
-                  <td>{val.OrderDate}</td>
+                  <td>{getDates(val.OrderDate)}</td>
                   <td>{val.onhand}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        </div>
+        
         <div className = "addForm">
             <form>
               <label>Inventory_ID:</label>
@@ -106,6 +120,13 @@ return(
             </form>
         </div>
       </div>
+      <DownloadTableExcel
+                    filename="Inventory"
+                    sheet="sheet1"
+                    currentTableRef={tableRef.current}
+                >
+             <button className='btn btn-primary'> Export as Excel Sheet</button>
+      </DownloadTableExcel>
       </Mainlayout>
     );
 }

@@ -1,8 +1,9 @@
-import React, {useState,useEffect} from "react";
+import React, {useState,useEffect,useRef} from "react";
 import Mainlayout from '../../layouts/Mainlayout';
 import axios from "axios";
 import {Link} from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 function Menu(){
     const [menuitem, menu] = useState([]);
@@ -10,6 +11,7 @@ function Menu(){
     const [recID, setrecID] = useState(0);
     const [price, setPrice] = useState(0);
     const [category, setCategory] = useState("");
+    const tableRef = useRef(null);
   
     useEffect(() =>{
       axios.get("http://localhost:3001/getMenu").then((response) =>{
@@ -57,8 +59,9 @@ return(
 
       <div className = "anotherContainer">
         <h3>Menu</h3>
+        <div style={{height:'80vh', overflowX:'hidden',overflowY:'scroll'}}>
         <div className="table-responsive bg-secondary rounded"> 
-          <table className="table">
+          <table ref={tableRef} className="table" style={{textAlign:'center'}}>
             <thead>
               <tr>
                 <th>ID</th>
@@ -78,6 +81,8 @@ return(
               ))}
             </tbody>
           </table>
+        </div>
+          
         </div>
         <div className = "addForm">
             <form>
@@ -105,6 +110,13 @@ return(
             </form>
         </div>
       </div>
+      <DownloadTableExcel
+                    filename="Menu"
+                    sheet="sheet1"
+                    currentTableRef={tableRef.current}
+                >
+             <button className='btn btn-primary'> Export as Excel Sheet</button>
+      </DownloadTableExcel>
     </Mainlayout>
     );
 }

@@ -294,4 +294,8 @@ main{
     width:5vh;
 }
 
+.dropdown-menu{
+    --bs-dropdown-link-active-bg: #FFF !important;
+}
+
 @import "~bootstrap/scss/bootstrap"

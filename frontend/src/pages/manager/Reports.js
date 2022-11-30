@@ -1,33 +1,25 @@
-import React, {useState} from "react";
+import React, {useState,useEffect,useRef} from "react";
 import Mainlayout from '../../layouts/Mainlayout';
 import axios from "axios";
 import {Link} from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 function Reports(){
     const [sale, sales] = useState([]);
-    
-    const getSales = ()=>{
-        let date1 = prompt("Please enter date one:");
-        let date2 = prompt("Please enter date two:");
+    const date1 = new Date('September 1, 2022 00:00:00');
+    const date2 = new Date('September 15, 2022 00:00:00');
+    const [startDate, setStartDate] = useState(date1);
+    const [endDate, setEndDate] = useState(date2);
+    const tableRef = useRef(null);
 
-        axios.get("http://localhost:3001/getSales", {params: {date1: date1, date2:date2}}).then((response) =>{
-            sales(response.data);
-        });
-    }
-    const getRestock = ()=>{
-        axios.get("http://localhost:3001/getRestock", {params: {}}).then((response) =>{
-            sales(response.data);
-        });
-    }
-    const getExcess = ()=>{
-        // let date1 = prompt("Please enter date one:");
-        // let date2 = prompt("Please enter date two:");
-
-        // axios.get("http://localhost:3001/getSales", {params: {date1: date1, date2:date2}}).then((response) =>{
-        //     sales(response.data);
-        // });
-    }
+    useEffect(() =>{
+      axios.get("http://localhost:3001/getSales", {params: {date1: startDate, date2:endDate}}).then((response) =>{
+        sales(response.data);
+      });
+    },[startDate,endDate]);
 
     return(
       <Mainlayout>
@@ -52,29 +44,42 @@ function Reports(){
         </div>
         <div className = "anotherContainer">
         <h3>Sales Report</h3>
-        <div className="table-responsive bg-secondary rounded"> 
-          <table className="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>QUANTITY</th>
-                <th>PRICE</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sale.map((val) => (
+        <div style={{height:'80vh', overflowX:'hidden',overflowY:'scroll'}}>
+          <div className="table-responsive bg-secondary rounded"> 
+            <table  ref={tableRef} className="table" style={{textAlign:'center'}}>
+              <thead>
                 <tr>
-                  <td>{val.Recipe_ID}</td>
-                  <td>{val.Name}</td>
-                  <td>{val.quantity}</td>
-                  <td>${val.price}</td>
+                  <th>ID</th>
+                  <th>NAME</th>
+                  <th>QUANTITY</th>
+                  <th>PRICE</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {sale.map((val) => (
+                  <tr>
+                    <td>{val.Recipe_ID}</td>
+                    <td>{val.Name}</td>
+                    <td>{val.quantity}</td>
+                    <td>${val.price.toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
         </div>
+        <div style={{marginBottom:'-20vh'}}>
+          <h3>Start Date:</h3><DatePicker selected={startDate} onChange={(date) => setStartDate(date)}/>
+          <h3>End Date:</h3><DatePicker selected={endDate} onChange={(date) => setEndDate(date)}/>
+        </div>
+        <DownloadTableExcel
+                    filename="Sales Report"
+                    sheet="sheet1"
+                    currentTableRef={tableRef.current}
+                >
+             <button className='btn btn-primary'> Export as Excel Sheet</button>
+        </DownloadTableExcel>
         </Mainlayout>
     );
 }

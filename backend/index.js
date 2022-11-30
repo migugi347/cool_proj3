@@ -101,7 +101,7 @@ app.get('/getSales', (req, res) => {
     const date1 = req.query.date1;
     const date2 = req.query.date2;
     pool
-        .query('SELECT orders.\"Recipe_ID\", recipe.\"Name\", SUM(\"orderQuantity\") as Quantity, SUM(\"Price\" * orders.\"orderQuantity\") as Price FROM orders INNER JOIN recipe ON orders.\"Recipe_ID\" = Recipe.\"Recipe_ID" WHERE "Date" BETWEEN \''+date1+'\' and \''+date2+'\' GROUP BY orders.\"Recipe_ID\", recipe.\"Name\" ORDER BY orders.\"Recipe_ID\";', (err, result) =>{
+        .query('SELECT orders.\"Recipe_ID\", recipe.\"Name\", SUM(\"orderQuantity\") as Quantity, SUM(\"Price\" * orders.\"orderQuantity\") as Price FROM orders INNER JOIN recipe ON orders.\"Recipe_ID\" = Recipe.\"Recipe_ID\" WHERE \"Date\" BETWEEN \''+date1+'\' and \''+date2+'\' GROUP BY orders.\"Recipe_ID\", recipe.\"Name\" ORDER BY orders.\"Recipe_ID\";', (err, result) =>{
             res.send(result.rows);
         });
 });
@@ -248,7 +248,9 @@ app.get('/getAccountType', (req,res) => {
 });
 
 app.get('/getOrders', (req,res) => {
-    pool.query("SELECT * FROM orders ORDER BY \"Line_Num\" DESC LIMIT 100;", (err, result) => {
+    const date1 = req.query.date1;
+    const date2 = req.query.date2;
+    pool.query('SELECT * FROM orders WHERE "Date" BETWEEN \''+date1+'\' and \''+date2+'\' ORDER BY \"Line_Num\" DESC LIMIT 1000;', (err, result) => {
         res.send(result.rows);
     });
 });

@@ -26,6 +26,12 @@ function homepage() {
                 <Magnifier style={{width:'84vw', marginTop:'15px'}} src ={home3}></Magnifier>
                 <Magnifier style={{width:'84vw', marginTop:'15px'}} src ={home4}></Magnifier>
             </div>
+            <div style={{textAlign:'center', display:'flex',marginTop:'50px'}}>
+                <p>*Excludes taxes and gratuities. At participating stores. Some restrictions apply. 
+                    150 Stars deposited after first qualifying Starbucks purchase. Flights purchased close to 
+                    departure may not earn double Stars. Stars may not be earned on purchases of alcohol, 
+                    Starbucks Cards and Starbucks Card reloads. For details, visit deltastarbucks.com/terms.</p>
+            </div>
             <ul style={{  height: '100%', width: '100%',display: 'flex',justifyContent: 'center', alignItems: 'center', marginTop:'7vh',marginBottom:'-20vh'}}>
                 <a href='https://www.instagram.com/starbucks/'><img src = {instagram} className='footerImage'></img></a>
                 <a href='https://www.facebook.com/Starbucks/'><img src = {facebook} className='footerImage'></img></a>

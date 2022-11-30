@@ -66,8 +66,9 @@ function Mainlayout({ children }) {
                             <Link to="/home" className="navbar-brand text-light" style={{ fontWeight: 800 }}>    STARBUCKS</Link>
                         </div>
                         <div style={{display:"flex"}}>
+                        <Link to='/' className='btn btn-secondary' style={{marginLeft:"10px"}}>Locate Store</Link>
+                        <Link to='/' className='btn btn-secondary' style={{marginLeft:"10px", marginRight:"10px"}}>Login</Link>
                         <div id="google_translate_element"></div>
-                        <Link to='/' className='btn btn-secondary'>Login</Link>
                             <Dropdown>
                                 <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: '#eac784', color:"#000000", marginLeft:"10px"}}>Settings</Dropdown.Toggle>
                                 <Dropdown.Menu>
@@ -83,7 +84,7 @@ function Mainlayout({ children }) {
                     </div>
                    
                 </nav>
-                <div>
+                <div style={{float:'right'}}>
                     {showColorPicker && (
                         <ChromePicker
                             color={color}

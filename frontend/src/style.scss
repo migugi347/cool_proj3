@@ -287,4 +287,19 @@ main{
     margin-right: 30px;
 }
 
+.footerImage{
+    margin-top: 20px;
+    margin-right: 5px;
+    margin-left:5px;
+    height:30px;
+    width:30px;
+}
+.footerImage:hover{
+    margin-top: 20px;
+    margin-right: 5px;
+    margin-left:5px;
+    height:35px;
+    width:35px;
+}
+
 @import "~bootstrap/scss/bootstrap"

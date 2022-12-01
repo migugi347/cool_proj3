@@ -1,22 +1,23 @@
-import React, {useState,useRef} from "react";
+import React, {useState,useRef,useEffect} from "react";
 import Mainlayout from '../../layouts/Mainlayout';
 import axios from "axios";
 import {Link} from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 function ExReports(){
     const [sale, sales] = useState([]);
+    const date1 = new Date('September 15, 2022 00:00:00');
+    const [startDate, setStartDate] = useState(date1);
     const tableRef = useRef(null);
 
-    const getExcess = ()=>{
-        // let date1 = prompt("Please enter date one:");
-        // let date2 = prompt("Please enter date two:");
-
-        // axios.get("http://localhost:3001/getSales", {params: {date1: date1, date2:date2}}).then((response) =>{
-        //     sales(response.data);
-        // });
-    }
+    useEffect(() =>{
+      axios.get("http://localhost:3001/getExcess", {params: {date1: startDate}}).then((response) =>{
+        sales(response.data);
+      }); 
+    },[startDate]); 
 
     return(
       <Mainlayout>
@@ -43,28 +44,31 @@ function ExReports(){
         <h3>Excess Report</h3>
           <div style={{height:'80vh', overflowX:'hidden',overflowY:'scroll'}}>
             <div className="table-responsive bg-secondary rounded"> 
-              <table ref={tableRef} className="table">
+              <table ref={tableRef} className="table" style={{textAlign:'center'}}>
                 <thead>
                   <tr>
                     <th>ID</th>
                     <th>NAME</th>
-                    <th>QUANTITY</th>
-                    <th>PRICE</th>
+                    <th>QUANTITY USED SINCE DATE</th>
+                    <th>CURRENT QUANTITY IN INVENTORY</th>
                   </tr>
                 </thead>
                 <tbody>
                   {sale.map((val) => (
                     <tr>
-                      <td>{val.Recipe_ID}</td>
-                      <td>{val.Name}</td>
-                      <td>{val.quantity}</td>
-                      <td>${val.price}</td>
+                      <td>{val.inventory_id}</td>
+                      <td>{val.Inventory}</td>
+                      <td>{val.total}</td>
+                      <td>{val.Quantity}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           </div>
+        </div>
+        <div style={{marginBottom:'-8vh'}}>
+          <h3>Date:</h3><DatePicker selected={startDate} onChange={(date) => setStartDate(date)}/>
         </div>
         <DownloadTableExcel
                     filename="Excess Report"

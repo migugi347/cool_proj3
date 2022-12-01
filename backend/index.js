@@ -297,6 +297,13 @@ app.get('/newMin', (req,res) => {
     });
 });
 
+app.get('/getExcess', (req,res) => {
+    const date1 = req.query.date1;
+    pool.query("SELECT inventory_id, inventory.\"Inventory\",total,inventory.\"Quantity\" FROM (SELECT inventory_id, SUM(itemquantity*quantity) AS total FROM (SELECT orders.\"Recipe_ID\", SUM(\"orderQuantity\") as itemquantity FROM orders INNER JOIN recipe ON orders.\"Recipe_ID\" = Recipe.\"Recipe_ID\" WHERE \"Date\" > '"+date1+"' GROUP BY orders.\"Recipe_ID\" ORDER BY \"Recipe_ID\") AS X INNER JOIN menuinv ON X.\"Recipe_ID\" = menuinv.recipe_id GROUP BY inventory_id ORDER BY inventory_id) AS Y INNER JOIN inventory ON inventory_id = inventory.\"Inventory_ID\" WHERE total/\"Quantity\" < .1 ORDER BY inventory_id;", (err, result) => {
+        res.send(result.rows);
+    });
+});
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });   

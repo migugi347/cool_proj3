@@ -40,6 +40,7 @@ function Inventory(){
    };
 
     const dels = () =>{
+      let inventoryID = prompt('Enter Inventory ID to be deleted:')
       axios.post("http://localhost:3001/deleteInventory",{
       inventoryID: inventoryID
     }); 
@@ -96,37 +97,40 @@ return(
           </table>
         </div>
         </div>
-        
-        <div className = "addForm">
-            <form>
-              <label>Inventory_ID:</label>
-              <input type="text" name="invID" onChange = {(e)=>{setinvID(e.target.value);}}></input>
-              <label>Name:</label>
-              <input type="text" name="name" onChange = {(e)=>{setName(e.target.value);}}></input>
-              <label>Quantity:</label>
-              <input type="text" name="quantity" onChange = {(e)=>{setQuantity(e.target.value);}}></input>
-              <label>Order Date:</label>
-              <input type="text" name="orderDate" onChange = {(e)=>{setOrderDate(e.target.value);}}></input>
-              <label>On Hand:</label>
-              <input type="text" name="onHand" onChange = {(e)=>{setOnHand(e.target.value);}}></input>
-              <button className='btn btn-primary' onClick={()=>subs()}>Add New Inv Item</button>
-            </form>
-        </div>
-        <div className = "deleteForm">
-            <form>
-              <label>Inventory_ID:</label>
-              <input type="text" name="recID" onChange = {(e)=>{setinvID(e.target.value);}}></input>
-              <button className='btn btn-primary' onClick={()=>dels()}>Delete Inventory Item</button>
-            </form>
-        </div>
-      </div>
-      <DownloadTableExcel
+        <DownloadTableExcel
                     filename="Inventory"
                     sheet="sheet1"
                     currentTableRef={tableRef.current}
                 >
-             <button className='btn btn-primary'> Export as Excel Sheet</button>
-      </DownloadTableExcel>
+             <button style={{float:'right', width:'175px', marginTop:'1vh'}} className='btn btn-primary'>Export to Excel</button>
+        </DownloadTableExcel>
+        
+        <div style={{display:'flex', marginTop:'6vh', marginBottom:'-20vh', justifyContent:'center', width:'80vw'}}>
+          <div className = "addForm" style={{display:'flex', textAlign:'center', alignSelf:'flex-end'}}>
+              <form>
+                <div style={{textAlign:'right'}}>
+                <label>Inventory_ID:</label>
+                <input style={{margin:'7.5px'}} type="text" name="invID" onChange = {(e)=>{setinvID(e.target.value);}}></input><br></br>
+                <label>Name:</label>
+                <input style={{margin:'7.5px'}} type="text" name="name" onChange = {(e)=>{setName(e.target.value);}}></input><br></br>
+                <label>Quantity:</label>
+                <input style={{margin:'7.5px'}} type="text" name="quantity" onChange = {(e)=>{setQuantity(e.target.value);}}></input><br></br>
+                <label>Acquired Date:</label>
+                <input style={{margin:'7.5px'}} type="text" name="orderDate" onChange = {(e)=>{setOrderDate(e.target.value);}}></input><br></br>
+                <label>On Hand:</label>
+                <input style={{margin:'7.5px'}} type="text" name="onHand" onChange = {(e)=>{setOnHand(e.target.value);}}></input><br></br>
+                </div>
+                <button style={{width:'175px',marginTop:'7.5px'}} className='btn btn-primary' onClick={()=>subs()}>Add New Inv Item</button>
+              </form>
+          </div>
+          <div className = "deleteForm" style={{alignSelf:'flex-end', marginLeft:'10vw',marginRight:'10vw'}}>
+            <button style={{width:'auto'}} className='btn btn-primary' onClick={()=>dels()}>Delete Inventory Item</button>
+          </div>
+          <div className = "updateForm" style={{alignSelf:'flex-end'}}>
+              <Link to='/updateInventory' style={{width:'auto'}} className='btn btn-primary'> Update An Inventory Item</Link>
+          </div>          
+        </div>
+      </div>
       </Mainlayout>
     );
 }

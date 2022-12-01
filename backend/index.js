@@ -89,6 +89,14 @@ app.get('/getMenuItem', (req, res) => {
         });
 });
 
+app.get('/getInvItem', (req, res) => {
+    const invID = req.query.invID;
+    pool
+        .query('SELECT * FROM inventory WHERE "Inventory_ID" = '+invID+';', (err, result) =>{
+            res.send(result.rows);
+        });
+});
+
 app.get('/getItemRecipe', (req, res) => {
     const recID = req.query.recID;
     pool
@@ -137,6 +145,22 @@ app.put('/updateItem', (req, res) => {
     const category = req.body.category;
     console.log(recID, name, price, category);
     pool.query('UPDATE recipe SET "Name" = \''+name+'\' , "Price" = '+price+', \"Category\" = \''+category+'\' WHERE \"Recipe_ID\" = '+recID+';', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('updated');
+        }
+    });
+});
+
+app.put('/updateInvItem', (req, res) => {
+    const invID = req.body.invID;
+    const name = req.body.name;
+    const quantity = req.body.quantity;
+    const date = req.body.date;
+    const onHand = req.body.onHand;
+    pool.query('UPDATE inventory SET "Inventory" = \''+name+'\' , "Quantity" = '+quantity+', \"OrderDate\" = \''+date+'\', onhand = '+onHand+' WHERE \"Inventory_ID\" = '+invID+';', (err, result) =>{
         if(err){
             console.log(err);
         }

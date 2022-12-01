@@ -84,18 +84,18 @@ function Orders(){
         </div>
 
         </div>
-        </div>
-        <div style={{marginBottom:'-20vh'}}>
-          <h3>Start Date:</h3><DatePicker selected={startDate} onChange={(date) => setStartDate(date)}/>
-          <h3>End Date:</h3><DatePicker selected={endDate} onChange={(date) => setEndDate(date)}/>
-        </div>
         <DownloadTableExcel
                     filename="Orders"
                     sheet="sheet1"
                     currentTableRef={tableRef.current}
                 >
-             <button className='btn btn-primary'> Export as Excel Sheet</button>
+             <button style={{float:'right', marginTop:'1vh'}} className='btn btn-primary'>Export to Excel</button>
         </DownloadTableExcel>
+        </div>
+        <div style={{marginBottom:'-20vh'}}>
+          <h3>Start Date:</h3><DatePicker selected={startDate} onChange={(date) => setStartDate(date)}/>
+          <h3>End Date:</h3><DatePicker selected={endDate} onChange={(date) => setEndDate(date)}/>
+        </div>
         </Mainlayout>
     );
 }

@@ -10,6 +10,7 @@ import Pospage from './pages/customer/pospage'
 import CustomerLogin from './pages/customer/customerLogin';
 import Inventory from './pages/manager/Inventory';
 import UpdateMenu from './pages/manager/UpdateMenu';
+import UpdateInventory from './pages/manager/UpdateInventory';
 import Menu from './pages/manager/Menu';
 import Reports from './pages/manager/Reports';
 import ExReports from './pages/manager/ExReports';
@@ -29,6 +30,7 @@ function App() {
           <Route path = '/orders' element = {<Orders/>}/>
           <Route path ='/inventory' element={<Inventory/>} />
           <Route path ='/updateMenu' element={<UpdateMenu/>} />
+          <Route path ='/updateInventory' element={<UpdateInventory/>} />
           <Route path ='/reports' element={<Reports/>} />
           <Route path ='/exreports' element={<ExReports/>} />
           <Route path ='/rereports' element={<ReReports/>} />

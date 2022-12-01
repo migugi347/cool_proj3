@@ -31,6 +31,7 @@ function Menu(){
     };
   
     const dels = () =>{
+      let recID = prompt('Enter Recipe ID to be deleted:')
       axios.post("http://localhost:3001/deleteMenu",{
       recipeID: recID
     }); 
@@ -77,7 +78,7 @@ return(
                 <tr>
                   <td>{val.Recipe_ID}</td>
                   <td>{val.Name}</td>
-                  <td>${val.Price}</td>
+                  <td>${val.Price.toFixed(2)}</td>
                   <td>{val.Category}</td>
                 </tr>
               ))}
@@ -91,7 +92,7 @@ return(
                     sheet="sheet1"
                     currentTableRef={tableRef.current}
                 >
-             <button style={{float:'right', width:'175px', marginTop:'1vh'}} className='btn btn-primary'> Export as Excel Sheet</button>
+             <button style={{float:'right', width:'175px', marginTop:'1vh'}} className='btn btn-primary'>Export to Excelt</button>
         </DownloadTableExcel>
         
         <div style={{display:'flex', marginTop:'6vh', marginBottom:'-20vh', justifyContent:'center', width:'80vw'}}>
@@ -113,12 +114,8 @@ return(
               </form>
           </div>
 
-          <div className = "deleteForm" style={{display:'flex', alignSelf:'flex-end', marginLeft:'10vw',marginRight:'10vw', textAlign:'center'}}>
-            <form>
-              <label>Recipe_ID:</label>
-              <input style={{margin:'15px'}} type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}></input><br></br>
+          <div className = "deleteForm" style={{alignSelf:'flex-end', marginLeft:'10vw',marginRight:'10vw'}}>
               <button style={{width:'175px'}} className='btn btn-primary' onClick={()=>dels()}> Delete Menu Item</button>
-            </form>
           </div>
 
           <div className = "updateForm" style={{alignSelf:'flex-end'}}>

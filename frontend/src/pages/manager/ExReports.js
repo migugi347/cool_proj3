@@ -9,7 +9,7 @@ import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 function ExReports(){
     const [sale, sales] = useState([]);
-    const date1 = new Date('September 15, 2022 00:00:00');
+    const date1 = new Date('October 28, 2022 00:00:00');
     const [startDate, setStartDate] = useState(date1);
     const tableRef = useRef(null);
 
@@ -38,6 +38,7 @@ function ExReports(){
                   </Dropdown.Item>
               </Dropdown.Menu>
               <Link to='/orders' className='btn btn-primary'> Orders</Link>
+              <Link to='/employees' className='btn btn-primary'> Employees</Link>
             </Dropdown>
         </div>
         <div className = "anotherContainer">

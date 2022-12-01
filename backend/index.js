@@ -116,7 +116,7 @@ app.get('/getSales', (req, res) => {
 
 app.get('/getRestock', (req, res) => {
     pool
-        .query('SELECT * FROM inventory WHERE \"Quantity\" < onhand;', (err, result) =>{
+        .query('SELECT * FROM inventory WHERE \"Quantity\" < onhand ORDER BY "Inventory_ID";', (err, result) =>{
             res.send(result.rows);
         });
 });
@@ -143,7 +143,6 @@ app.put('/updateItem', (req, res) => {
     const name = req.body.name;
     const price = req.body.price;
     const category = req.body.category;
-    console.log(recID, name, price, category);
     pool.query('UPDATE recipe SET "Name" = \''+name+'\' , "Price" = '+price+', \"Category\" = \''+category+'\' WHERE \"Recipe_ID\" = '+recID+';', (err, result) =>{
         if(err){
             console.log(err);
@@ -301,6 +300,35 @@ app.get('/getExcess', (req,res) => {
     const date1 = req.query.date1;
     pool.query("SELECT inventory_id, inventory.\"Inventory\",total,inventory.\"Quantity\" FROM (SELECT inventory_id, SUM(itemquantity*quantity) AS total FROM (SELECT orders.\"Recipe_ID\", SUM(\"orderQuantity\") as itemquantity FROM orders INNER JOIN recipe ON orders.\"Recipe_ID\" = Recipe.\"Recipe_ID\" WHERE \"Date\" > '"+date1+"' GROUP BY orders.\"Recipe_ID\" ORDER BY \"Recipe_ID\") AS X INNER JOIN menuinv ON X.\"Recipe_ID\" = menuinv.recipe_id GROUP BY inventory_id ORDER BY inventory_id) AS Y INNER JOIN inventory ON inventory_id = inventory.\"Inventory_ID\" WHERE total/\"Quantity\" < .1 ORDER BY inventory_id;", (err, result) => {
         res.send(result.rows);
+    });
+});
+
+app.get('/getEmployees', (req,res) => {
+    pool.query("SELECT * FROM accounts WHERE type = 'manager' OR type = 'server';", (err, result) => {
+        res.send(result.rows);
+    });
+});
+app.post('/addEmployee', (req, res) => {
+    const email = req.body.email;
+    const name = req.body.name;
+    const phone = req.body.phone;
+    const type = req.body.type;
+    const password = req.body.password;
+    pool.query("INSERT INTO accounts VALUES('"+email+"', '"+type+"', '"+name+"', '"+password+"', '"+phone+"');", (err, result) =>{
+    });
+});
+
+app.post('/deleteEmployee', (req, res) => {
+    const empID = req.body.employeeEmail;
+    pool.query('DELETE FROM accounts WHERE email = \''+empID+'\';', (err, result) =>{
+       // console.log(err);
+    });
+});
+
+app.post('/updateEmployee', (req, res) => {
+    const email = req.body.email;
+    const type = req.body.type;
+    pool.query('UPDATE accounts accounts SET type = \''+type+'\' WHERE email = \''+email+'\' ;', (err, result) =>{
     });
 });
 

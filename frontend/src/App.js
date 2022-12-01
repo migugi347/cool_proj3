@@ -16,6 +16,7 @@ import Reports from './pages/manager/Reports';
 import ExReports from './pages/manager/ExReports';
 import ReReports from './pages/manager/ReReports';
 import Orders from './pages/manager/Orders';
+import Employees from './pages/manager/Employees';
 import ServerHomeScreen from './pages/server/server_homescreen';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path ='/exreports' element={<ExReports/>} />
           <Route path ='/rereports' element={<ReReports/>} />
           <Route path = "/server" element = {<ServerHomeScreen/>} />
+          <Route path = "/Employees" element = {<Employees/>} />
         </Routes>
       </Router>
       </>

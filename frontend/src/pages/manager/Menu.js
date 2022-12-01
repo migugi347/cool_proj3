@@ -57,6 +57,7 @@ return(
                 </Dropdown.Item>
             </Dropdown.Menu>
             <Link to='/orders' className='btn btn-primary'> Orders</Link>
+            <Link to='/employees' className='btn btn-primary'> Employees</Link>
           </Dropdown>
       </div>
 
@@ -92,7 +93,7 @@ return(
                     sheet="sheet1"
                     currentTableRef={tableRef.current}
                 >
-             <button style={{float:'right', width:'175px', marginTop:'1vh'}} className='btn btn-primary'>Export to Excelt</button>
+             <button style={{float:'right', width:'175px', marginTop:'1vh'}} className='btn btn-primary'>Export to Excel</button>
         </DownloadTableExcel>
         
         <div style={{display:'flex', marginTop:'6vh', marginBottom:'-20vh', justifyContent:'center', width:'80vw'}}>

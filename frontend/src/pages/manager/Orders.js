@@ -51,6 +51,7 @@ function Orders(){
                   </Dropdown.Item>
               </Dropdown.Menu>
               <Link to='/orders' className='btn btn-primary'> Orders</Link>
+              <Link to='/employees' className='btn btn-primary'> Employees</Link>
             </Dropdown>
         </div>
         <div className = "anotherContainer">

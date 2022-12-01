@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom"
 import Logo from './images/SB_logo.png';
 import { ChromePicker } from 'react-color'
 import "../style.scss"
@@ -9,14 +10,27 @@ function Mainlayout({ children }) {
 
 
     const [account, setAccount] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
-        const loggedInUser = localStorage.getItem("user");
-        if (loggedInUser) {
 
+        if (localStorage.getItem("user") !== null) {
+
+            const loggedInUser = localStorage.getItem("user")
             setAccount(loggedInUser);
+            console.log(loggedInUser)
+
         }
     }, []);
 
+
+
+
+
+    function handleSignOut(event) {
+        setAccount({});
+        localStorage.setItem('user', null);
+        navigate("/", { replace: true });
+    }
     // const google = window.google;
     // useEffect(() => {
     //     var addScript = document.createElement('script');
@@ -30,11 +44,11 @@ function Mainlayout({ children }) {
     // }
     const googleTranslateElementInit = () => {
         new window.google.translate.TranslateElement({
-                pageLanguage: "en",
-                autoDisplay: false,
-                includedLanguages: 'ar,en,es,jv,ko,pa,pt,ru,zh-CN',
-                layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-            },
+            pageLanguage: "en",
+            autoDisplay: false,
+            includedLanguages: 'ar,en,es,jv,ko,pa,pt,ru,zh-CN',
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+        },
             "google_translate_element"
         );
     };
@@ -65,26 +79,34 @@ function Mainlayout({ children }) {
                             <img style={{ width: "15%", height: "15%" }} src={Logo} alt="starbucks_logo" />
                             <Link to="/home" className="navbar-brand text-light" style={{ fontWeight: 800 }}>    STARBUCKS</Link>
                         </div>
-                            <div style={{display:"flex"}}>
-                            <Link to='/' className='btn btn-secondary' style={{marginLeft:"10px"}}>Locate Store</Link>
-                            <Link to='/' className='btn btn-secondary' style={{marginLeft:"10px", marginRight:"10px"}}>Login</Link>
+                        <div style={{ display: "flex" }}>
+                            <Link to='/' className='btn btn-secondary' style={{ marginLeft: "10px" }}>Locate Store</Link>
+
+
+                            {account !== null && <div id="login-btn" className='btn btn-secondary' style={{ marginLeft: "10px", marginRight: "10px" }}>Hello, {account}</div>
+                            }
+                            {account !== null &&
+                                <button onClick={(e) => handleSignOut(e)} className='btn btn-secondary' style={{ marginLeft: "10px", marginRight: "10px" }} >Log Out</button>
+                            }
+
+
                             <div id="google_translate_element"></div>
                             <Dropdown>
-                                <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: '#eac784', color:"#000000", marginLeft:"10px"}}>Settings</Dropdown.Toggle>
+                                <Dropdown.Toggle variant="success" id="dropdown-basic" style={{ backgroundColor: '#eac784', color: "#000000", marginLeft: "10px" }}>Settings</Dropdown.Toggle>
                                 <Dropdown.Menu>
                                     <Dropdown.Item >
-                                        <button className='btn btn-secondary' style={{width:'200px'}} onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}>
+                                        <button className='btn btn-secondary' style={{ width: '200px' }} onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}>
                                             {showColorPicker ? 'Close Color Changer' : 'Change Background'}
                                         </button>
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
-                        
+
                     </div>
-                   
+
                 </nav>
-                <div style={{float:'right'}}>
+                <div style={{ float: 'right' }}>
                     {showColorPicker && (
                         <ChromePicker
                             color={color}
@@ -102,7 +124,7 @@ function Mainlayout({ children }) {
             </main>
             <div>
                 <nav className=' navbar fixed-bottom  bg-primary'>
-                    
+
                 </nav>
             </div>
         </div>

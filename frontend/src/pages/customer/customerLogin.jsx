@@ -5,6 +5,7 @@ import axios from "axios";
 import { Link } from 'react-router-dom'
 import jwt_decode from "jwt-decode";
 import Mainlayout from "../../layouts/Mainlayout";
+import { API_URL } from "../../API";
 
 
 
@@ -19,22 +20,12 @@ export default function CustomerLogin(props) {
 
     const navigate = useNavigate();
 
-    function handleCallbackResponse(response) {
-        console.log(response)
-        var userObject = jwt_decode(response.credential);
-        console.log(userObject);
 
-        setEmail(userObject.email);
-        setAccount(userObject);
-
-        localStorage.setItem('user', userObject);
-
-    }
 
     useEffect(() => {
         (async () => {
             try {
-                axios.get("http://localhost:3001/getAccountType", { params: { email: email } }).then((response) => {
+                axios.get(API_URL + "/getAccountType", { params: { email: email } }).then((response) => {
                     setAccount(response.data);
                 });
             } catch (error) {
@@ -47,8 +38,7 @@ export default function CustomerLogin(props) {
         /* global google  */
         google.accounts.id.initialize({
             client_id: "704019936455-s2sdsnf3jc47qljoduocgo6ufla51qbn.apps.googleusercontent.com",
-            callback: handleCallbackResponse,
-            ux_mode: "redirect",
+            callback: handleCallbackResponse
 
 
         });
@@ -61,7 +51,20 @@ export default function CustomerLogin(props) {
             }
         );
 
-    }, []);
+        function handleCallbackResponse(response) {
+
+            var userObject = jwt_decode(response.credential);
+            console.log(userObject.name);
+
+            setEmail(userObject.email);
+            setAccount(userObject);
+
+            localStorage.setItem('user', JSON.stringify(userObject));
+
+            navigate("/home", { replace: true });
+        }
+
+    }, [navigate]);
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
@@ -84,7 +87,7 @@ export default function CustomerLogin(props) {
         return (
             <Mainlayout className=" align-items-center   ">
 
-                <div className="login-form-cont "  style={{backgroundColor:"#FFFFFF"}}>
+                <div className="login-form-cont " >
 
                     <Form className="login-form " onSubmit={onSubmitHandler}>
                         <div className="login-form-content">
@@ -135,10 +138,10 @@ export default function CustomerLogin(props) {
     return (
         <Mainlayout>
 
-            <div className="login-form-cont"  style={{backgroundColor:"#FFFFFF"}}>
+            <div className="login-form-cont" >
 
                 <Form className="auth-form" onSubmit={onSubmitHandler}>
-                    <div className="auth-form-content" >
+                    <div className="auth-form-content">
                         <h3 >Sign Up</h3>
 
                         <div className="form-group mt-3">

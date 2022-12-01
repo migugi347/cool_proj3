@@ -1,8 +1,9 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Mainlayout from '../../layouts/Mainlayout';
 import PopUp from "../../components/PopUp";
 import logo from '../../layouts/images/coffee.gif';
+import { API_URL } from "../../API";
 
 function Server_homescreen() {
     const [products, setProducts] = useState([]);
@@ -23,7 +24,7 @@ function Server_homescreen() {
 
     const fetchMenu = async () => {
         setIsLoading(true);
-        const result = await axios.get('user');
+        const result = await axios.get(API_URL + '/user');
         setProducts(await result.data);
         setMenu(await result.data);
         setIsLoading(false);
@@ -32,14 +33,14 @@ function Server_homescreen() {
 
     const fetchCategory = async () => {
         setIsLoading(true);
-        const result = await axios.get('user');
+        const result = await axios.get(API_URL + '/user');
         setCategories(await result.data);
 
         setIsLoading(false);
     }
 
     useEffect(() => {
-        axios.get("http://localhost:3001/user").then((response) => {
+        axios.get(API_URL + "/user").then((response) => {
             console.log(response.data);
         });
     }, []);
@@ -57,17 +58,17 @@ function Server_homescreen() {
     }
 
     const fetchOrderID = async () => {
-        axios.get("http://localhost:3001/orderid").then((response) => {
+        axios.get(API_URL + "/orderid").then((response) => {
             setOrderID(response.data);
         });
-        const result = await axios.get('orderid');
+        const result = await axios.get(API_URL + "/orderid");
         setOrderID(await result.data.var_order);
         console.log(Order_ID);
     }
 
 
     const fetchLineNum = async () => {
-        const result = await axios.get('linenum');
+        const result = await axios.get(API_URL + "/orderid");
         setlineNum(await result.data);
         const newLine = lineNum + 1;
         setlineNum(newLine);
@@ -75,7 +76,7 @@ function Server_homescreen() {
 
     const checkoutItem = (cartItem) => {
         fetchLineNum();
-        axios.post("http://localhost:3001/checkout", {
+        axios.post(API_URL + "/checkout", {
             //fetch line
             Line_Num: lineNum,
             Order_ID: Order_ID,
@@ -148,7 +149,7 @@ function Server_homescreen() {
 
     return (
         <Mainlayout >
-            <div className = "navbarArea">
+            <div className="navbarArea">
                 <h2>CATEGORIES</h2>
                 <nav className='serverNavBar'>
                     <h2>CATEGORIES</h2>

@@ -6,7 +6,8 @@ import Button from 'react-bootstrap/Button';
 import Cart from '../../layouts/images/cart.svg';
 import logo from '../../layouts/images/coffee.gif';
 import Magnifier from "react-magnifier";
-import axios from "axios"
+import axios from "axios";
+import { API_URL } from "../../API";
 
 function Pospage() {
 
@@ -18,7 +19,7 @@ function Pospage() {
 
     const [totalAmount, setTotalAmount] = useState(0);
     const [buttonPopup, setButtonPopup] = useState(false);
-    // const [open, setOpen] = useState(false);
+
 
     const [Order_ID, setOrderID] = useState(0);
     const [lineNum, setlineNum] = useState([]);
@@ -29,7 +30,7 @@ function Pospage() {
 
     const fetchMenu = async () => {
         setIsLoading(true);
-        const result = await axios.get('user');
+        const result = await axios.get(API_URL + '/user');
         setProducts(await result.data);
         setMenu(await result.data);
         setIsLoading(false);
@@ -38,7 +39,7 @@ function Pospage() {
 
     const fetchCategory = async () => {
         setIsLoading(true);
-        const result = await axios.get('user');
+        const result = await axios.get(API_URL + '/user');
         setCategories(await result.data);
 
         setIsLoading(false);
@@ -46,7 +47,7 @@ function Pospage() {
 
 
     useEffect(() => {
-        axios.get("http://localhost:3001/user").then((response) => {
+        axios.get(API_URL + "/user").then((response) => {
             //console.log(response.data);
         });
     }, []);
@@ -118,7 +119,7 @@ function Pospage() {
     const fetchOrderID = async () => {
 
 
-        await axios.get("http://localhost:3001/orderid").then((response) => {
+        await axios.get(API_URL + "/orderid").then((response) => {
             // setOrderID(response.data);
             const ord = response.data;
             setOrderID(ord[0].var_order);
@@ -142,35 +143,35 @@ function Pospage() {
 
         fetchLineNum();
 
-        // axios.post("http://localhost:3001/checkout", {
+        axios.post(API_URL + "/checkout", {
 
-        //     //fetch line
-        //     Line_Num: lineNum,
-        //     Order_ID: Order_ID,
-        //     Cust_Name: Cust_Name,
-        //     Recipe_ID: cartItem.Recipe_ID,
+            //fetch line
+            Line_Num: lineNum,
+            Order_ID: Order_ID,
+            Cust_Name: Cust_Name,
+            Recipe_ID: cartItem.Recipe_ID,
 
 
-        // });
+        });
     };
 
 
     const checkoutPrompt = async () => {
 
         setButtonPopup(true);
-
+        reSizeView(open);
 
         console.log(cart);
         console.log(Order_ID)
-        // cart.forEach(cartItem => {
-        //     //checkoutItem
-        //     //pass same order number 
+        cart.forEach(cartItem => {
+            //checkoutItem
+            //pass same order number 
 
-        //     setCustName("Steve");
-        //     checkoutItem(cartItem);
-        //     console.log(Order_ID);
-        //     console.log(cartItem.Name);
-        // });
+            setCustName("Steve");
+            checkoutItem(cartItem);
+            console.log(Order_ID);
+            console.log(cartItem.Name);
+        });
 
     }
 
@@ -183,6 +184,7 @@ function Pospage() {
 
             let newCart = [];
             let newItem;
+
 
 
             cart.forEach(cartItem => {
@@ -270,7 +272,7 @@ function Pospage() {
 
                                 <div className='poop border text-center text-uppercase fw-bold bg-secondary rounded' onClick={() => addItemtoCart(product)}>
                                     <p className="font-weight-bold" style={{ fontWeight: "600" }}>{product.Name}</p>
-                                    <Magnifier  src={product.image} className="img-fluid" alt={product.Name} ></Magnifier>
+                                    <Magnifier src={product.image} className="img-fluid" alt={product.Name} ></Magnifier>
                                     <p>${product.Price}</p>
                                 </div>
                             </div>
@@ -286,7 +288,7 @@ function Pospage() {
                     <Button className=" bg-primary sticky-top " onClick={() => reSizeView(open)}
                         aria-controls="example-collapse-text"
                         aria-expanded={open}>
-                        VIEW CART
+                        VIEW CART - {cart.length}
                         <img src={Cart} alt="cart" />
                     </Button>
 

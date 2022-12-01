@@ -11,6 +11,7 @@ function Menu(){
     const [recID, setrecID] = useState(0);
     const [price, setPrice] = useState(0);
     const [category, setCategory] = useState("");
+    const [image, setImage] = useState("");
     const tableRef = useRef(null);
   
     useEffect(() =>{
@@ -24,7 +25,8 @@ function Menu(){
         recipeID: recID,
         name: name,
         price: price,
-        category: category
+        category: category,
+        image:image
       }); 
     };
   
@@ -82,41 +84,51 @@ return(
             </tbody>
           </table>
         </div>
-          
         </div>
-        <div className = "addForm">
-            <form>
-              <label>Recipe_ID:</label>
-              <input type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}></input>
-              <label>Name:</label>
-              <input type="text" name="name" onChange = {(e)=>{setName(e.target.value);}}></input>
-              <label>Price:</label>
-              <input type="text" name="price" onChange = {(e)=>{setPrice(e.target.value);}}></input>
-              <label>Category:</label>
-              <input type="text" name="category" onChange = {(e)=>{setCategory(e.target.value);}}></input>
-              <button className='btn btn-primary' onClick={()=>subs()}> Add New Menu Item</button>
-            </form>
-        </div>
-        <div className = "deleteForm">
-            <form>
-              <label>Recipe_ID:</label>
-              <input type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}></input>
-              <button className='btn btn-primary' onClick={()=>dels()}> Delete Menu Item</button>
-            </form>
-        </div>
-        <div className = "updateForm">
-            <form>
-              <Link to='/updateMenu' className='btn btn-primary'> Update Menu Item</Link>
-            </form>
-        </div>
-      </div>
-      <DownloadTableExcel
+
+        <DownloadTableExcel
                     filename="Menu"
                     sheet="sheet1"
                     currentTableRef={tableRef.current}
                 >
-             <button className='btn btn-primary'> Export as Excel Sheet</button>
-      </DownloadTableExcel>
+             <button style={{float:'right', width:'175px', marginTop:'1vh'}} className='btn btn-primary'> Export as Excel Sheet</button>
+        </DownloadTableExcel>
+        
+        <div style={{display:'flex', marginTop:'6vh', marginBottom:'-20vh', justifyContent:'center', width:'80vw'}}>
+          <div className = "addForm" style={{display:'flex', textAlign:'center', alignSelf:'flex-end'}}>
+              <form>
+                <div style={{textAlign:'right'}}>
+                <label>Recipe_ID:</label>
+                <input style={{margin:'7.5px'}} type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}></input><br></br>
+                <label>Name:</label>
+                <input style={{margin:'7.5px'}} type="text" name="name" onChange = {(e)=>{setName(e.target.value);}}></input><br></br>
+                <label>Price:</label>
+                <input style={{margin:'7.5px'}} type="text" name="price" onChange = {(e)=>{setPrice(e.target.value);}}></input><br></br>
+                <label>Category:</label>
+                <input style={{margin:'7.5px'}} type="text" name="category" onChange = {(e)=>{setCategory(e.target.value);}}></input><br></br>
+                <label>Image URL:</label>
+                <input style={{margin:'7.5px'}} type="text" name="image" onChange = {(e)=>{setImage(e.target.value);}}></input><br></br>
+                </div>
+                <button style={{width:'175px',marginTop:'7.5px'}} className='btn btn-primary' onClick={()=>subs()}> Add New Menu Item</button><br></br>
+              </form>
+          </div>
+
+          <div className = "deleteForm" style={{display:'flex', alignSelf:'flex-end', marginLeft:'10vw',marginRight:'10vw', textAlign:'center'}}>
+            <form>
+              <label>Recipe_ID:</label>
+              <input style={{margin:'15px'}} type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}></input><br></br>
+              <button style={{width:'175px'}} className='btn btn-primary' onClick={()=>dels()}> Delete Menu Item</button>
+            </form>
+          </div>
+
+          <div className = "updateForm" style={{alignSelf:'flex-end'}}>
+            <form>
+              <Link to='/updateMenu' style={{width:'175px'}} className='btn btn-primary'> Update A Menu Item</Link>
+            </form>
+          </div>
+        </div>
+
+      </div>
     </Mainlayout>
     );
 }

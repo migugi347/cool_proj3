@@ -268,7 +268,7 @@ function Pospage() {
 
                             <div key={key} className='col-lg-4  '>
 
-                                <div className='poop border text-center text-uppercase fw-bold bg-secondary rounded' onClick={() => addItemtoCart(product)}>
+                                <div className='mt-4 poop border text-center text-uppercase fw-bold bg-secondary rounded' onClick={() => addItemtoCart(product)}>
                                     <p className="font-weight-bold" style={{ fontWeight: "600" }}>{product.Name}</p>
                                     <Magnifier  src={product.image} className="img-fluid" alt={product.Name} ></Magnifier>
                                     <p>${product.Price}</p>
@@ -276,12 +276,8 @@ function Pospage() {
                             </div>
                         )}
                     </div>}
-
-
                 </div>
-
-
-
+                
                 <div className="col-lg-2 " id="sideBar">
                     <Button className=" bg-primary sticky-top " onClick={() => reSizeView(open)}
                         aria-controls="example-collapse-text"

@@ -14,15 +14,30 @@ function ReReports(){
         axios.get("http://localhost:3001/getRestock", {params: {}}).then((response) =>{
             sales(response.data);
         });
-    },[]);
+    });
 
     const getDates =(x) => {
         const date = new Date(x);
-        console.log(x);
         const year = date.getFullYear();
         const month = date.getMonth() + 1;
         const day = date.getDate();
         return [year, month, day].join('/');
+    };
+
+    const updateQuantity = () => {
+        let date1 = prompt("Please Enter Inventory ID:");
+        let date2 = prompt("Please Enter Quantity Arrived:");
+        axios.get("http://localhost:3001/updateInventoryAmt", {params: {date1: date1, date2:date2}}).then((response) =>{
+            sales(response.data);
+        });
+    };
+
+    const updateMinimum = () => {
+        let date1 = prompt("Please Enter Inventory ID:");
+        let date2 = prompt("Please Enter New Minimum Amount:");
+        axios.get("http://localhost:3001/newMin", {params: {date1: date1, date2:date2}}).then((response) =>{
+            sales(response.data);
+        });
     };
 
     return(
@@ -57,7 +72,7 @@ function ReReports(){
                     <th>ID</th>
                     <th>NAME</th>
                     <th>QUANTITY</th>
-                    <th>LAST ORDER DATE</th>
+                    <th>LAST RESTOCK DATE</th>
                     <th>MIN REQUIRED AMOUNTS</th>
                 </tr>
                 </thead>
@@ -76,12 +91,14 @@ function ReReports(){
             </div>
         </div>
         </div>
+        <button className ='btn btn-primary' onClick={()=>updateQuantity()}>Restock Inventory Item</button>
+        <button style={{margin:'5px'}} className ='btn btn-primary' onClick={()=>updateMinimum()}>Change Minimum Amount</button>
         <DownloadTableExcel
                     filename="Restock Report"
                     sheet="sheet1"
                     currentTableRef={tableRef.current}
                 >
-             <button className='btn btn-primary'> Export as Excel Sheet</button>
+             <button style={{float:'right'}} className='btn btn-primary'> Export to Excel</button>
         </DownloadTableExcel>
         </Mainlayout>
     );

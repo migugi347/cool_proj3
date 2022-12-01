@@ -69,7 +69,7 @@ function Reports(){
           </div>
         </div>
         </div>
-        <div style={{marginBottom:'-20vh'}}>
+        <div style={{marginBottom:'-15vh'}}>
           <h3>Start Date:</h3><DatePicker selected={startDate} onChange={(date) => setStartDate(date)}/>
           <h3>End Date:</h3><DatePicker selected={endDate} onChange={(date) => setEndDate(date)}/>
         </div>
@@ -78,7 +78,7 @@ function Reports(){
                     sheet="sheet1"
                     currentTableRef={tableRef.current}
                 >
-             <button className='btn btn-primary'> Export as Excel Sheet</button>
+             <button style={{float:'right'}} className='btn btn-primary'> Export to Excel</button>
         </DownloadTableExcel>
         </Mainlayout>
     );

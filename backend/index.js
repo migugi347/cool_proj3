@@ -118,8 +118,9 @@ app.post('/addMenu', (req, res) => {
     const name = req.body.name;
     const price = req.body.price;
     const category = req.body.category;
+    const image = req.body.image;
     //console.log(name);
-    pool.query('INSERT INTO recipe (\"Recipe_ID\", \"Name\", \"Price\", \"Category\") VALUES ('+recID+',\''+name+'\','+price+',\''+category+'\');', (err, result) =>{
+    pool.query('INSERT INTO recipe (\"Recipe_ID\", \"Name\", \"Price\", \"Category\", image) VALUES ('+recID+',\''+name+'\','+price+',\''+category+'\', \''+image+'\');', (err, result) =>{
         if(err){
             console.log(err);
         }
@@ -252,6 +253,23 @@ app.get('/getOrders', (req,res) => {
     const date2 = req.query.date2;
     pool.query('SELECT * FROM orders WHERE "Date" BETWEEN \''+date1+'\' and \''+date2+'\' ORDER BY \"Line_Num\" DESC LIMIT 1000;', (err, result) => {
         res.send(result.rows);
+    });
+});
+
+app.get('/updateInventoryAmt', (req,res) => {
+    const id = req.query.date1;
+    const amount = req.query.date2;
+    const date = new Date().toUTCString();
+    pool.query('UPDATE inventory SET "Quantity" = "Quantity" + '+amount+' WHERE "Inventory_ID" = '+id+';', (err, result) => {
+    });
+    pool.query('UPDATE inventory SET "OrderDate" = \''+date+'\' WHERE "Inventory_ID" = '+id+';', (err, result) => {
+    });
+});
+
+app.get('/newMin', (req,res) => {
+    const id = req.query.date1;
+    const amount = req.query.date2;
+    pool.query('UPDATE inventory SET "onhand" = '+amount+' WHERE "Inventory_ID" = '+id+';', (err, result) => {
     });
 });
 

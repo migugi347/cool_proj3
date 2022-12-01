@@ -41,35 +41,37 @@ function ExReports(){
         </div>
         <div className = "anotherContainer">
         <h3>Excess Report</h3>
-        <div className="table-responsive bg-secondary rounded"> 
-          <table ref={tableRef} className="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>QUANTITY</th>
-                <th>PRICE</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sale.map((val) => (
-                <tr>
-                  <td>{val.Recipe_ID}</td>
-                  <td>{val.Name}</td>
-                  <td>{val.quantity}</td>
-                  <td>${val.price}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+          <div style={{height:'80vh', overflowX:'hidden',overflowY:'scroll'}}>
+            <div className="table-responsive bg-secondary rounded"> 
+              <table ref={tableRef} className="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>QUANTITY</th>
+                    <th>PRICE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sale.map((val) => (
+                    <tr>
+                      <td>{val.Recipe_ID}</td>
+                      <td>{val.Name}</td>
+                      <td>{val.quantity}</td>
+                      <td>${val.price}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
         <DownloadTableExcel
                     filename="Excess Report"
                     sheet="sheet1"
                     currentTableRef={tableRef.current}
                 >
-             <button className='btn btn-primary'> Export as Excel Sheet</button>
+             <button style={{float:'right'}} className='btn btn-primary'> Export to Excel</button>
         </DownloadTableExcel>
         </Mainlayout>
     );

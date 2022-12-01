@@ -332,6 +332,11 @@ app.post('/updateEmployee', (req, res) => {
     });
 });
 
+app.post('/trigger', (req, res) => {
+    pool.query('DO $$ DECLARE x record; BEGIN FOR x IN (SELECT inventory_id,("Quantity"-amount) AS quantity FROM (SELECT inventory_id, ("orderQuantity" * quantity) AS amount from orders INNER JOIN menuinv ON orders."Recipe_ID" = menuinv.recipe_id WHERE "Line_Num" = (SELECT MAX("Line_Num") FROM orders)) AS amtUsed INNER JOIN inventory ON amtUsed.inventory_id = inventory."Inventory_ID") LOOP UPDATE inventory SET "Quantity" = x.quantity WHERE "Inventory_ID" = x.inventory_id; END LOOP; END $$', (err, result) =>{
+    });
+});
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });   

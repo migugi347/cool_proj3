@@ -58,15 +58,15 @@ function Server_homescreen() {
         setMenu(newProducts);
     }
 
-    const fetchOrderID = async () => {
+    const fetchOrderID = () => {
+        console.log("start");
         axios.get("http://localhost:3001/orderid").then((response) => {
-            setOrderID(response.data);
+            //setOrderID(response.data);
+            console.log(response.data);
         });
-        const result = await axios.get('orderid');
-        setOrderID(await result.data.var_order);
-        console.log(Order_ID);
+        console.log("end");
     }
-
+ 
 
     const fetchLineNum = async () => {
         const result = await axios.get('linenum');
@@ -163,9 +163,16 @@ function Server_homescreen() {
     }
 
     const submitOrder = () => {
-        setCart([]);
-        setTotalAmount(0);
-        setCustName("");
+        if(Cust_Name === ""){
+            alert("Cannot submit order! Please enter customer's name!");
+        }else if(cart.length === 0){
+            alert("Cannot submit order! No menu items have been selected!")
+        }else{
+            setSubmitOpen(true)
+            setCart([]);
+            setTotalAmount(0);
+            setCustName("");
+        }
     }
 
     useEffect(() => {
@@ -236,7 +243,7 @@ function Server_homescreen() {
                         </tbody>
                     </table>
                     <div id = "submit" className="submitButton">
-                        <button className="btn btn-primary" onClick={() => {setSubmitOpen(true); submitOrder()}}>Submit Order</button>
+                        <button className="btn btn-primary" onClick={() => {submitOrder()}}>Submit Order</button>
                             <SubmitPopUp open={submitOpen} onClose={() => setSubmitOpen(false)}>
                                 <h1>Order Submitted!</h1>
                             </SubmitPopUp>

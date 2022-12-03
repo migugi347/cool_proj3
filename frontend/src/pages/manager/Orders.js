@@ -34,30 +34,30 @@ function Orders(){
 
     return(
       <Mainlayout>
-        <div className = "header">
-            <Dropdown>
-              <Link to='/menu' className='btn btn-primary'> Menu</Link>
-              <Link to='/inventory' className='btn btn-primary'> Inventory</Link>
-              <Dropdown.Toggle variant="success" id="dropdown-basic" style={{color:"#FFFFFF", marginLeft:"10px"}}>Reports</Dropdown.Toggle>
-              <Dropdown.Menu>
-                  <Dropdown.Item >
-                    <Link to='/reports' className='btn btn-primary' style={{width:'150px'}}> Sales Report</Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <Link to='/exreports' className='btn btn-primary' style={{width:'150px'}}> Excess Report</Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <Link to='/rereports' className='btn btn-primary' style={{width:'150px'}}> Restock Report</Link>
-                  </Dropdown.Item>
-              </Dropdown.Menu>
-              <Link to='/orders' className='btn btn-primary'> Orders</Link>
-              <Link to='/employees' className='btn btn-primary'> Employees</Link>
-            </Dropdown>
+      <div className = "header" style={{backgroundColor:'var(--primary)'}}>
+          <Dropdown style={{}}>
+            <Link to='/menu' className='btn1'> Menu</Link>
+            <Link to='/inventory' className='btn1'> Inventory</Link>
+            <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: 'var(--primary)', color:"var(--secondary)"}}>Reports</Dropdown.Toggle>
+            <Dropdown.Menu>
+                <Dropdown.Item >
+                  <Link to='/reports' className='btn1' style={{width:'150px'}}> Sales Report</Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to='/exreports' className='btn1' style={{width:'150px'}}> Excess Report</Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to='/rereports' className='btn1' style={{width:'150px'}}> Restock Report</Link>
+                </Dropdown.Item>
+            </Dropdown.Menu>
+            <Link to='/orders' className='btn1'> Orders</Link>
+            <Link to='/employees' className='btn1'> Employees</Link>
+          </Dropdown>
         </div>
         <div className = "anotherContainer">
         <h3>Orders (Last 1000 Made Between Selected Dates)</h3>
         <div style={{height:'80vh', overflowX:'hidden',overflowY:'scroll'}}>
-        <div className="table-responsive bg-secondary rounded"> 
+        <div className="table-responsive rounded" style={{backgroundColor:'var(--secondary)'}}> 
           <table ref={tableRef} className="table" style={{textAlign:'center'}}>
             <thead>
               <tr>
@@ -90,7 +90,7 @@ function Orders(){
                     sheet="sheet1"
                     currentTableRef={tableRef.current}
                 >
-             <button style={{float:'right', marginTop:'1vh'}} className='btn btn-primary'>Export to Excel</button>
+             <button style={{float:'right', marginTop:'1vh'}} className='btn1'>Export to Excel</button>
         </DownloadTableExcel>
         </div>
         <div style={{marginBottom:'-20vh'}}>

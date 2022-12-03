@@ -50,33 +50,33 @@ function UpdateInventory(){
 
     return(
        <Mainlayout>
-            <div className = "header">
-                <Dropdown style={{}}>
-                <Link to='/menu' className='btn btn-primary'> Menu</Link>
-                <Link to='/inventory' className='btn btn-primary'> Inventory</Link>
-                <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: '#00704A', color:"#FFFFFF", marginLeft:"10px"}}>Reports</Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item >
-                        <Link to='/reports' className='btn btn-primary' style={{width:'150px'}}> Sales Report</Link>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                        <Link to='/exreports' className='btn btn-primary' style={{width:'150px'}}> Excess Report</Link>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                        <Link to='/rereports' className='btn btn-primary' style={{width:'150px'}}> Restock Report</Link>
-                    </Dropdown.Item>
-                </Dropdown.Menu>
-                <Link to='/orders' className='btn btn-primary'> Orders</Link>
-                <Link to='/employees' className='btn btn-primary'> Employees</Link>
-                </Dropdown>
-            </div>
+        <div className = "header" style={{backgroundColor:'var(--primary)'}}>
+          <Dropdown style={{}}>
+            <Link to='/menu' className='btn1'> Menu</Link>
+            <Link to='/inventory' className='btn1'> Inventory</Link>
+            <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: 'var(--primary)', color:"var(--secondary)"}}>Reports</Dropdown.Toggle>
+            <Dropdown.Menu>
+                <Dropdown.Item >
+                  <Link to='/reports' className='btn1' style={{width:'150px'}}> Sales Report</Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to='/exreports' className='btn1' style={{width:'150px'}}> Excess Report</Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to='/rereports' className='btn1' style={{width:'150px'}}> Restock Report</Link>
+                </Dropdown.Item>
+            </Dropdown.Menu>
+            <Link to='/orders' className='btn1'> Orders</Link>
+            <Link to='/employees' className='btn1'> Employees</Link>
+          </Dropdown>
+        </div>
             
             <div style={{marginTop:'3vh'}}>
                 <Form>
                     <label>Inventory ID:</label>
                     <input type="text" name="invID" onChange = {(e)=>{setInvID(e.target.value);}}></input>
                 </Form>
-                <Button className='btn btn-primary' onClick={()=>subs()}> SELECT</Button>
+                <Button className='btn' style={{backgroundColor:'var(--primary)', color:'var(--secondary)'}} onClick={()=>subs()}> SELECT</Button>
             </div>
             
             <div style={{display:'flex', justifyContent:'center', marginTop:'5vh'}}>
@@ -90,7 +90,7 @@ function UpdateInventory(){
                         <input style={{margin:'10px'}} type="text" name="date" placeholder={getDates(val.OrderDate)} onChange = {(e)=>{setDate(e.target.value);}}></input>
                         <label>On Hand:</label>
                         <input style={{margin:'10px'}} type="text" name="onhand" placeholder={val.onhand} onChange = {(e)=>{setOnhand(e.target.value);}}></input>
-                        <button className='btn btn-primary' onClick={()=>updateItem()}>Update Inventory Item</button>
+                        <button className='btn1' onClick={()=>updateItem()}>Update Inventory Item</button>
                     </form>
                 ))}
             </div>

@@ -49,30 +49,30 @@ function Employees(){
  
     return(       
       <Mainlayout>
-        <div className = "header">
-            <Dropdown style={{}}>
-              <Link to='/menu' className='btn btn-primary'> Menu</Link>
-              <Link to='/inventory' className='btn btn-primary'> Inventory</Link>
-              <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: '#00704A', color:"#FFFFFF", marginLeft:"10px"}}>Reports</Dropdown.Toggle>
-              <Dropdown.Menu>
-                  <Dropdown.Item>
-                    <Link to='/reports' className='btn btn-primary' style={{width:'150px'}}> Sales Report</Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <Link to='/exreports' className='btn btn-primary' style={{width:'150px'}}> Excess Report</Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <Link to='/rereports' className='btn btn-primary' style={{width:'150px'}}> Restock Report</Link>
-                  </Dropdown.Item>
-              </Dropdown.Menu>
-              <Link to='/orders' className='btn btn-primary'> Orders</Link>
-              <Link to='/employees' className='btn btn-primary'> Employees</Link>
-            </Dropdown>
+      <div className = "header" style={{backgroundColor:'var(--primary)'}}>
+          <Dropdown style={{}}>
+            <Link to='/menu' className='btn1'> Menu</Link>
+            <Link to='/inventory' className='btn1'> Inventory</Link>
+            <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: 'var(--primary)', color:"var(--secondary)"}}>Reports</Dropdown.Toggle>
+            <Dropdown.Menu>
+                <Dropdown.Item >
+                  <Link to='/reports' className='btn1' style={{width:'150px'}}> Sales Report</Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to='/exreports' className='btn1' style={{width:'150px'}}> Excess Report</Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to='/rereports' className='btn1' style={{width:'150px'}}> Restock Report</Link>
+                </Dropdown.Item>
+            </Dropdown.Menu>
+            <Link to='/orders' className='btn1'> Orders</Link>
+            <Link to='/employees' className='btn1'> Employees</Link>
+          </Dropdown>
         </div>
         <div className = "anotherContainer">
         <h3>Employees</h3>
         <div style={{height:'40vh', overflowX:'hidden',overflowY:'scroll'}}>
-            <div className="table-responsive bg-secondary rounded"> 
+            <div className="table-responsive rounded" style={{backgroundColor:'var(--secondary)'}}> 
             <table ref={tableRef} className="table" style={{textAlign:'center'}}>
                 <thead>
                 <tr>
@@ -96,16 +96,16 @@ function Employees(){
             </div>
         </div>
         </div>
-        <button className ='btn btn-primary' onClick={()=>addEmployee()}>Add New Employee</button>
-        <button style={{margin:'5px'}} className ='btn btn-primary' onClick={()=>deleteEmployee()}>Fire Employee</button>
-        <button style={{margin:'5px'}} className ='btn btn-primary' onClick={()=>updateEmployee()}>Edit Employee Type</button>
+        <button className ='btn' style={{backgroundColor:'var(--primary)', color:'var(--secondary)'}} onClick={()=>addEmployee()}>Add New Employee</button>
+        <button style={{margin:'5px', backgroundColor:'var(--primary)', color:'var(--secondary)'}} className ='btn ' onClick={()=>deleteEmployee()}>Fire Employee</button>
+        <button style={{margin:'5px', backgroundColor:'var(--primary)', color:'var(--secondary)'}} className ='btn ' onClick={()=>updateEmployee()}>Edit Employee Type</button>
 
         <DownloadTableExcel
                     filename="Employee Report"
                     sheet="sheet1"
                     currentTableRef={tableRef.current}
                 >
-             <button style={{float:'right'}} className='btn btn-primary'> Export to Excel</button>
+             <button style={{float:'right', backgroundColor:'var(--primary)', color:'var(--secondary)'}} className='btn '> Export to Excel</button>
         </DownloadTableExcel>
         </Mainlayout>
     );

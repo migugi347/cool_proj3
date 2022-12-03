@@ -1,9 +1,7 @@
-$theme-colors: (
-    "primary": #00704A,
-
-    "secondary": #eac784,
-);
-
+:root{
+    --primary: #00704A;
+    --secondary: #eac784;
+}
 
 .poop:hover {
     transform: scale(1.05);
@@ -13,6 +11,34 @@ $theme-colors: (
     transition: transform 0.2s ease;
 }
 
+.table{
+    background-color: var(--secondary);
+}
+.btn1{
+    font-size: 16px;
+    padding: 8px 12px;
+    margin-bottom: 0;
+    border-radius: 5px;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    background-color: var(--primary);
+    color: var(--secondary);
+}
+.btn1:hover{
+    color: white;
+}
 
 .login-form-cont {
     width: 100%;
@@ -89,7 +115,7 @@ $theme-colors: (
 }
 
 .icon-labels {
-    background-color: #eac784;
+    background-color:var(--secondary);
     border-radius: 40px;
     margin-left: 5px;
     margin-right: 5px;
@@ -174,7 +200,6 @@ $theme-colors: (
 }
 
 .header {
-    background-color: #00704A;
     text-align: center;
 }
 
@@ -200,7 +225,7 @@ main{
     left: 0px;
     width: 15%;
     height: 85%;
-    background-color: #00704A;
+    background-color: var(--primary);
 }
 
 .serverNavBar h2 {
@@ -216,7 +241,7 @@ main{
 .serverNavBar button{
     text-transform: uppercase;
     color: white;
-    background-color: #00704A;
+    background-color: --primary;
     text-align: center;
     position: relative;
     left: -32px;
@@ -225,8 +250,8 @@ main{
     margin-top: 14px;
     margin-bottom: 14px;
     padding: 22px;
-    border-bottom: 1px solid #013f2a;
-    border-top: 1px solid  #003d29;
+    border-bottom: 1px solid var(--primary);
+    border-top: 1px solid var(--primary);
     border-right: 1px solid rgba(0,0,0,0);
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 16px;
@@ -234,9 +259,9 @@ main{
 
 .serverNavBar button:hover{
     font-size: 17px;
-    background-color: #00281a;
-    border-bottom: 1px solid #03e99c;
-    border-top: 1px solid  #03e89b;
+    background-color: var(--primary);
+    border-bottom: 1px solid var(--secondary);
+    border-top: 1px solid  var(--secondary);
 }
 
 .navbarArea{

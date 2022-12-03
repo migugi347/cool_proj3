@@ -52,6 +52,9 @@ app.post('/checkout', (req, res) => {
     const custName = req.body.Cust_Name;
     const recID = req.body.Recipe_ID;
     const quanity = req.body.orderQuantity;
+   
+   
+
     //need to get order number 
     //increment line number everytime
 

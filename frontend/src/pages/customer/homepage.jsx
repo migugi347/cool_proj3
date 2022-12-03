@@ -18,7 +18,7 @@ function homepage() {
             <div className='bg-light p-5 mt-4 rounded-5 '>
                 <h1>Starbucks Self Check-out</h1>
 
-                <Link to='/pos' className='btn btn-primary'> START ORDER</Link>
+                <Link to='/pos' className='btn1'> START ORDER</Link>
             </div>
             <div>
                 <Magnifier style={{width:'84vw', marginTop:'15px'}} src ={home1}></Magnifier>

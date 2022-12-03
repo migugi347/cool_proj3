@@ -153,9 +153,9 @@ function Server_homescreen() {
                 <nav className='serverNavBar'>
                     <h2>CATEGORIES</h2>
                     <ul>
-                        <button onClick={() => fetchMenu()}>Main Menu</button>
+                        <button style={{backgroundColor:'var(--primary)'}} onClick={() => fetchMenu()}>Main Menu</button>
                         {uniCate.map((product, key) =>
-                            <button href="#" key={key} onClick={() => removeMenu(product)}>{product.Category}</button>
+                            <button style={{backgroundColor:'var(--primary)'}} href="#" key={key} onClick={() => removeMenu(product)}>{product.Category}</button>
                         )}
                     </ul>
                 </nav>
@@ -163,8 +163,8 @@ function Server_homescreen() {
             <div className="menuItems">
                 {isLoading ? <img src={logo} style={{ width: "800px" }} alt="loading .. " /> : <div className='row'>
                     {menu.map((product, key) =>
-                        <div key={key} className='col-lg-4  '>
-                            <button className='poop border text-center text-uppercase fw-bold bg-secondary rounded' onClick={() => addItemtoCart(product)}>
+                        <div key={key} className='col-lg-4'>
+                            <button style={{backgroundColor:'var(--secondary)'}} className='poop border text-center text-uppercase fw-bold rounded' onClick={() => addItemtoCart(product)}>
                                 <p className="font-weight-bold" style={{ fontWeight: "900" }}>{product.Name}</p>
                             </button>
                         </div>
@@ -175,7 +175,7 @@ function Server_homescreen() {
                 <div className="position-fixed">
                     <h2 className="px-2">Customer Name: </h2>
                     <h2 className="px-2" contentEditable>Name</h2>
-                    <div className="table-responsive bg-secondary rounded">
+                    <div style={{backgroundColor:'var(--secondary)'}} className="table-responsive rounded">
                         <table className="table ">
                             <thead>
                                 <tr>
@@ -189,26 +189,26 @@ function Server_homescreen() {
                             <tbody>
                                 {cart ? cart.map((cartItem, key) => <tr key={key}>
                                     <td>{cartItem.Name}</td>
-                                    <td ><button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>-</button></td>
+                                    <td ><button style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>-</button></td>
                                     <td>{cartItem.orderQuantity}</td>
-                                    <td ><button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>X</button></td>
+                                    <td ><button style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>X</button></td>
                                 </tr>)
 
                                     : "No Item In Cart"}
 
                                 {menu.map((product, key) => <tr key={key}>
-                                    <td><button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => addItemtoCart(product)}>+</button></td>
+                                    <td><button  style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" onClick={() => addItemtoCart(product)}>+</button></td>
                                 </tr>)}
 
                             </tbody>
                         </table>
                         <div className="submitButton">
                             {totalAmount !== 0 ? <div>
-                                <button className="btn btn-primary" onClick={() => checkoutPrompt()} >Submit Order</button>
+                                <button className="btn1" onClick={() => checkoutPrompt()} >Submit Order</button>
                             </div> : "Please add a product to the cart"}
                         </div>
                         <div className="cancelButton">
-                            <button className="btn btn-primary" onClick={() => checkoutPrompt()} >Cancel Order</button>
+                            <button className="btn1" onClick={() => checkoutPrompt()} >Cancel Order</button>
                         </div>
                     </div>
                     <h2 className="px-2">Total: ${totalAmount}</h2>
@@ -219,7 +219,7 @@ function Server_homescreen() {
                 Your Order Number is #{Order_ID}</h3>
 
                 <p>ORDER SUMMARY</p>
-                <div className="table-responsive bg-secondary rounded">
+                <div style={{backgroundColor:'var(secondary)'}} className="table-responsive rounded">
                     <table className="table">
                         <thead>
                             <tr>

@@ -110,11 +110,11 @@ export default function CustomerLogin(props) {
                                 />
                             </div>
                             <div className="d-grid gap-2 mt-3">
-                                <Button size="md" className="d-grid gap-2 mt-4 mb-2 btn-block bg-primary text-white" type="submit" style={{ fontWeight: 800 }}>
+                                <Button size="md" className="d-grid gap-2 mt-4 mb-2 btn-block text-white" type="submit" style={{ fontWeight: 800,backgroundColor:'var(--primary)'}}>
                                     SUBMIT
                                 </Button>
                                 <div id="signInDiv" ></div>
-                                <Link to='/home' className='btn btn-primary'> START ORDER</Link>
+                                <Link to='/home' className='btn1'> START ORDER</Link>
                             </div>
                             <div className="text-center">
                                 Dont Have an Account?{" "}

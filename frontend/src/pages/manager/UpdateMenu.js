@@ -90,33 +90,33 @@ function UpdateMenu(){
 
     return(
        <Mainlayout>
-            <div className = "header">
-                <Dropdown style={{}}>
-                <Link to='/menu' className='btn btn-primary'> Menu</Link>
-                <Link to='/inventory' className='btn btn-primary'> Inventory</Link>
-                <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: '#00704A', color:"#FFFFFF", marginLeft:"10px"}}>Reports</Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item >
-                        <Link to='/reports' className='btn btn-primary' style={{width:'150px'}}> Sales Report</Link>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                        <Link to='/exreports' className='btn btn-primary' style={{width:'150px'}}> Excess Report</Link>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                        <Link to='/rereports' className='btn btn-primary' style={{width:'150px'}}> Restock Report</Link>
-                    </Dropdown.Item>
-                </Dropdown.Menu>
-                <Link to='/orders' className='btn btn-primary'> Orders</Link>
-                <Link to='/employees' className='btn btn-primary'> Employees</Link>
-                </Dropdown>
-            </div>
+        <div className = "header" style={{backgroundColor:'var(--primary)'}}>
+          <Dropdown style={{}}>
+            <Link to='/menu' className='btn1'> Menu</Link>
+            <Link to='/inventory' className='btn1'> Inventory</Link>
+            <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: 'var(--primary)', color:"var(--secondary)"}}>Reports</Dropdown.Toggle>
+            <Dropdown.Menu>
+                <Dropdown.Item >
+                  <Link to='/reports' className='btn1' style={{width:'150px'}}> Sales Report</Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to='/exreports' className='btn1' style={{width:'150px'}}> Excess Report</Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to='/rereports' className='btn1' style={{width:'150px'}}> Restock Report</Link>
+                </Dropdown.Item>
+            </Dropdown.Menu>
+            <Link to='/orders' className='btn1'> Orders</Link>
+            <Link to='/employees' className='btn1'> Employees</Link>
+          </Dropdown>
+        </div>
             
             <div>
                 <Form style={{marginTop:'3vh'}}>
                     <label>Recipe_ID:</label>
                     <input type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}></input>
                 </Form>
-                <Button className='btn btn-primary mt-2' onClick={()=>subs()}>SELECT</Button>
+                <Button className='btn mt-2' style={{backgroundColor:'var(--primary)', color:'var(--secondary)'}} onClick={()=>subs()}>SELECT</Button>
             </div>
 
             <div style={{display:'flex', justifyContent:'center', textAlign:'center', marginBottom:'-20vh', marginTop:'5vh'}}>
@@ -138,14 +138,14 @@ function UpdateMenu(){
                                 <label>Category:</label>
                                 <input style={{margin:'5px'}} type="text" name="category" placeholder={val.Category} onChange = {(e)=>{setCategory(e.target.value);}}></input><br></br>
                             </div>
-                            <button className='btn btn-primary mt-2' onClick={()=>updateItem()}>Update Menu Item</button>
+                            <button className='btn1 mt-2' onClick={()=>updateItem()}>Update Menu Item</button>
                         </form>
                     ))}
                 </div>
 
                 <div className = "recipeTable" id ="recipeTable">
                     <h3>Recipe Table</h3>
-                    <div className="table-responsive bg-secondary rounded"> 
+                    <div className="table-responsive rounded" style={{backgroundColor:'var(--secondary)'}}> 
                         <table className="table">
                             <thead>
                             <tr>
@@ -165,9 +165,9 @@ function UpdateMenu(){
                             </tbody>
                         </table>
                     </div>
-                    <button className='btn btn-primary m-2' onClick={()=>recipeInsert()}>Insert</button>
-                    <button className='btn btn-primary m-2' onClick={()=>recipeDelete()}>Delete</button>
-                    <button className='btn btn-primary m-2' onClick={()=>recipeUpdate()}>Update</button>
+                    <button className='btn1 m-2' onClick={()=>recipeInsert()}>Insert</button>
+                    <button className='btn1 m-2' onClick={()=>recipeDelete()}>Delete</button>
+                    <button className='btn1 m-2' onClick={()=>recipeUpdate()}>Update</button>
                 </div>
             </div>
             

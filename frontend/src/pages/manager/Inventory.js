@@ -48,31 +48,31 @@ function Inventory(){
 
 return(
     <Mainlayout>
-      <div className = "header">
+    <div className = "header" style={{backgroundColor:'var(--primary)'}}>
           <Dropdown style={{}}>
-            <Link to='/menu' className='btn btn-primary'> Menu</Link>
-            <Link to='/inventory' className='btn btn-primary'> Inventory</Link>
-            <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: '#00704A', color:"#FFFFFF", marginLeft:"10px"}}>Reports</Dropdown.Toggle>
+            <Link to='/menu' className='btn1'> Menu</Link>
+            <Link to='/inventory' className='btn1'> Inventory</Link>
+            <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: 'var(--primary)', color:"var(--secondary)"}}>Reports</Dropdown.Toggle>
             <Dropdown.Menu>
                 <Dropdown.Item >
-                  <Link to='/reports' className='btn btn-primary'style={{width:'150px'}}> Sales Report</Link>
+                  <Link to='/reports' className='btn1' style={{width:'150px'}}> Sales Report</Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link to='/exreports' className='btn btn-primary' style={{width:'150px'}}> Excess Report</Link>
+                  <Link to='/exreports' className='btn1' style={{width:'150px'}}> Excess Report</Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link to='/rereports' className='btn btn-primary' style={{width:'150px'}}> Restock Report</Link>
+                  <Link to='/rereports' className='btn1' style={{width:'150px'}}> Restock Report</Link>
                 </Dropdown.Item>
             </Dropdown.Menu>
-            <Link to='/orders' className='btn btn-primary'> Orders</Link>
-            <Link to='/employees' className='btn btn-primary'> Employees</Link>
+            <Link to='/orders' className='btn1'> Orders</Link>
+            <Link to='/employees' className='btn1'> Employees</Link>
           </Dropdown>
       </div>
 
       <div className = "anotherContainer">
         <h3>Inventory</h3>
         <div style={{height:'80vh', overflowX:'hidden',overflowY:'scroll'}}>
-        <div className="table-responsive bg-secondary rounded"> 
+        <div className="table-responsive rounded" style={{backgroundColor:'var(--secondary)'}}> 
           <table ref={tableRef} className="table" style={{textAlign:'center'}}>
             <thead>
               <tr>
@@ -102,7 +102,7 @@ return(
                     sheet="sheet1"
                     currentTableRef={tableRef.current}
                 >
-             <button style={{float:'right', width:'175px', marginTop:'1vh'}} className='btn btn-primary'>Export to Excel</button>
+             <button style={{float:'right', width:'175px', marginTop:'1vh'}} className='btn1'>Export to Excel</button>
         </DownloadTableExcel>
         
         <div style={{display:'flex', marginTop:'6vh', marginBottom:'-20vh', justifyContent:'center', width:'80vw'}}>
@@ -120,14 +120,14 @@ return(
                 <label>On Hand:</label>
                 <input style={{margin:'7.5px'}} type="text" name="onHand" onChange = {(e)=>{setOnHand(e.target.value);}}></input><br></br>
                 </div>
-                <button style={{width:'175px',marginTop:'7.5px'}} className='btn btn-primary' onClick={()=>subs()}>Add New Inv Item</button>
+                <button style={{width:'175px',marginTop:'7.5px'}} className='btn1' onClick={()=>subs()}>Add New Inv Item</button>
               </form>
           </div>
           <div className = "deleteForm" style={{alignSelf:'flex-end', marginLeft:'10vw',marginRight:'10vw'}}>
-            <button style={{width:'auto'}} className='btn btn-primary' onClick={()=>dels()}>Delete Inventory Item</button>
+            <button style={{width:'auto'}} className='btn1' onClick={()=>dels()}>Delete Inventory Item</button>
           </div>
           <div className = "updateForm" style={{alignSelf:'flex-end'}}>
-              <Link to='/updateInventory' style={{width:'auto'}} className='btn btn-primary'> Update An Inventory Item</Link>
+              <Link to='/updateInventory' style={{width:'auto'}} className='btn1'> Update An Inventory Item</Link>
           </div>          
         </div>
       </div>

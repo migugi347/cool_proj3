@@ -63,14 +63,14 @@ function Mainlayout({ children }) {
         const body = document.querySelector('body');
         setHighContrast(highContrast => !highContrast)
         if(!highContrast && x==1){
-            root.style.setProperty('--primary', 'green');
+            root.style.setProperty('--primary', '#1c3866');
             root.style.setProperty('--secondary', 'pink');
-            body.style.setProperty('background-color','yellow')
+            body.style.setProperty('background-color','#808080')
         }
         if(highContrast && x==1){
             root.style.setProperty('--primary', 'black');
             root.style.setProperty('--secondary', 'yellow');
-            body.style.setProperty('background-color','pink')
+            body.style.setProperty('background-color','green')
         }
         if(x==2){
             root.style.setProperty('--primary', '#00704A');

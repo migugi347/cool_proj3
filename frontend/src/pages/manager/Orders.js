@@ -94,8 +94,8 @@ function Orders(){
         </DownloadTableExcel>
         </div>
         <div style={{marginBottom:'-20vh'}}>
-          <h3>Start Date:</h3><DatePicker selected={startDate} onChange={(date) => setStartDate(date)}/>
-          <h3>End Date:</h3><DatePicker selected={endDate} onChange={(date) => setEndDate(date)}/>
+          <h3>Start Date:</h3><DatePicker selected={startDate} maxDate={new Date()} onChange={(date) => setStartDate(date)}/>
+          <h3>End Date:</h3><DatePicker selected={endDate} maxDate={new Date()} onChange={(date) => setEndDate(date)}/>
         </div>
         </Mainlayout>
     );

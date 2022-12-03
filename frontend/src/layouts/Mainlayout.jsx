@@ -57,8 +57,21 @@ function Mainlayout({ children }) {
         root.style.setProperty('background-color', newcolor);
     };
 
+    const [s, setfontSize] = useState(16);
+    const changeFontSize=(x)=>{
+        const root = document.querySelector(':root');
+        if(x==0){
+            setfontSize(s+2);
+            root.style.setProperty('--sizer', `${s}px`);
+        }
+        if(x==1){
+            setfontSize(s-2);
+            root.style.setProperty('--sizer', `${s}px`);
+        }
+    };
+
     const changeContrast = (x) =>{
-        console.log(highContrast);
+        //console.log(highContrast);
         const root = document.querySelector(':root');
         const body = document.querySelector('body');
         setHighContrast(highContrast => !highContrast)
@@ -109,6 +122,11 @@ function Mainlayout({ children }) {
                                         <button className='btn1' style={{width:'200px'}} onClick={() => changeContrast(2)}>
                                             Original Color Scheme
                                         </button>
+                                    </Dropdown.Item>
+                                    <Dropdown.Item >
+                                        <h6>Font Size:</h6>
+                                        <button style={{padding:'0',height:'30px', width:'30px',fontSize:'20px'}} className='btn1' onClick={() => changeFontSize(1)}>-</button>
+                                        <button style={{padding:'0', height:'30px', width:'30px',fontSize:'20px', marginLeft:'10px'}} className='btn1' onClick={() => changeFontSize(0)}>+</button>
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>

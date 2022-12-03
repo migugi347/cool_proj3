@@ -265,9 +265,9 @@ function Pospage() {
                             <div key={key} className='col-lg-4  '>
 
                                 <div style={{backgroundColor:'var(--secondary)'}} className='mt-4 poop border text-center text-uppercase fw-bold rounded' onClick={() => addItemtoCart(product)}>
-                                    <p className="font-weight-bold" style={{marginTop:'10px',fontWeight: "600" }}>{product.Name}</p>
+                                    <p style={{fontSize:'var(--sizer)',marginTop:'10px'}}>{product.Name}</p>
                                     <Magnifier  src={product.image} className="img-fluid" alt={product.Name} ></Magnifier>
-                                    <p style={{marginTop:'10px'}}>${product.Price.toFixed(2)}</p>
+                                    <p style={{fontSize:'var(--sizer)',marginTop:'10px'}}>${product.Price.toFixed(2)}</p>
                                 </div>
                             </div>
                         )}
@@ -275,7 +275,7 @@ function Pospage() {
                 </div>
                 
                 <div className="col-lg-2 " id="sideBar">
-                    <Button style={{backgroundColor:'var(--primary)'}} className="sticky-top " onClick={() => reSizeView(open)}
+                    <Button style={{backgroundColor:'var(--primary)',zIndex:'1'}} className="sticky-top " onClick={() => reSizeView(open)}
                         aria-controls="example-collapse-text"
                         aria-expanded={open}>
                         VIEW CART
@@ -283,9 +283,9 @@ function Pospage() {
                     </Button>
 
                     {cart.length !== 0 ? <Collapse in={open} dimension="width" >
-                        <div className="position-sticky sticky-top top-30 mt-2" id="example-collapse-text">
+                        <div style={{zIndex:'1'}} className="position-sticky sticky-top top-30 mt-2" id="example-collapse-text">
                             <div style={{backgroundColor:'var(--secondary)'}} className="table-responsive rounded" >
-                                <table className="table " >
+                                <table className="table">
                                     <thead>
                                         <tr>
                                             <th>#</th>

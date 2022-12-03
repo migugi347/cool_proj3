@@ -16,8 +16,9 @@ function Mainlayout({ children }) {
         if (localStorage.getItem("user") !== null) {
 
             const loggedInUser = localStorage.getItem("user")
-            setAccount(loggedInUser);
-            console.log(loggedInUser)
+            setAccount(JSON.parse(loggedInUser));
+            // navigate("/home", { replace: true });
+            // console.log(account)
 
         }
     }, []);
@@ -52,6 +53,8 @@ function Mainlayout({ children }) {
             "google_translate_element"
         );
     };
+
+
     useEffect(() => {
         var addScript = document.createElement("script");
         addScript.setAttribute(
@@ -83,7 +86,7 @@ function Mainlayout({ children }) {
                             <Link to='/' className='btn btn-secondary' style={{ marginLeft: "10px" }}>Locate Store</Link>
 
 
-                            {account !== null && <div id="login-btn" className='btn btn-secondary' style={{ marginLeft: "10px", marginRight: "10px" }}>Hello, {account}</div>
+                            {account ? <div id="login-btn" className='btn btn-secondary' style={{ marginLeft: "10px", marginRight: "10px" }}>Hello, {account.name}</div> : ""
                             }
                             {account !== null &&
                                 <button onClick={(e) => handleSignOut(e)} className='btn btn-secondary' style={{ marginLeft: "10px", marginRight: "10px" }} >Log Out</button>

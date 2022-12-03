@@ -123,7 +123,9 @@ function Pospage() {
             // setOrderID(response.data);
             const ord = response.data;
             setOrderID(ord[0].var_order);
+            console.log(Order_ID);
         });
+
         // const result = await axios.get('orderid');
 
 
@@ -132,16 +134,21 @@ function Pospage() {
 
     const fetchLineNum = async () => {
 
-        const result = await axios.get('linenum');
+        const result = await axios.get(API_URL + '/linenum');
         setlineNum(await result.data);
         const newLine = lineNum + 1;
         setlineNum(newLine);
-        //console.log(lineNum);
+        console.log(lineNum);
     }
 
     const checkoutItem = (cartItem) => {
 
         fetchLineNum();
+
+        console.log(lineNum);
+        console.log(Cust_Name);
+
+
 
         axios.post(API_URL + "/checkout", {
 
@@ -149,6 +156,7 @@ function Pospage() {
             Line_Num: lineNum,
             Order_ID: Order_ID,
             Cust_Name: Cust_Name,
+            orderQuantity: cartItem.orderQuantity,
             Recipe_ID: cartItem.Recipe_ID,
 
 
@@ -161,16 +169,15 @@ function Pospage() {
         setButtonPopup(true);
         reSizeView(open);
 
-        console.log(cart);
-        console.log(Order_ID)
+        //console.log(cart);
+        // console.log(Order_ID)
         cart.forEach(cartItem => {
             //checkoutItem
             //pass same order number 
 
             setCustName("Steve");
             checkoutItem(cartItem);
-            console.log(Order_ID);
-            console.log(cartItem.Name);
+
         });
 
     }
@@ -353,7 +360,7 @@ function Pospage() {
             </div >
 
             <PopUp trigger={buttonPopup} setTrigger={setButtonPopup} ><h3>Order Complete! <br></br>
-                Your Order Number is #</h3>
+                Your Order Number is #{Order_ID}</h3>
 
                 <p>ORDER SUMMARY</p>
                 <div className="table-responsive bg-secondary rounded">

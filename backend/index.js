@@ -250,6 +250,29 @@ app.get('/getAccountType', (req,res) => {
     });
 });
 
+app.get('/getLocations', (req,res) => {
+	const lat = req.query.lati;
+	const lng = req.query.longi;
+	const lat_high = parseFloat(lat) + 0.5;
+	const lat_low  = parseFloat(lat) - 0.5;
+	const lng_high = parseFloat(lng) + 0.5;
+	const lng_low  = parseFloat(lng) - 0.5;
+	//1 degree of latitude is ~69 miles
+	//1 degree of longitude is cos(radians(latitude)) * ~69
+	//we are going to assume that a span of 1 degree in both directions
+	//is good enough for now -Timothy 2Dec22
+	
+	const queryString = 'SELECT * FROM sbdirectory '+
+							'WHERE "longitude" BETWEEN '+lng_low+' AND '+lng_high+
+							 ' AND "latittude" BETWEEN '+lat_low+' AND '+lat_high+';';
+	console.log(queryString);
+	pool.query(queryString, (err, result) => {
+		console.log(result);
+		console.log(err);
+		res.send(result.rows);
+	});
+});
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });   

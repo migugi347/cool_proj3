@@ -2,18 +2,33 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Mainlayout from '../layouts/Mainlayout';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import Axios from "axios";
 
+const defaultCenter = {
+	lat: 41.3851, lng: 2.1734
+};
 
-class AddressInput extends React.Component {
+class Mappage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			origin: GoogleMap.LatLng,
+			position: null,
+			stores: null,
 			errorMsg: "",
 		};
+		console.log(this.state.position);
 	}
 	
-	findMe() {
+	componentDidUpdate() {
+		console.log("Position:");
+		console.log(this.state.position);
+		console.log("Stores:");
+		console.log(this.state.stores);
+		console.log("Error State:");
+		console.log(this.state.errorMsg);
+	}
+	  
+	FindMe() {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 				(position) => {
@@ -21,8 +36,7 @@ class AddressInput extends React.Component {
 						lat: position.coords.latitude,
 						lng: position.coords.longitude,
 					};
-					
-					this.setState({origin: pos});
+					this.setState({position: pos});
 				},
 				() => {
 					this.setState({errorMsg: "Error: The Geolocation service failed."});
@@ -33,12 +47,28 @@ class AddressInput extends React.Component {
 		}
 	}
 	
-	render() {
-		if (false/*address construct is filled out*/) {
-			document.getElementByID("map").setCenter(this.state.origin);
-			return (
-				<h1> List of Starbucks Restraunts </h1>
-			);
+	DummyLocationFinder() {
+		console.log("Dummy button fired.");
+	}
+	
+	renderAddressInput() {
+		if (this.state.position) {
+			if (this.state.stores) {
+				return (
+					<h1> List of Starbucks Restraunts </h1>
+				);
+			} else {
+				const lat = this.state.position.lat;
+				const lng = this.state.position.lng;
+				Axios.get("http://localhost:3001/getLocations", 
+						{params: {lati: lat, longi: lng}}
+						).then((response) => {
+					this.setState({stores: response.data});
+				});
+				return (
+					<h1> Loading... </h1>
+				)
+			}
 		} else {
 			return (
 				<>
@@ -47,50 +77,54 @@ class AddressInput extends React.Component {
 					{ this.state.errorMsg && <h3 className="error"> { this.state.errorMsg } </h3> }
 					<p> City:  <input float="right" placeholder="City" /> </p>
 					<p> State: <input float="right" placeholder="State" /> </p>
-					<p> <button className="buttonGeoLocate" id="GetOriginCityState"> City and State </button> </p>
+					<p> <button className="buttonGeoLocate" id="GetOriginCityState" onClick={() => this.DummyLocationFinder()}> City and State </button> </p>
 					<p> OR </p>
 					<p> Zip:   <input float="right" placeholder="Zip Code" /> </p>
-					<p> <button className="buttonGeoLocate" id="GetOriginZip"> Zip Code </button> </p>
+					<p> <button className="buttonGeoLocate" id="GetOriginZip" onClick={() => this.DummyLocationFinder()}> Zip Code </button> </p>
 					<p> OR </p>
-					<p> <button className="buttonGeoLocate" id="GetOriginAuto" onClick={this.props.findMe}> Get Position Automatically </button> </p>
+					<p> <button className="buttonGeoLocate" id="GetOriginAuto" onClick={() => this.FindMe()}> Get Position Automatically </button> </p>
 					
 				</>
 			);
 		}
 	}
-}
+	
+	GetPosition() {
+		if (this.state.position) {
+			return this.state.position;
+		} else {
+			return defaultCenter;
+		}
+	}
 
-const Maptest = () => {
-
-  const mapStyles = {
-    height: "100vh",
-    width: "60%"
-  };
-
-  const defaultCenter = {
-    lat: 41.3851, lng: 2.1734
-  };
-
-  return (
-  <Mainlayout>
-	<div className="textSide">
-		<AddressInput />
-	</div>
-	<div className="mapcontainer">
-		<LoadScript
-			googleMapsApiKey='AIzaSyAlpHWlQyFeFQTX2b3GgVaRBMcvXhzwQyo'>
-			<GoogleMap
-				mapContainerStyle={mapStyles}
-				zoom={13}
-				center={defaultCenter}
-			/>
-		</LoadScript>
-	</div>
-  </Mainlayout>
-  )
+	render() {
+	
+		const mapStyles = {
+			height: "100vh",
+			width: "60%"
+		};
+		
+		return (
+		<Mainlayout>
+			<div className="textSide">
+				{this.renderAddressInput()}	
+			</div>
+			<div className="mapcontainer">
+				<LoadScript
+					googleMapsApiKey='AIzaSyAlpHWlQyFeFQTX2b3GgVaRBMcvXhzwQyo'>
+					<GoogleMap id="map"
+						mapContainerStyle={mapStyles}
+						zoom={13}
+						center={this.GetPosition()}
+					/>
+				</LoadScript>
+			</div>
+		</Mainlayout>
+		)
+	}
 };
 
-export default Maptest;
+export default Mappage;
 /*
 function Square(props) {
   return (

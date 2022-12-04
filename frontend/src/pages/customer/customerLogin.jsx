@@ -84,7 +84,7 @@ export default function CustomerLogin(props) {
         return (
             <Mainlayout className=" align-items-center   ">
 
-                <div className="login-form-cont " >
+                <div className="login-form-cont "  style={{backgroundColor:"#FFFFFF"}}>
 
                     <Form className="login-form " onSubmit={onSubmitHandler}>
                         <div className="login-form-content">
@@ -110,11 +110,11 @@ export default function CustomerLogin(props) {
                                 />
                             </div>
                             <div className="d-grid gap-2 mt-3">
-                                <Button size="md" className="d-grid gap-2 mt-4 mb-2 btn-block bg-primary text-white" type="submit" style={{ fontWeight: 800 }}>
+                                <Button size="md" className="d-grid gap-2 mt-4 mb-2 btn-block text-white" type="submit" style={{ fontWeight: 800,backgroundColor:'var(--primary)'}}>
                                     SUBMIT
                                 </Button>
                                 <div id="signInDiv" ></div>
-                                <Link to='/home' className='btn btn-primary'> START ORDER</Link>
+                                <Link to='/home' className='btn1'> START ORDER</Link>
                             </div>
                             <div className="text-center">
                                 Dont Have an Account?{" "}
@@ -135,10 +135,10 @@ export default function CustomerLogin(props) {
     return (
         <Mainlayout>
 
-            <div className="login-form-cont" >
+            <div className="login-form-cont"  style={{backgroundColor:"#FFFFFF"}}>
 
                 <Form className="auth-form" onSubmit={onSubmitHandler}>
-                    <div className="auth-form-content">
+                    <div className="auth-form-content" >
                         <h3 >Sign Up</h3>
 
                         <div className="form-group mt-3">

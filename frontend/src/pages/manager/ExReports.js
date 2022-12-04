@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useRef} from "react";
+import React, {useState,useRef,useEffect} from "react";
 import Mainlayout from '../../layouts/Mainlayout';
 import axios from "axios";
 import {Link} from 'react-router-dom';
@@ -7,19 +7,17 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 
-function Reports(){
+function ExReports(){
     const [sale, sales] = useState([]);
-    const date1 = new Date('September 1, 2022 00:00:00');
-    const date2 = new Date('September 15, 2022 00:00:00');
+    const date1 = new Date('October 28, 2022 00:00:00');
     const [startDate, setStartDate] = useState(date1);
-    const [endDate, setEndDate] = useState(date2);
     const tableRef = useRef(null);
 
     useEffect(() =>{
-      axios.get("http://localhost:3001/getSales", {params: {date1: startDate, date2:endDate}}).then((response) =>{
+      axios.get("http://localhost:3001/getExcess", {params: {date1: startDate}}).then((response) =>{
         sales(response.data);
-      });
-    },[startDate,endDate]);
+      }); 
+    },[startDate]); 
 
     return(
       <Mainlayout>
@@ -44,44 +42,43 @@ function Reports(){
           </Dropdown>
         </div>
         <div className = "anotherContainer">
-        <h3>Sales Report</h3>
-        <div style={{height:'80vh', overflowX:'hidden',overflowY:'scroll'}}>
-          <div className="table-responsive rounded" style={{backgroundColor:'var(--secondary)'}}> 
-            <table  ref={tableRef} className="table" style={{textAlign:'center'}}>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>NAME</th>
-                  <th>QUANTITY</th>
-                  <th>PRICE</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sale.map((val) => (
+        <h3>Excess Report</h3>
+          <div style={{height:'80vh', overflowX:'hidden',overflowY:'scroll'}}>
+            <div className="table-responsive rounded" style={{backgroundColor:'var(--secondary)'}}> 
+              <table ref={tableRef} className="table" style={{textAlign:'center'}}>
+                <thead>
                   <tr>
-                    <td>{val.Recipe_ID}</td>
-                    <td>{val.Name}</td>
-                    <td>{val.quantity}</td>
-                    <td>${val.price.toFixed(2)}</td>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>QUANTITY USED SINCE DATE</th>
+                    <th>CURRENT QUANTITY IN INVENTORY</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {sale.map((val) => (
+                    <tr>
+                      <td>{val.inventory_id}</td>
+                      <td>{val.Inventory}</td>
+                      <td>{val.total}</td>
+                      <td>{val.Quantity}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-        </div>
-        <div style={{marginBottom:'-15vh'}}>
-          <h3>Start Date:</h3><DatePicker selected={startDate} maxDate={new Date()} onChange={(date) => setStartDate(date)}/>
-          <h3>End Date:</h3><DatePicker selected={endDate} maxDate={new Date()} onChange={(date) => setEndDate(date)}/>
+        <div style={{marginBottom:'-8vh'}}>
+          <h3>Date:</h3><DatePicker maxDate={new Date()} selected={startDate} onChange={(date) => setStartDate(date)}/>
         </div>
         <DownloadTableExcel
-                    filename="Sales Report"
+                    filename="Excess Report"
                     sheet="sheet1"
                     currentTableRef={tableRef.current}
                 >
-             <button style={{float:'right'}} className='btn1'> Export to Excel</button>
+             <button style={{float:'right',backgroundColor:'var(--primary)', color:'var(--secondary)'}} className='btn'> Export to Excel</button>
         </DownloadTableExcel>
         </Mainlayout>
     );
 }
-export default Reports;
+export default ExReports;

@@ -212,9 +212,9 @@ function Server_homescreen() {
                 <nav className='serverNavBar'>
                     <h2>CATEGORIES</h2>
                     <ul>
-                        <button onClick={() => fetchMenu()}>Main Menu</button>
+                        <button style={{backgroundColor:'var(--primary)'}} onClick={() => fetchMenu()}>Main Menu</button>
                         {uniCate.map((product, key) =>
-                            <button href="#" key={key} onClick={() => removeMenu(product)}>{product.Category}</button>
+                            <button style={{backgroundColor:'var(--primary)'}} href="#" key={key} onClick={() => removeMenu(product)}>{product.Category}</button>
                         )}
                     </ul>
                 </nav>
@@ -222,8 +222,8 @@ function Server_homescreen() {
             <div className="menuItems">
                 {isLoading ? <img src={logo} style={{ width: "800px" }} alt="loading .. " /> : <div className='row'>
                     {menu.map((product, key) =>
-                        <div key={key} className='col-lg-4  '>
-                            <button className='poop border text-center text-uppercase fw-bold bg-secondary rounded' onClick={() => addItemtoCart(product)}>
+                        <div key={key} className='col-lg-4'>
+                            <button style={{backgroundColor:'var(--secondary)'}} className='poop border text-center text-uppercase fw-bold rounded' onClick={() => addItemtoCart(product)}>
                                 <p className="font-weight-bold" style={{ fontWeight: "900" }}>{product.Name}</p>
                             </button>
                         </div>
@@ -235,40 +235,44 @@ function Server_homescreen() {
                 <input type = "text" id = "customerName" onChange={getCustomerName} value = {Cust_Name}/>
                 <div className="table-responsive bg-secondary rounded">
                     <table className="table ">
-                        <thead>
-                            <tr>
-                                <th>Menu Item</th>
-                                <th>Decrease</th>
-                                <th>Quantity</th>
-                                <th>Increase</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {cart ? cart.map((cartItem, key) => <tr key={key}>
-                                <td>{cartItem.Name}</td>
-                                <td> <button onClick={() => decrementHandler(cartItem)} value="+" className="button-plus bg-primary border rounded-circle  icon-shape icon-sm  text-white " data-field="quantity">-</button></td>
-                                <td>{cartItem.orderQuantity}</td>
-                                <td> <button onClick={() => incrementHandler(cartItem)} value="+" className="button-plus bg-primary border rounded-circle  icon-shape icon-sm  text-white " data-field="quantity">+</button></td>
-                                <td ><button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>X</button></td>
-                            </tr>) : "No Item In Cart"}
-                        </tbody>
-                    </table>
-                    <div id = "submit" className="submitButton">
-                        <button className="btn btn-primary" onClick={() => {submitOrder()}}>Submit Order</button>
-                            <SubmitPopUp open={submitOpen} onClose={() => setSubmitOpen(false)}>
-                                <h1>Order Submitted!</h1>
-                            </SubmitPopUp>
-                    </div>
-                    <div className="cancelButton">
-                        <button className="btn btn-primary" onClick={() => {setCancelOpen(true); cancelOrder(); fetchOrderID()}}>Cancel Order</button>
+                    <h2 className="px-2">Customer Name: </h2>
+                    <input type = "text" id = "customerName" onChange={getCustomerName} value = {Cust_Name}/>
+                    <div style={{backgroundColor:'var(--secondary)'}} className="table-responsive rounded">
+                        <table className="table ">
+                            <thead>
+                                <tr>
+                                    <th>Menu Item</th>
+                                    <th>Decrease</th>
+                                    <th>Quantity</th>
+                                    <th>Increase</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {cart ? cart.map((cartItem, key) => <tr key={key}>
+                                    <td>{cartItem.Name}</td>
+                                    <td> <button onClick={() => decrementHandler(cartItem)} value="+" style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" data-field="quantity">-</button></td>
+                                    <td>{cartItem.orderQuantity}</td>
+                                    <td> <button onClick={() => decrementHandler(cartItem)} value="+" style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" data-field="quantity">+</button></td>
+                                    <td ><button style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>X</button></td>
+                                </tr>) : "No Item In Cart"}
+                            </tbody>
+                        </table>
+                        <div id = "submit" className="submitButton">
+                            <button className="btn1" onClick={() => {submitOrder()}}>Submit Order</button>
+                              <SubmitPopUp open={submitOpen} onClose={() => setSubmitOpen(false)}>
+                                  <h1>Order Submitted!</h1>
+                              </SubmitPopUp>
+                        </div>
+                        <div className="cancelButton">
+                            <button className="btn1" onClick={() => {setCancelOpen(true); cancelOrder(); fetchOrderID()}}>Cancel Order</button>
                             <CancelPopUp open={cancelOpen} onClose={() => setCancelOpen(false)}>
                                 <h1>Order Cancelled!</h1>
                             </CancelPopUp>
+                        </div>
                     </div>
+                    <h2 className="px-2">Total: ${totalAmount}</h2>
                 </div>
-                <h2 className="px-2">Total: ${totalAmount}</h2>
-            </div>
         </Mainlayout >
     )
 }

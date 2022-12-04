@@ -1,7 +1,9 @@
-import React, {useState,useEffect} from "react";
+import React, {useState,useEffect,useRef} from "react";
 import Mainlayout from '../../layouts/Mainlayout';
 import axios from "axios";
 import {Link} from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 function Menu(){
     const [menuitem, menu] = useState([]);
@@ -9,6 +11,8 @@ function Menu(){
     const [recID, setrecID] = useState(0);
     const [price, setPrice] = useState(0);
     const [category, setCategory] = useState("");
+    const [image, setImage] = useState("");
+    const tableRef = useRef(null);
   
     useEffect(() =>{
       axios.get("http://localhost:3001/getMenu").then((response) =>{
@@ -21,11 +25,13 @@ function Menu(){
         recipeID: recID,
         name: name,
         price: price,
-        category: category
+        category: category,
+        image:image
       }); 
     };
   
     const dels = () =>{
+      let recID = prompt('Enter Recipe ID to be deleted:')
       axios.post("http://localhost:3001/deleteMenu",{
       recipeID: recID
     }); 
@@ -34,20 +40,32 @@ function Menu(){
   
 return(
   <Mainlayout>
-      <div className = "header">
-      
-        <ul>
-          <Link to='/menu' className='btn btn-primary'> Menu</Link>
-          <Link to='/inventory' className='btn btn-primary'> Inventory</Link>
-          <Link to='/reports' className='btn btn-primary'> Reports</Link>
-          <Link to='/orders' className='btn btn-primary'> Orders</Link>
-        </ul>
+      <div className = "header" style={{backgroundColor:'var(--primary)'}}>
+          <Dropdown style={{}}>
+            <Link to='/menu' className='btn1'> Menu</Link>
+            <Link to='/inventory' className='btn1'> Inventory</Link>
+            <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: 'var(--primary)', color:"var(--secondary)"}}>Reports</Dropdown.Toggle>
+            <Dropdown.Menu>
+                <Dropdown.Item >
+                  <Link to='/reports' className='btn1' style={{width:'150px'}}> Sales Report</Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to='/exreports' className='btn1' style={{width:'150px'}}> Excess Report</Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to='/rereports' className='btn1' style={{width:'150px'}}> Restock Report</Link>
+                </Dropdown.Item>
+            </Dropdown.Menu>
+            <Link to='/orders' className='btn1'> Orders</Link>
+            <Link to='/employees' className='btn1'> Employees</Link>
+          </Dropdown>
       </div>
 
       <div className = "anotherContainer">
         <h3>Menu</h3>
-        <div className="table-responsive bg-secondary rounded"> 
-          <table className="table">
+        <div style={{height:'80vh', overflowX:'hidden',overflowY:'scroll'}}>
+        <div className="table-responsive rounded" style={{backgroundColor:'var(--secondary)'}}> 
+          <table ref={tableRef} className="table" style={{textAlign:'center'}}>
             <thead>
               <tr>
                 <th>ID</th>
@@ -61,38 +79,53 @@ return(
                 <tr>
                   <td>{val.Recipe_ID}</td>
                   <td>{val.Name}</td>
-                  <td>${val.Price}</td>
+                  <td>${val.Price.toFixed(2)}</td>
                   <td>{val.Category}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div className = "addForm">
-            <form>
-              <label>Recipe_ID:</label>
-              <input type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}></input>
-              <label>Name:</label>
-              <input type="text" name="name" onChange = {(e)=>{setName(e.target.value);}}></input>
-              <label>Price:</label>
-              <input type="text" name="price" onChange = {(e)=>{setPrice(e.target.value);}}></input>
-              <label>Category:</label>
-              <input type="text" name="category" onChange = {(e)=>{setCategory(e.target.value);}}></input>
-              <button className='btn btn-primary' onClick={()=>subs()}> Add New Menu Item</button>
-            </form>
         </div>
-        <div className = "deleteForm">
+
+        <DownloadTableExcel
+                    filename="Menu"
+                    sheet="sheet1"
+                    currentTableRef={tableRef.current}
+                >
+             <button style={{float:'right', width:'175px', marginTop:'1vh'}} className='btn1'>Export to Excel</button>
+        </DownloadTableExcel>
+        
+        <div style={{display:'flex', marginTop:'6vh', marginBottom:'-20vh', justifyContent:'center', width:'80vw'}}>
+          <div className = "addForm" style={{display:'flex', textAlign:'center', alignSelf:'flex-end'}}>
+              <form>
+                <div style={{textAlign:'right'}}>
+                <label>Recipe_ID:</label>
+                <input style={{margin:'7.5px'}} type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}></input><br></br>
+                <label>Name:</label>
+                <input style={{margin:'7.5px'}} type="text" name="name" onChange = {(e)=>{setName(e.target.value);}}></input><br></br>
+                <label>Price:</label>
+                <input style={{margin:'7.5px'}} type="text" name="price" onChange = {(e)=>{setPrice(e.target.value);}}></input><br></br>
+                <label>Category:</label>
+                <input style={{margin:'7.5px'}} type="text" name="category" onChange = {(e)=>{setCategory(e.target.value);}}></input><br></br>
+                <label>Image URL:</label>
+                <input style={{margin:'7.5px'}} type="text" name="image" onChange = {(e)=>{setImage(e.target.value);}}></input><br></br>
+                </div>
+                <button style={{width:'175px',marginTop:'7.5px'}} className='btn1' onClick={()=>subs()}> Add New Menu Item</button><br></br>
+              </form>
+          </div>
+
+          <div className = "deleteForm" style={{alignSelf:'flex-end', marginLeft:'10vw',marginRight:'10vw'}}>
+              <button style={{width:'175px'}} className='btn1' onClick={()=>dels()}> Delete Menu Item</button>
+          </div>
+
+          <div className = "updateForm" style={{alignSelf:'flex-end'}}>
             <form>
-              <label>Recipe_ID:</label>
-              <input type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}></input>
-              <button className='btn btn-primary' onClick={()=>dels()}> Delete Menu Item</button>
+              <Link to='/updateMenu' style={{width:'175px',backgroundColor:'var(--primary)', color:'var(--secondary)'}} className='btn1'> Update A Menu Item</Link>
             </form>
+          </div>
         </div>
-        <div className = "updateForm">
-            <form>
-              <Link to='/updateMenu' className='btn btn-primary'> Update Menu Item</Link>
-            </form>
-        </div>
+
       </div>
     </Mainlayout>
     );

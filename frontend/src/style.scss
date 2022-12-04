@@ -1,9 +1,8 @@
-$theme-colors: (
-    "primary": #00704A,
-
-    "secondary": #eac784,
-);
-
+:root{
+    --primary: #00704A;
+    --secondary: #eac784;
+    --sizer:16px;
+}
 
 .poop:hover {
     transform: scale(1.05);
@@ -13,6 +12,34 @@ $theme-colors: (
     transition: transform 0.2s ease;
 }
 
+.table{
+    background-color: var(--secondary);
+}
+.btn1{
+    font-size: 16px;
+    padding: 8px 12px;
+    margin-bottom: 0;
+    border-radius: 5px;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    background-color: var(--primary);
+    color: var(--secondary);
+}
+.btn1:hover{
+    color: white;
+}
 
 .login-form-cont {
     width: 100%;
@@ -23,7 +50,7 @@ $theme-colors: (
     padding-top: 100px;
     margin: auto;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0.05);
-
+    margin-bottom: -20vh;
     h3 {
         font-weight: 500;
         margin-bottom: 50px
@@ -78,8 +105,6 @@ $theme-colors: (
     border-radius: 50px;
     object-fit: cover;
     object-position: 100% 0;
-
-
 }
 
 .poop-2:hover {
@@ -91,7 +116,7 @@ $theme-colors: (
 }
 
 .icon-labels {
-    background-color: #eac784;
+    background-color:var(--secondary);
     border-radius: 40px;
     margin-left: 5px;
     margin-right: 5px;
@@ -176,14 +201,15 @@ $theme-colors: (
 }
 
 .header {
-    background-color: #00704A;
     text-align: center;
 }
 
 /*google translate Dropdown */
 .goog-te-gadget-simple {
-    border-radius: 25px;
+    border-radius: 15px;
     font-size: 20px !important;
+    margin:0;
+    padding:0;
 }
 
 main{
@@ -202,6 +228,7 @@ main{
     height: 70%;
     overflow-y: scroll;
     background-color: #00704A;
+    background-color: var(--primary);
 }
 
 .serverNavBar h2 {
@@ -217,7 +244,7 @@ main{
 .serverNavBar button{
     text-transform: uppercase;
     color: white;
-    background-color: #00704A;
+    background-color: --primary;
     text-align: center;
     position: relative;
     left: -32px;
@@ -225,8 +252,8 @@ main{
     list-style: none;
     margin-top: 10px;
     padding: 22px;
-    border-bottom: 1px solid #013f2a;
-    border-top: 1px solid  #003d29;
+    border-bottom: 1px solid var(--primary);
+    border-top: 1px solid var(--primary);
     border-right: 1px solid rgba(0,0,0,0);
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 16px;
@@ -234,9 +261,9 @@ main{
 
 .serverNavBar button:hover{
     font-size: 17px;
-    background-color: #00281a;
-    border-bottom: 1px solid #03e99c;
-    border-top: 1px solid  #03e89b;
+    background-color: var(--primary);
+    border-bottom: 1px solid var(--secondary);
+    border-top: 1px solid  var(--secondary);
 }
 
 .navbarArea{
@@ -294,6 +321,17 @@ main{
     float: right;
     margin-bottom: 30px;
     margin-right: 30px;
+}
+
+.footerImage{
+    margin-right: 5px;
+    margin-left:5px;
+    height:5vh;
+    width:5vh;
+}
+
+.dropdown-menu{
+    --bs-dropdown-link-active-bg: #FFF !important;
 }
 
 @import "~bootstrap/scss/bootstrap"

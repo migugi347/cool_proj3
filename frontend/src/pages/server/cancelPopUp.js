@@ -38,7 +38,7 @@ function CancelPopUp({ open, children, onClose}) {
             </div>
             <div style={popUp}>
                 <div>{children}</div>
-                <button className="btn btn-primary" onClick={onClose}>New Order!</button>
+                <button className="btn1" onClick={onClose}>New Order!</button>
             </div>
         </>
     )

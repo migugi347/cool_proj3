@@ -231,10 +231,7 @@ function Server_homescreen() {
                 </div>}
             </div>
             <div className="orderSummary">
-                <h2 className="px-2">Customer Name: </h2>
-                <input type = "text" id = "customerName" onChange={getCustomerName} value = {Cust_Name}/>
                 <div className="table-responsive bg-secondary rounded">
-                    <table className="table ">
                     <h2 className="px-2">Customer Name: </h2>
                     <input type = "text" id = "customerName" onChange={getCustomerName} value = {Cust_Name}/>
                     <div style={{backgroundColor:'var(--secondary)'}} className="table-responsive rounded">
@@ -273,6 +270,7 @@ function Server_homescreen() {
                     </div>
                     <h2 className="px-2">Total: ${totalAmount}</h2>
                 </div>
+            </div>
         </Mainlayout >
     )
 }

@@ -222,10 +222,12 @@ main{
     padding: 0;
     box-sizing: border-box;
     position: fixed;
-    top: 124px;
+    top: 175px;
     left: 0px;
     width: 15%;
-    height: 85%;
+    height: 70%;
+    overflow-y: scroll;
+    background-color: #00704A;
     background-color: var(--primary);
 }
 
@@ -248,8 +250,7 @@ main{
     left: -32px;
     width: 15vw;
     list-style: none;
-    margin-top: 14px;
-    margin-bottom: 14px;
+    margin-top: 10px;
     padding: 22px;
     border-bottom: 1px solid var(--primary);
     border-top: 1px solid var(--primary);
@@ -268,17 +269,18 @@ main{
 .navbarArea{
     color: rgba(0,0,0,0);
     float: left;
-    width: 15%;
+    width: 12%;
+    position: sticky;
 }
 
 .menuItems{
-    width: 56%;
+    width: 53%;
     float: left;
 }
 
 .menuItems button {
     height: 5.5vw;
-    width: 16vw;
+    width: 14vw;
     margin-top: 5px;
     margin-left: 0px;
     margin-right: 0px;
@@ -287,18 +289,26 @@ main{
 
 .orderSummary{
     float: left;
-    width: 24%;
-    margin-left: 1%;
+    position: sticky;
+    width: 34%;
 }
 
 .orderSummary table{
+    overflow-x: scroll;
     overflow-y:scroll;
     display:block;
-    height: 450px;
+    height: 300px;
+    width: 100%;
 }
 
 .orderSummary thead, td {
     text-align: center;
+}
+
+.orderSummary #customerName {
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
 }
 
 .submitButton {

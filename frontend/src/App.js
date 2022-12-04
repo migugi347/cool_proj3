@@ -19,6 +19,11 @@ import Orders from './pages/manager/Orders';
 import Employees from './pages/manager/Employees';
 import ServerHomeScreen from './pages/server/server_homescreen';
 
+/**
+ * Main page for Starbucks POS web application.
+ * Used to route to different links (web pages) within the web application.
+ * @returns {HTML} - HTML code containing all the routes within the web application.
+ */
 function App() {
   return (
     <>

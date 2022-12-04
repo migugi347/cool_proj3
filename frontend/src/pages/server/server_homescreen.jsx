@@ -1,25 +1,36 @@
 import React, { useState, useEffect} from "react";
 import axios from "axios";
 import Mainlayout from '../../layouts/Mainlayout';
-import PopUp from "../../components/PopUp";
 import logo from '../../layouts/images/coffee.gif';
+import SubmitPopUp from './submitPopUp';
+import CancelPopUp from './cancelPopUp';
 
+/**
+ * Graphical User Interface (GUI) for MSC Starbucks' servers. Allows
+ * servers to easily navigate through menu items, take orders, and 
+ * update the store's inventory when submitting an order.
+ * Program pulls the menu items and categories from the project's database,
+ * uses that information to populate the page, and updates the database in the end
+ * once an order has been submitted successfully.
+ * @returns {HTML} - HTML code displaying Graphical User Interface
+ */
 function Server_homescreen() {
     const [products, setProducts] = useState([]);
     const [menu, setMenu] = useState([]);
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState([]); //clear
 
-    const [totalAmount, setTotalAmount] = useState(0);
-    const [buttonPopup, setButtonPopup] = useState(false);
-
+    const [totalAmount, setTotalAmount] = useState(0); //clear
 
     const [Order_ID, setOrderID] = useState(0);
     const [lineNum, setlineNum] = useState([]);
-    const [Cust_Name, setCustName] = useState("");
+    const [Cust_Name, setCustName] = useState(""); //clear
 
     const uniCate = [...new Map(categories.map((m) => [m.Category, m])).values()];
+
+    const[submitOpen, setSubmitOpen] = useState(false);
+    const[cancelOpen, setCancelOpen] = useState(false);
 
     const fetchMenu = async () => {
         setIsLoading(true);
@@ -28,7 +39,6 @@ function Server_homescreen() {
         setMenu(await result.data);
         setIsLoading(false);
     }
-
 
     const fetchCategory = async () => {
         setIsLoading(true);
@@ -57,14 +67,15 @@ function Server_homescreen() {
     }
 
     const fetchOrderID = async () => {
-        axios.get("http://localhost:3001/orderid").then((response) => {
-            setOrderID(response.data);
-        });
-        const result = await axios.get('orderid');
-        setOrderID(await result.data.var_order);
-        console.log(Order_ID);
-    }
+        console.log("start");
 
+        const result = await axios.get('orderid');
+        setOrderID(await result.data);
+        alert(Order_ID);
+
+        console.log("end");
+    }
+ 
 
     const fetchLineNum = async () => {
         const result = await axios.get('linenum');
@@ -83,15 +94,6 @@ function Server_homescreen() {
             Recipe_ID: cartItem.Recipe_ID,
         });
     };
-
-    const checkoutPrompt = async () => {
-        setButtonPopup(true)
-        fetchOrderID();
-        cart.forEach(cartItem => {
-            setCustName("Steve");
-            checkoutItem(cartItem);
-        });
-    }
 
     const addItemtoCart = async (product) => {
         let findItemInCart = await cart.find(i => {
@@ -125,6 +127,63 @@ function Server_homescreen() {
             }
             setCart([...cart, addingItem]);
             console.log(cart)
+        }
+    }
+
+    const decrementHandler = async (itemID) => {
+        if (itemID.orderQuantity === 1) {
+            removeProduct(itemID);
+        }
+        else {
+            let newCart = [];
+            let newItem;
+            cart.forEach(cartItem => {
+                if (cartItem.Recipe_ID === itemID.Recipe_ID) {
+                    newItem =
+                    {
+                        ...cartItem,
+                        orderQuantity: cartItem.orderQuantity - 1,
+                        totalAmount: cartItem.Price * (cartItem.orderQuantity - 1)
+
+                    }
+                    newCart.push(newItem);
+                }
+                else {
+                    newCart.push(cartItem);
+                }
+            });
+            setCart(newCart);
+        }
+    }
+
+    const incrementHandler = (itemID) => {
+        addItemtoCart(itemID);
+    }
+
+    /**
+     * stores customer's name upon input from server
+     * @param {string} customerName
+     */
+    const getCustomerName = (customerName) => {
+        setCustName(customerName.target.value);
+    }
+
+    const cancelOrder = () => {
+        setCart([]);
+        setTotalAmount(0);
+        setCustName("");
+    }
+
+    const submitOrder = () => {
+        if(Cust_Name === ""){
+            alert("Cannot submit order! Please enter customer's name!");
+        }else if(cart.length === 0){
+            alert("Cannot submit order! No menu items have been selected!")
+        }else{
+            setSubmitOpen(true)
+            setCart([]);
+            setTotalAmount(0);
+            setCustName("");
         }
     }
 
@@ -172,9 +231,12 @@ function Server_homescreen() {
                 </div>}
             </div>
             <div className="orderSummary">
-                <div className="position-fixed">
+                <h2 className="px-2">Customer Name: </h2>
+                <input type = "text" id = "customerName" onChange={getCustomerName} value = {Cust_Name}/>
+                <div className="table-responsive bg-secondary rounded">
+                    <table className="table ">
                     <h2 className="px-2">Customer Name: </h2>
-                    <h2 className="px-2" contentEditable>Name</h2>
+                    <input type = "text" id = "customerName" onChange={getCustomerName} value = {Cust_Name}/>
                     <div style={{backgroundColor:'var(--secondary)'}} className="table-responsive rounded">
                         <table className="table ">
                             <thead>
@@ -189,65 +251,28 @@ function Server_homescreen() {
                             <tbody>
                                 {cart ? cart.map((cartItem, key) => <tr key={key}>
                                     <td>{cartItem.Name}</td>
-                                    <td ><button style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>-</button></td>
+                                    <td> <button onClick={() => decrementHandler(cartItem)} value="+" style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" data-field="quantity">-</button></td>
                                     <td>{cartItem.orderQuantity}</td>
+                                    <td> <button onClick={() => decrementHandler(cartItem)} value="+" style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" data-field="quantity">+</button></td>
                                     <td ><button style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>X</button></td>
-                                </tr>)
-
-                                    : "No Item In Cart"}
-
-                                {menu.map((product, key) => <tr key={key}>
-                                    <td><button  style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" onClick={() => addItemtoCart(product)}>+</button></td>
-                                </tr>)}
-
+                                </tr>) : "No Item In Cart"}
                             </tbody>
                         </table>
-                        <div className="submitButton">
-                            {totalAmount !== 0 ? <div>
-                                <button className="btn1" onClick={() => checkoutPrompt()} >Submit Order</button>
-                            </div> : "Please add a product to the cart"}
+                        <div id = "submit" className="submitButton">
+                            <button className="btn1" onClick={() => {submitOrder()}}>Submit Order</button>
+                              <SubmitPopUp open={submitOpen} onClose={() => setSubmitOpen(false)}>
+                                  <h1>Order Submitted!</h1>
+                              </SubmitPopUp>
                         </div>
                         <div className="cancelButton">
-                            <button className="btn1" onClick={() => checkoutPrompt()} >Cancel Order</button>
+                            <button className="btn1" onClick={() => {setCancelOpen(true); cancelOrder(); fetchOrderID()}}>Cancel Order</button>
+                            <CancelPopUp open={cancelOpen} onClose={() => setCancelOpen(false)}>
+                                <h1>Order Cancelled!</h1>
+                            </CancelPopUp>
                         </div>
                     </div>
                     <h2 className="px-2">Total: ${totalAmount}</h2>
                 </div>
-            </div>
-
-            <PopUp trigger={buttonPopup} setTrigger={setButtonPopup} ><h3>Order Complete! <br></br>
-                Your Order Number is #{Order_ID}</h3>
-
-                <p>ORDER SUMMARY</p>
-                <div style={{backgroundColor:'var(secondary)'}} className="table-responsive rounded">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Qty</th>
-                                <th>Total</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {cart ? cart.map((cartItem, key) => <tr key={key}>
-                                <td>{cartItem.Recipe_ID}</td>
-                                <td>{cartItem.Name}</td>
-                                <td>{cartItem.Price}</td>
-                                <td>{cartItem.orderQuantity}</td>
-                                <td>{cartItem.totalAmount}</td>
-
-                            </tr>)
-
-                                : "No Item In Cart"}
-
-                        </tbody>
-                    </table>
-                    <h2 className="px-2">Total Amount Due ${totalAmount}</h2>
-                </div>
-            </PopUp>
         </Mainlayout >
     )
 }

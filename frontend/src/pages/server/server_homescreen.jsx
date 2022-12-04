@@ -250,7 +250,7 @@ function Server_homescreen() {
                                     <td>{cartItem.Name}</td>
                                     <td> <button onClick={() => decrementHandler(cartItem)} value="+" style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" data-field="quantity">-</button></td>
                                     <td>{cartItem.orderQuantity}</td>
-                                    <td> <button onClick={() => decrementHandler(cartItem)} value="+" style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" data-field="quantity">+</button></td>
+                                    <td> <button onClick={() => incrementHandler(cartItem)} value="+" style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" data-field="quantity">+</button></td>
                                     <td ><button style={{backgroundColor:'var(--primary)'}} className="btn text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>X</button></td>
                                 </tr>) : "No Item In Cart"}
                             </tbody>

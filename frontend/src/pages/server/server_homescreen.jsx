@@ -9,6 +9,9 @@ import CancelPopUp from './cancelPopUp';
  * Graphical User Interface (GUI) for MSC Starbucks' servers. Allows
  * servers to easily navigate through menu items, take orders, and 
  * update the store's inventory when submitting an order.
+ * Program pulls the menu items and categories from the project's database,
+ * uses that information to populate the page, and updates the database in the end
+ * once an order has been submitted successfully.
  * @returns {HTML} - HTML code displaying Graphical User Interface
  */
 function Server_homescreen() {

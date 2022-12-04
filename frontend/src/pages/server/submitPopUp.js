@@ -23,7 +23,7 @@ const darkenBackground = {
 }
 
 /**
- * 
+ * Pop-up that displays that an order has been submitted successfully.
  * @param {boolean} open - determines whether pop-up will opened or closed
  * @param {HTML} children - elements to be displayed by the pop-up
  * @param {function} onClose - stops displaying pop-up when closed

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Mainlayout from '../layouts/Mainlayout';
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Axios from "axios";
 
 const defaultCenter = {
@@ -96,6 +96,18 @@ class Mappage extends React.Component {
 			return defaultCenter;
 		}
 	}
+	
+	BuildStoreMarker(index) {
+		return (<Marker position={{lat: this.state.stores[index].latittude, lng: this.state.stores[index].longitude}} />);
+	}
+	
+	GenerateMarkers() {
+		if (this.state.stores) {
+			return this.BuildStoreMarker(0);
+		} else {
+			return (<></>);
+		}
+	}
 
 	render() {
 	
@@ -116,7 +128,9 @@ class Mappage extends React.Component {
 						mapContainerStyle={mapStyles}
 						zoom={13}
 						center={this.GetPosition()}
-					/>
+					>
+					{this.GenerateMarkers()}
+					</GoogleMap>
 				</LoadScript>
 			</div>
 		</Mainlayout>

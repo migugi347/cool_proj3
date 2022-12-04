@@ -5,6 +5,12 @@ import logo from '../../layouts/images/coffee.gif';
 import SubmitPopUp from './submitPopUp';
 import CancelPopUp from './cancelPopUp';
 
+/**
+ * Graphical User Interface (GUI) for MSC Starbucks' servers. Allows
+ * servers to easily navigate through menu items, take orders, and 
+ * update the store's inventory when submitting an order.
+ * @returns {HTML} - HTML code displaying Graphical User Interface
+ */
 function Server_homescreen() {
     const [products, setProducts] = useState([]);
     const [menu, setMenu] = useState([]);
@@ -30,7 +36,6 @@ function Server_homescreen() {
         setMenu(await result.data);
         setIsLoading(false);
     }
-
 
     const fetchCategory = async () => {
         setIsLoading(true);
@@ -58,12 +63,13 @@ function Server_homescreen() {
         setMenu(newProducts);
     }
 
-    const fetchOrderID = () => {
+    const fetchOrderID = async () => {
         console.log("start");
-        axios.get("http://localhost:3001/orderid").then((response) => {
-            //setOrderID(response.data);
-            console.log(response.data);
-        });
+
+        const result = await axios.get('orderid');
+        setOrderID(await result.data);
+        alert(Order_ID);
+
         console.log("end");
     }
  
@@ -151,8 +157,11 @@ function Server_homescreen() {
         addItemtoCart(itemID);
     }
 
+    /**
+     * stores customer's name upon input from server
+     * @param {string} customerName
+     */
     const getCustomerName = (customerName) => {
-        console.log(customerName.target.value);
         setCustName(customerName.target.value);
     }
 
@@ -249,7 +258,7 @@ function Server_homescreen() {
                             </SubmitPopUp>
                     </div>
                     <div className="cancelButton">
-                        <button className="btn btn-primary" onClick={() => {setCancelOpen(true); cancelOrder()}}>Cancel Order</button>
+                        <button className="btn btn-primary" onClick={() => {setCancelOpen(true); cancelOrder(); fetchOrderID()}}>Cancel Order</button>
                             <CancelPopUp open={cancelOpen} onClose={() => setCancelOpen(false)}>
                                 <h1>Order Cancelled!</h1>
                             </CancelPopUp>

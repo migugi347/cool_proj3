@@ -21,6 +21,13 @@ const darkenBackground = {
     zIndex: 1
 }
 
+/**
+ * 
+ * @param {boolean} open - determines whether pop-up will opened or closed
+ * @param {HTML} children - elements to be displayed by the pop-up
+ * @param {function} onClose - stops displaying pop-up when closed
+ * @returns {HTML} - HTML code displaying pop-up
+ */
 function CancelPopUp({ open, children, onClose}) {
     if(!open){
         return null

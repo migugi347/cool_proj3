@@ -30,10 +30,13 @@ app.get('/user', (req, res) => {
 
 
 app.get('/orderid', (req,res) => {
-    pool
-        .query('SELECT MAX( \"Order_ID\") +1  AS var_order FROM orders;', (err, result) => {
+    pool.query('SELECT \"Order_ID\" FROM orders WHERE \"Order_ID\" = (SELECT MAX(\"Order_ID\") FROM orders);', (err, result) => {
+        if(err){
+            console.log(err);
+        }else{
             res.send(result.rows);
-        })
+        }
+    })
 });
 
 
@@ -225,19 +228,6 @@ app.post('/deleteInventory', (req, res) => {
     });
 });
 
-app.get('/server/getCategories', (req,res) =>{
-    const getCategories = "SELECT DISTINCT \"Category\" FROM recipe";
-    pool.query(getCategories, (err, result) => {
-        res.send(result.rows);
-    });
-});
-
-app.get('/server/getMenuItems', (req,res) => {
-    const getItems = " SELECT * FROM recipe";
-    pool.query(getItems, (err, result) => {
-        res.send(result.rows);
-    });
-});
 
 app.get('/getAccountType', (req,res) => {
     const email = req.query.email;

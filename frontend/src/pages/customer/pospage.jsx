@@ -117,15 +117,11 @@ function Pospage() {
 
     const fetchOrderID = async () => {
 
-
         await axios.get("http://localhost:3001/orderid").then((response) => {
             // setOrderID(response.data);
             const ord = response.data;
             setOrderID(ord[0].var_order);
         });
-        // const result = await axios.get('orderid');
-
-
 
     }
 

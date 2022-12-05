@@ -234,6 +234,15 @@ app.post('/updateRecipeItem', (req, res) => {
     });
 });
 
+app.post('/signup', (req, res) => {
+    const email = req.body.upemail;
+    const name = req.body.upname;
+    const pass = req.body.uppass;
+    pool.query("INSERT INTO accounts VALUES ('"+email+"','customer','"+name+"','"+pass+"');", (err, result) => {
+        console.log(err);
+    });
+});
+
 app.post('/deleteMenu', (req, res) => {
     const recID = req.body.recipeID;
     pool.query('DELETE FROM recipe WHERE "Recipe_ID" = ' + recID + ';', (err, result) => {
@@ -275,7 +284,7 @@ app.get('/server/getMenuItems', (req, res) => {
 app.get('/getAccountType', (req, res) => {
     const email = req.query.email;
     //console.log(email);
-    pool.query("SELECT type FROM accounts WHERE email = \'" + email + "\';", (err, result) => {
+    pool.query("SELECT name, type FROM accounts WHERE email = \'" + email + "\';", (err, result) => {
         res.send(result.rows);
     });
 });

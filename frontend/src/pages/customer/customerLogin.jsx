@@ -20,13 +20,18 @@ export default function CustomerLogin(props) {
 
     const navigate = useNavigate();
 
-
+    const [upemail, setUpEmail] = useState("");
+    const [upname, setUpName] = useState("");
+    const [uppass, setUpPass] = useState("");
+    const [tempname,setTempName] = useState("");
 
     useEffect(() => {
         (async () => {
             try {
                 axios.get(API_URL + "/getAccountType", { params: { email: email } }).then((response) => {
-                    setAccount(response.data);
+                    setAccount(response.data[0].type);
+                    setTempName(response.data[0].name);
+                    //console.log(tempname);
                 });
             } catch (error) {
                 console.log('error');
@@ -69,6 +74,7 @@ export default function CustomerLogin(props) {
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
+        localStorage.setItem('name',tempname);
         if (account.length === 0)
             switchLogin();
         else if (account[0].type === "manager")
@@ -81,6 +87,14 @@ export default function CustomerLogin(props) {
 
     const switchLogin = () => {
         setAuthMode(authMode === "signin" ? "signup" : "signin")
+    }
+
+    const signUp = () => {
+        axios.post("http://localhost:3001/signup",{
+            upname: upname,
+            upemail: upemail,
+            uppass: uppass
+        }); 
     }
 
 
@@ -150,6 +164,7 @@ export default function CustomerLogin(props) {
                                 className="form-control mt-1"
                                 placeholder="First and Last Name"
                                 required
+                                onChange = {(e)=>{setUpName(e.target.value);}}
                             />
                         </div>
                         <div className="form-group mt-3">
@@ -159,6 +174,7 @@ export default function CustomerLogin(props) {
                                 className="form-control mt-1"
                                 placeholder="name@email.com"
                                 required
+                                onChange = {(e)=>{setUpEmail(e.target.value);}}
                             />
                         </div>
                         <div className="form-group mt-3 text-le">
@@ -168,10 +184,11 @@ export default function CustomerLogin(props) {
                                 className="form-control mt-1"
                                 placeholder="Password"
                                 required
+                                onChange = {(e)=>{setUpPass(e.target.value);}}
                             />
                         </div>
                         <div className="d-grid gap-2 mt-3">
-                            <Button size="md" className="d-grid gap-2 mt-4 mb-3 btn-block bg-primary text-white" type="submit" style={{ fontWeight: 800 }}>
+                            <Button onClick={()=>signUp()} size="md" className="d-grid gap-2 mt-4 mb-3 btn-block bg-primary text-white" type="submit" style={{ fontWeight: 800 }}>
                                 SIGN IN
                             </Button>
                         </div>

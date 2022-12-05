@@ -6,7 +6,7 @@ import "../style.scss"
 import Dropdown from 'react-bootstrap/Dropdown';
 
 function Mainlayout({ children }) {
-
+    
 
     const [account, setAccount] = useState([]);
     useEffect(() => {
@@ -28,6 +28,7 @@ function Mainlayout({ children }) {
     // const googleTranslateElementInit = () => {
     //     new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
     // }
+
     const googleTranslateElementInit = () => {
         new window.google.translate.TranslateElement({
                 pageLanguage: "en",
@@ -130,11 +131,8 @@ function Mainlayout({ children }) {
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
-
                         </div>
-                        
                     </div>
-                   
                 </nav>
                 <div style={{float:'right'}}>
                     {showColorPicker && (
@@ -144,13 +142,11 @@ function Mainlayout({ children }) {
                         />
                     )}
                 </div>
-
             </header>
             <main>
                 <div className='container mt-3 mb-5'>
                     {children}
                 </div>
-
             </main>
             <div>
                 <nav  style={{backgroundColor:'var(--primary)'}} className=' navbar fixed-bottom'>

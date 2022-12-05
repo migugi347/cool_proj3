@@ -87,7 +87,7 @@ export default function CustomerLogin(props) {
         return (
             <Mainlayout className=" align-items-center   ">
 
-                <div className="login-form-cont " >
+                <div className="login-form-cont " style={{backgroundColor:'white'}}>
 
                     <Form className="login-form " onSubmit={onSubmitHandler}>
                         <div className="login-form-content">
@@ -138,7 +138,7 @@ export default function CustomerLogin(props) {
     return (
         <Mainlayout>
 
-            <div className="login-form-cont" >
+            <div className="login-form-cont"  style={{backgroundColor:'white'}}>
 
                 <Form className="auth-form" onSubmit={onSubmitHandler}>
                     <div className="auth-form-content">

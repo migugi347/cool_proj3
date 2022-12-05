@@ -277,10 +277,10 @@ function Pospage() {
 
                             <div key={key} className='col-lg-4  '>
 
-                                <div className='poop border text-center text-uppercase fw-bold bg-secondary rounded' onClick={() => addItemtoCart(product)}>
-                                    <p className="font-weight-bold" style={{ fontWeight: "600" }}>{product.Name}</p>
+                                <div style={{backgroundColor:'var(--secondary)', margin:'5px'}} className='poop border text-center text-uppercase fw-bold rounded' onClick={() => addItemtoCart(product)}>
+                                    <p style={{marginTop:'5px',fontSize:'var(--sizer)'}} className="font-weight-bold">{product.Name}</p>
                                     <Magnifier src={product.image} className="img-fluid" alt={product.Name} ></Magnifier>
-                                    <p>${product.Price}</p>
+                                    <p style={{marginTop:'5px',fontSize:'var(--sizer)'}} >${product.Price}</p>
                                 </div>
                             </div>
                         )}

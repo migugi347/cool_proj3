@@ -103,7 +103,10 @@ class Mappage extends React.Component {
 	
 	GenerateMarkers() {
 		if (this.state.stores) {
-			return this.BuildStoreMarker(0);
+			const stores = this.state.stores;
+			return (<>{stores.map((store, index) =>
+                <Marker position={{lat: store.latittude, lng: store.longitude}} />
+            )}</>);
 		} else {
 			return (<></>);
 		}

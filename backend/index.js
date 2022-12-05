@@ -265,13 +265,11 @@ app.get('/getLocations', (req,res) => {
 	const queryString = 'SELECT * FROM sbdirectory '+
 							'WHERE "longitude" BETWEEN '+lng_low+' AND '+lng_high+
 							 ' AND "latittude" BETWEEN '+lat_low+' AND '+lat_high+';';
-	console.log(queryString);
 	pool.query(queryString, (err, result) => {
-		console.log(result);
-		console.log(err);
 		res.send(result.rows);
 	});
 });
+//SELECT * FROM sbdirectory WHERE "city"='College Station' AND "state"='TX' AND "country"='US';
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);

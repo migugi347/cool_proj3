@@ -71,8 +71,11 @@ class Mappage extends React.Component {
 					<h1> List of Starbucks Restraunts </h1>
 					{stores.map((store, index) => 
 						<>
-						<p> <b>{(index+1).toString()}</b> {" " + store.street} </p>
-						<p> {store.city + ", " + store.state + " " + this.FixPostcode(store.postcode)} </p>
+							<p> 
+								<b>{(index+1).toString() + ") " + store.name}</b>
+								<p style={{margin:'0px'}}>{store.street}</p>
+								<p>{store.city + ", " + store.state + " " + this.FixPostcode(store.postcode)}</p>
+							</p>
 						</>
 					)}
 					</>
@@ -140,7 +143,7 @@ class Mappage extends React.Component {
 		
 		return (
 		<Mainlayout>
-			<div className="textSide">
+			<div className="textSide" style={{marginBottom:'20px'}}>
 				{this.renderAddressInput()}	
 			</div>
 			<div className="mapcontainer">

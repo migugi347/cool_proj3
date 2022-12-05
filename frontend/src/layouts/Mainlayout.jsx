@@ -5,10 +5,18 @@ import { ChromePicker } from 'react-color'
 import "../style.scss"
 import Dropdown from 'react-bootstrap/Dropdown';
 
+
+//const localUser = JSON.parse(localStorage.getItem('user') || '{}');
+
+
 function Mainlayout({ children }) {
     
 
-    const [account, setAccount] = useState([]);
+
+    const [account, setAccount] = useState({});
+    const navigate = useNavigate();
+    const signedIn = Object.keys(account).length > 0;
+
     useEffect(() => {
         const loggedInUser = localStorage.getItem("user");
         if (loggedInUser) {
@@ -16,6 +24,16 @@ function Mainlayout({ children }) {
             setAccount(loggedInUser);
         }
     }, []);
+
+
+
+
+    function handleSignOut(event) {
+        setAccount({});
+        localStorage.removeItem('user');
+        navigate("/", { replace: true });
+
+    }
 
     // const google = window.google;
     // useEffect(() => {
@@ -102,9 +120,23 @@ function Mainlayout({ children }) {
                             <img style={{ width: "15%", height: "15%" }} src={Logo} alt="starbucks_logo" />
                             <Link to="/home" className="navbar-brand text-light" style={{ fontWeight: 800 }}>    STARBUCKS</Link>
                         </div>
+
+                        <div style={{ display: "flex" }}>
+                          
+
+
+                            {Object.keys(account).length > 0 ? <div id="login-btn" className='btn btn-secondary' style={{ marginLeft: "10px", marginRight: "10px" }}>Hello, {account.name}</div> : ""
+                            }
+                            {Object.keys(account).length > 0 &&
+                                <button onClick={(e) => handleSignOut(e)} className='btn1' style={{backgroundColor: 'var(--secondary)', color:"black", marginLeft:"10px", marginRight:"10px"}} >Log Out</button>
+                            }
+
+
+
                             <div style={{display:"flex"}}>
                             <Link to='/' className='btn1' style={{marginLeft:"10px", backgroundColor:'var(--secondary)', color:'black'}}>Locate Store</Link>
-                            <Link to='/' className='btn1' style={{backgroundColor: 'var(--secondary)', color:"black", marginLeft:"10px", marginRight:"10px"}}>Login</Link>
+                           // <Link to='/' className='btn1' style={{backgroundColor: 'var(--secondary)', color:"black", marginLeft:"10px", marginRight:"10px"}}>Login</Link>
+
                             <div id="google_translate_element"></div>
                             <Dropdown autoClose="outside">
                                 <Dropdown.Toggle variant="success" id="dropdown-autoclose-outside" style={{backgroundColor: 'var(--secondary)', color:"black", marginLeft:"10px"}}>Settings</Dropdown.Toggle>

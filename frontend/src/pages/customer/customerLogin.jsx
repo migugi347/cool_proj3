@@ -271,9 +271,9 @@ export default function CustomerLogin(props) {
         localStorage.setItem('name',tempname);
         if (account.length === 0)
             switchLogin();
-        else if (account[0].type === "manager")
+        else if (account === "manager")
             navigate("/menu", { replace: true });
-        else if (account[0].type === "server")
+        else if (account === "server")
             navigate("/server", { replace: true });
         else
             navigate("/home", { replace: true });

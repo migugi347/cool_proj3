@@ -105,8 +105,8 @@ function Mainlayout({ children }) {
                             <Link to='/' className='btn1' style={{marginLeft:"10px", backgroundColor:'var(--secondary)', color:'black'}}>Locate Store</Link>
                             <Link to='/' className='btn1' style={{backgroundColor: 'var(--secondary)', color:"black", marginLeft:"10px", marginRight:"10px"}}>Login</Link>
                             <div id="google_translate_element"></div>
-                            <Dropdown>
-                                <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: 'var(--secondary)', color:"black", marginLeft:"10px"}}>Settings</Dropdown.Toggle>
+                            <Dropdown autoClose="outside">
+                                <Dropdown.Toggle variant="success" id="dropdown-autoclose-outside" style={{backgroundColor: 'var(--secondary)', color:"black", marginLeft:"10px"}}>Settings</Dropdown.Toggle>
                                 <Dropdown.Menu>
                                     <Dropdown.Item >
                                         <button className='btn1' style={{width:'200px'}} onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}>
@@ -130,6 +130,7 @@ function Mainlayout({ children }) {
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
+
                         </div>
                         
                     </div>

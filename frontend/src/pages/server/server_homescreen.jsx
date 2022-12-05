@@ -209,8 +209,8 @@ function Server_homescreen() {
         <Mainlayout >
             <div className = "navbarArea">
                 <h2>CATEGORIES</h2>
+                <h2 style ={{fontWeight:'bold', fontFamily: 'Georgia, \'Times New Roman\', Times, serif',color:'var(--secondary)',float:'left', left:'0px',top:'140px',position:'fixed'}}>CATEGORIES</h2>
                 <nav style={{overflowX:'hidden',width:'16vw', height:'70vh'}} className='serverNavBar'>
-                    <h2>CATEGORIES</h2>
                     <ul>
                         <button style={{backgroundColor:'var(--primary)'}} onClick={() => fetchMenu()}>Main Menu</button>
                         {uniCate.map((product, key) =>

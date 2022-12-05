@@ -6,11 +6,16 @@ import { ChromePicker } from 'react-color'
 import "../style.scss"
 import Dropdown from 'react-bootstrap/Dropdown';
 
+
+//const localUser = JSON.parse(localStorage.getItem('user') || '{}');
+
+
 function Mainlayout({ children }) {
 
 
-    const [account, setAccount] = useState([]);
+    const [account, setAccount] = useState({});
     const navigate = useNavigate();
+    const signedIn = Object.keys(account).length > 0;
     useEffect(() => {
 
         if (localStorage.getItem("user") !== null) {
@@ -29,8 +34,9 @@ function Mainlayout({ children }) {
 
     function handleSignOut(event) {
         setAccount({});
-        localStorage.setItem('user', null);
+        localStorage.removeItem('user');
         navigate("/", { replace: true });
+
     }
     // const google = window.google;
     // useEffect(() => {
@@ -86,9 +92,9 @@ function Mainlayout({ children }) {
                             <Link to='/' className='btn btn-secondary' style={{ marginLeft: "10px" }}>Locate Store</Link>
 
 
-                            {account ? <div id="login-btn" className='btn btn-secondary' style={{ marginLeft: "10px", marginRight: "10px" }}>Hello, {account.name}</div> : ""
+                            {Object.keys(account).length > 0 ? <div id="login-btn" className='btn btn-secondary' style={{ marginLeft: "10px", marginRight: "10px" }}>Hello, {account.name}</div> : ""
                             }
-                            {account !== null &&
+                            {Object.keys(account).length > 0 &&
                                 <button onClick={(e) => handleSignOut(e)} className='btn btn-secondary' style={{ marginLeft: "10px", marginRight: "10px" }} >Log Out</button>
                             }
 

@@ -42,7 +42,7 @@ app.get('/orderid', (req,res) => {
 
 app.get('/linenum', (req, res) => {
     pool
-        .query('SELECT MAX( \"Line_Num\") +1 AS var_line FROM orders;', (err, result) => {
+        .query('SELECT MAX( \"Line_Num\") AS var_line FROM orders;', (err, result) => {
             res.send(result.rows);
             //console.log(result);
         })
@@ -68,14 +68,14 @@ app.post('/checkout', (req, res) => {
     console.log(recID);
     console.log(quanity);
 
-    // pool.query('INSERT INTO orders ( \"Line_Num\", \"Order_ID\", \"Cust_Name\", \"Recipe_ID\", \"orderQuantity\", \"Date\") VALUES ( '+Line_Num+', '+Order_ID+',  \''+custName+'\','+recID+','+quanity+', CAST( NOW() AS Date ));', (err, result) =>{
-    //     if(err){
-    //         console.log(err);
-    //     }
-    //     else{
-    //         console.log('inserted order');
-    //     }
-    // });
+    pool.query('INSERT INTO orders ( \"Line_Num\", \"Order_ID\", \"Cust_Name\", \"Recipe_ID\", \"orderQuantity\", \"Date\") VALUES ( ' + Line_Num + ', ' + Order_ID + ',  \'' + custName + '\',' + recID + ',' + quanity + ', CAST( NOW() AS Date ));', (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log('inserted order');
+        }
+    });
 });
 
 app.get('/getMenu', (req, res) => {

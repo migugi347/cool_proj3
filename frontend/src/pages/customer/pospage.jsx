@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import Mainlayout from '../../layouts/Mainlayout'
+import CustomerLogin from './customerLogin'
 import PopUp from "../../components/PopUp";
 import Collapse from 'react-bootstrap/Collapse';
 import Button from 'react-bootstrap/Button';
@@ -8,6 +9,7 @@ import logo from '../../layouts/images/coffee.gif';
 import Magnifier from "react-magnifier";
 import axios from "axios";
 import { API_URL } from "../../API";
+
 
 function Pospage() {
 
@@ -23,12 +25,20 @@ function Pospage() {
 
     const [Order_ID, setOrderID] = useState(0);
     const [lineNum, setlineNum] = useState([]);
-    const [Cust_Name, setCustName] = useState("");
+    let currLineNum = 0;
+    const [Cust_Name, setCustName] = useState("default");
 
     const uniCate = [...new Map(categories.map((m) => [m.Category, m])).values()];
     const [open, setOpen] = useState(false);
+    const [account, setAccount] = useState([]);
+
+
+
+
+
 
     const fetchMenu = async () => {
+
         setIsLoading(true);
         const result = await axios.get(API_URL + '/user');
         setProducts(await result.data);
@@ -48,7 +58,7 @@ function Pospage() {
 
     useEffect(() => {
         axios.get(API_URL + "/user").then((response) => {
-            //console.log(response.data);
+
         });
     }, []);
 
@@ -65,12 +75,12 @@ function Pospage() {
 
         addItemtoCart(itemID);
 
-        console.log("INCREMNT")
+
     }
 
     const decrementHandler = async (itemID) => {
 
-        console.log("DECREMTN")
+
 
 
 
@@ -123,7 +133,7 @@ function Pospage() {
             // setOrderID(response.data);
             const ord = response.data;
             setOrderID(ord[0].var_order);
-            console.log(Order_ID);
+
         });
 
         // const result = await axios.get('orderid');
@@ -134,26 +144,29 @@ function Pospage() {
 
     const fetchLineNum = async () => {
 
-        const result = await axios.get(API_URL + '/linenum');
-        setlineNum(await result.data);
-        const newLine = lineNum + 1;
-        setlineNum(newLine);
-        console.log(lineNum);
+        await axios.get(API_URL + "/linenum").then((response) => {
+            // setOrderID(response.data);
+
+            // const ord = response.data;
+            setlineNum(response.data[0].var_line);
+
+
+        });
     }
 
-    const checkoutItem = (cartItem) => {
+    const checkoutItem = async (cartItem) => {
 
-        fetchLineNum();
 
-        console.log(lineNum);
-        console.log(Cust_Name);
+
+
+        currLineNum = currLineNum + 1;
 
 
 
         axios.post(API_URL + "/checkout", {
 
             //fetch line
-            Line_Num: lineNum,
+            Line_Num: currLineNum,
             Order_ID: Order_ID,
             Cust_Name: Cust_Name,
             orderQuantity: cartItem.orderQuantity,
@@ -164,10 +177,16 @@ function Pospage() {
     };
 
 
+
     const checkoutPrompt = async () => {
 
+
+
+        currLineNum = lineNum;
         setButtonPopup(true);
         reSizeView(open);
+
+        console.log(Cust_Name);
 
         //console.log(cart);
         // console.log(Order_ID)
@@ -175,7 +194,7 @@ function Pospage() {
             //checkoutItem
             //pass same order number 
 
-            setCustName("Steve");
+
             checkoutItem(cartItem);
 
         });
@@ -241,19 +260,37 @@ function Pospage() {
         setOpen(!open);
     }
 
+    const fetchUser = useCallback(() => {
+        if (localStorage.getItem("user") !== null) {
+
+            const loggedInUser = localStorage.getItem("user")
+            setAccount(JSON.parse(loggedInUser));
+
+            setCustName(account.name);
+
+
+        }
+        else {
+            setCustName("Customer")
+        }
+    });
     useEffect(() => {
 
-        fetchMenu();
+        //setCustName(CustomerLogin.account.name)
 
+        fetchMenu();
         fetchOrderID();
+        fetchLineNum();
         fetchCategory();
+
+
 
 
     }, []);
 
     useEffect(() => {
 
-        // console.log(products)
+
     }, [products]);
 
     useEffect(() => {

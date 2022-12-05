@@ -31,6 +31,7 @@ function Mainlayout({ children }) {
     function handleSignOut(event) {
         setAccount({});
         localStorage.removeItem('user');
+        localStorage.removeItem('name');
         navigate("/", { replace: true });
 
     }

@@ -12,7 +12,7 @@ function Orders(){
 
     const [date, setDate] = useState("");
     const date1 = new Date('September 1, 2022 00:00:00');
-    const date2 = new Date('September 15, 2022 00:00:00');
+    const date2 = new Date();
     const [startDate, setStartDate] = useState(date1);
     const [endDate, setEndDate] = useState(date2);
     const tableRef = useRef(null);

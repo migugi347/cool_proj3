@@ -269,6 +269,7 @@ export default function CustomerLogin(props) {
     const onSubmitHandler = (e) => {
         e.preventDefault();
         localStorage.setItem('name',tempname);
+        localStorage.setItem('user',tempname);
         if (account.length === 0)
             switchLogin();
         else if (account === "manager")

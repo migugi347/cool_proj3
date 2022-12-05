@@ -79,11 +79,6 @@ function Pospage() {
     }
 
     const decrementHandler = async (itemID) => {
-
-
-
-
-
         if (itemID.orderQuantity === 1) {
             removeProduct(itemID);
         }
@@ -113,22 +108,16 @@ function Pospage() {
             });
 
             setCart(newCart);
-
         }
-
-
     }
 
 
     const removeMenu = async (product) => {
-
         const newProducts = products.filter(menuItem => menuItem.Category === product.Category);
         setMenu(newProducts);
     }
 
     const fetchOrderID = async () => {
-
-
         await axios.get(API_URL + "/orderid").then((response) => {
             // setOrderID(response.data);
             const ord = response.data;
@@ -137,9 +126,6 @@ function Pospage() {
         });
 
         // const result = await axios.get('orderid');
-
-
-
     }
 
     const fetchLineNum = async () => {

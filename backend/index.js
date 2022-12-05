@@ -29,14 +29,11 @@ app.get('/user', (req, res) => {
 });
 
 
-app.get('/orderid', (req,res) => {
-    pool.query('SELECT \"Order_ID\" FROM orders WHERE \"Order_ID\" = (SELECT MAX(\"Order_ID\") FROM orders);', (err, result) => {
-        if(err){
-            console.log(err);
-        }else{
+app.get('/orderid', (req, res) => {
+    pool
+        .query('SELECT MAX( \"Order_ID\") +1  AS var_order FROM orders;', (err, result) => {
             res.send(result.rows);
-        }
-    })
+        })
 });
 
 

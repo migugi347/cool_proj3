@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Logo from './images/SB_logo.png';
 import { ChromePicker } from 'react-color'
 import "../style.scss"
@@ -10,7 +10,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 
 function Mainlayout({ children }) {
-    
+
 
 
     const [account, setAccount] = useState({});
@@ -49,11 +49,11 @@ function Mainlayout({ children }) {
 
     const googleTranslateElementInit = () => {
         new window.google.translate.TranslateElement({
-                pageLanguage: "en",
-                autoDisplay: false,
-                includedLanguages: 'ar,en,es,jv,ko,pa,pt,ru,zh-CN',
-                layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-            },
+            pageLanguage: "en",
+            autoDisplay: false,
+            includedLanguages: 'ar,en,es,jv,ko,pa,pt,ru,zh-CN',
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+        },
             "google_translate_element"
         );
     };
@@ -77,44 +77,44 @@ function Mainlayout({ children }) {
     };
 
     const [s, setfontSize] = useState(16);
-    const changeFontSize=(x)=>{
+    const changeFontSize = (x) => {
         const root = document.querySelector(':root');
-        if(x==0){
-            setfontSize(s+2);
+        if (x === 0) {
+            setfontSize(s + 2);
             root.style.setProperty('--sizer', `${s}px`);
         }
-        if(x==1){
-            setfontSize(s-2);
+        if (x === 1) {
+            setfontSize(s - 2);
             root.style.setProperty('--sizer', `${s}px`);
         }
     };
 
-    const changeContrast = (x) =>{
+    const changeContrast = (x) => {
         //console.log(highContrast);
         const root = document.querySelector(':root');
         const body = document.querySelector('body');
         setHighContrast(highContrast => !highContrast)
-        if(!highContrast && x==1){
+        if (!highContrast && x === 1) {
             root.style.setProperty('--primary', '#1c3866');
             root.style.setProperty('--secondary', 'pink');
-            body.style.setProperty('background-color','#808080')
+            body.style.setProperty('background-color', '#808080')
         }
-        if(highContrast && x==1){
+        if (highContrast && x === 1) {
             root.style.setProperty('--primary', 'black');
             root.style.setProperty('--secondary', 'yellow');
-            body.style.setProperty('background-color','green')
+            body.style.setProperty('background-color', 'green')
         }
-        if(x==2){
+        if (x === 2) {
             root.style.setProperty('--primary', '#00704A');
             root.style.setProperty('--secondary', '#eac784');
-            body.style.setProperty('background-color','white')
+            body.style.setProperty('background-color', 'white')
         }
     };
 
     return (
         <div>
             <header>
-                <nav style={{backgroundColor:'var(--primary)'}} className='navbar navbar-light mb-2'>
+                <nav style={{ backgroundColor: 'var(--primary)' }} className='navbar navbar-light mb-2'>
                     < div className="container-fluid">
                         <div style={{}}>
                             <img style={{ width: "15%", height: "15%" }} src={Logo} alt="starbucks_logo" />
@@ -122,51 +122,51 @@ function Mainlayout({ children }) {
                         </div>
 
                         <div style={{ display: "flex" }}>
-                          
 
 
-                            {Object.keys(account).length > 0 ? <div id="login-btn" className='btn btn-secondary' style={{ marginLeft: "10px", marginRight: "10px" }}>Hello, {account.name}</div> : ""
-                            }
+
+
                             {Object.keys(account).length > 0 &&
-                                <button onClick={(e) => handleSignOut(e)} className='btn1' style={{backgroundColor: 'var(--secondary)', color:"black", marginLeft:"10px", marginRight:"10px"}} >Log Out</button>
+                                <button onClick={(e) => handleSignOut(e)} className='btn1' style={{ backgroundColor: 'var(--secondary)', color: "black", marginLeft: "10px", marginRight: "10px" }} >Log Out</button>
                             }
 
 
 
-                            <div style={{display:"flex"}}>
-                            <Link to='/' className='btn1' style={{marginLeft:"10px", backgroundColor:'var(--secondary)', color:'black'}}>Locate Store</Link>
-                           // <Link to='/' className='btn1' style={{backgroundColor: 'var(--secondary)', color:"black", marginLeft:"10px", marginRight:"10px"}}>Login</Link>
+                            <div style={{ display: "flex" }}>
+                                <Link to='/' className='btn1' style={{ marginLeft: "10px", backgroundColor: 'var(--secondary)', color: 'black' }}>Locate Store</Link>
+                                {/* <Link to='/' className='btn1' style={{ backgroundColor: 'var(--secondary)', color: "black", marginLeft: "10px", marginRight: "10px" }}>Login</Link> */}
 
-                            <div id="google_translate_element"></div>
-                            <Dropdown autoClose="outside">
-                                <Dropdown.Toggle variant="success" id="dropdown-autoclose-outside" style={{backgroundColor: 'var(--secondary)', color:"black", marginLeft:"10px"}}>Settings</Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item >
-                                        <button className='btn1' style={{width:'200px'}} onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}>
-                                            {showColorPicker ? 'Close Color Changer' : 'Change Background'}
-                                        </button>
-                                    </Dropdown.Item>
-                                    <Dropdown.Item >
-                                        <button className='btn1' style={{width:'200px'}} onClick={() => changeContrast(1)}>
-                                            {highContrast ? 'High Contrast' : 'Low Contrast'}
-                                        </button>
-                                    </Dropdown.Item>
-                                    <Dropdown.Item >
-                                        <button className='btn1' style={{width:'200px'}} onClick={() => changeContrast(2)}>
-                                            Original Color Scheme
-                                        </button>
-                                    </Dropdown.Item>
-                                    <Dropdown.Item >
-                                        <h6>Font Size:</h6>
-                                        <button style={{padding:'0',height:'30px', width:'30px',fontSize:'20px'}} className='btn1' onClick={() => changeFontSize(1)}>-</button>
-                                        <button style={{padding:'0', height:'30px', width:'30px',fontSize:'20px', marginLeft:'10px'}} className='btn1' onClick={() => changeFontSize(0)}>+</button>
-                                    </Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                                <div id="google_translate_element"></div>
+                                <Dropdown autoClose="outside">
+                                    <Dropdown.Toggle variant="success" id="dropdown-autoclose-outside" style={{ backgroundColor: 'var(--secondary)', color: "black", marginLeft: "10px" }}>Settings</Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item >
+                                            <button className='btn1' style={{ width: '200px' }} onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}>
+                                                {showColorPicker ? 'Close Color Changer' : 'Change Background'}
+                                            </button>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item >
+                                            <button className='btn1' style={{ width: '200px' }} onClick={() => changeContrast(1)}>
+                                                {highContrast ? 'High Contrast' : 'Low Contrast'}
+                                            </button>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item >
+                                            <button className='btn1' style={{ width: '200px' }} onClick={() => changeContrast(2)}>
+                                                Original Color Scheme
+                                            </button>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item >
+                                            <h6>Font Size:</h6>
+                                            <button style={{ padding: '0', height: '30px', width: '30px', fontSize: '20px' }} className='btn1' onClick={() => changeFontSize(1)}>-</button>
+                                            <button style={{ padding: '0', height: '30px', width: '30px', fontSize: '20px', marginLeft: '10px' }} className='btn1' onClick={() => changeFontSize(0)}>+</button>
+                                        </Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </div>
                         </div>
                     </div>
                 </nav>
-                <div style={{float:'right'}}>
+                <div style={{ float: 'right' }}>
                     {showColorPicker && (
                         <ChromePicker
                             color={color}
@@ -181,8 +181,8 @@ function Mainlayout({ children }) {
                 </div>
             </main>
             <div>
-                <nav  style={{backgroundColor:'var(--primary)'}} className=' navbar fixed-bottom'>
-                    
+                <nav style={{ backgroundColor: 'var(--primary)' }} className=' navbar fixed-bottom'>
+
                 </nav>
             </div>
         </div>

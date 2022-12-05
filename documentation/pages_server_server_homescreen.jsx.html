@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/server/server_homescreen.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/server/server_homescreen.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect} from "react";
+import axios from "axios";
+import Mainlayout from '../../layouts/Mainlayout';
+import logo from '../../layouts/images/coffee.gif';
+import SubmitPopUp from './submitPopUp';
+import CancelPopUp from './cancelPopUp';
+
+/**
+ * Graphical User Interface (GUI) for MSC Starbucks' servers. Allows
+ * servers to easily navigate through menu items, take orders, and 
+ * update the store's inventory when submitting an order.
+ * Program pulls the menu items and categories from the project's database,
+ * uses that information to populate the page, and updates the database in the end
+ * once an order has been submitted successfully.
+ * @returns {HTML} - HTML code displaying Graphical User Interface
+ */
+function Server_homescreen() {
+    const [products, setProducts] = useState([]);
+    const [menu, setMenu] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [cart, setCart] = useState([]); //clear
+
+    const [totalAmount, setTotalAmount] = useState(0); //clear
+
+    const [Order_ID, setOrderID] = useState(0);
+    const [lineNum, setlineNum] = useState([]);
+    const [Cust_Name, setCustName] = useState(""); //clear
+
+    const uniCate = [...new Map(categories.map((m) => [m.Category, m])).values()];
+
+    const[submitOpen, setSubmitOpen] = useState(false);
+    const[cancelOpen, setCancelOpen] = useState(false);
+
+    const fetchMenu = async () => {
+        setIsLoading(true);
+        const result = await axios.get('user');
+        setProducts(await result.data);
+        setMenu(await result.data);
+        setIsLoading(false);
+    }
+
+    const fetchCategory = async () => {
+        setIsLoading(true);
+        const result = await axios.get('user');
+        setCategories(await result.data);
+
+        setIsLoading(false);
+    }
+
+    useEffect(() => {
+        axios.get("http://localhost:3001/user").then((response) => {
+            console.log(response.data);
+        });
+    }, []);
+
+    const removeProduct = async (product) => {
+        setIsLoading(true);
+        const newCart = cart.filter(cartItem => cartItem.Recipe_ID !== product.Recipe_ID);
+        setCart(newCart);
+        setIsLoading(false);
+    }
+
+    const removeMenu = async (product) => {
+        const newProducts = products.filter(menuItem => menuItem.Category === product.Category);
+        setMenu(newProducts);
+    }
+
+    const fetchOrderID = async () => {
+        console.log("start");
+
+        const result = await axios.get('orderid');
+        setOrderID(await result.data);
+        alert(Order_ID);
+
+        console.log("end");
+    }
+ 
+
+    const fetchLineNum = async () => {
+        const result = await axios.get('linenum');
+        setlineNum(await result.data);
+        const newLine = lineNum + 1;
+        setlineNum(newLine);
+    }
+
+    const checkoutItem = (cartItem) => {
+        fetchLineNum();
+        axios.post("http://localhost:3001/checkout", {
+            //fetch line
+            Line_Num: lineNum,
+            Order_ID: Order_ID,
+            Cust_Name: Cust_Name,
+            Recipe_ID: cartItem.Recipe_ID,
+        });
+    };
+
+    const addItemtoCart = async (product) => {
+        let findItemInCart = await cart.find(i => {
+            return i.Recipe_ID === product.Recipe_ID
+        });
+        if (findItemInCart) {
+            let newCart = [];
+            let newItem;
+            cart.forEach(cartItem => {
+                if (cartItem.Recipe_ID === product.Recipe_ID) {
+                    newItem =
+                    {
+                        ...cartItem,
+                        orderQuantity: cartItem.orderQuantity + 1,
+                        totalAmount: cartItem.Price * (cartItem.orderQuantity + 1)
+
+                    }
+                    newCart.push(newItem);
+                }
+                else {
+                    newCart.push(cartItem);
+                }
+            });
+            setCart(newCart);
+        }
+        else {
+            let addingItem = {
+                ...product,
+                'orderQuantity': 1,
+                'totalAmount': product.Price,
+            }
+            setCart([...cart, addingItem]);
+            console.log(cart)
+        }
+    }
+
+    const decrementHandler = async (itemID) => {
+        if (itemID.orderQuantity === 1) {
+            removeProduct(itemID);
+        }
+        else {
+            let newCart = [];
+            let newItem;
+            cart.forEach(cartItem => {
+                if (cartItem.Recipe_ID === itemID.Recipe_ID) {
+                    newItem =
+                    {
+                        ...cartItem,
+                        orderQuantity: cartItem.orderQuantity - 1,
+                        totalAmount: cartItem.Price * (cartItem.orderQuantity - 1)
+
+                    }
+                    newCart.push(newItem);
+                }
+                else {
+                    newCart.push(cartItem);
+                }
+            });
+            setCart(newCart);
+        }
+    }
+
+    const incrementHandler = (itemID) => {
+        addItemtoCart(itemID);
+    }
+
+    /**
+     * stores customer's name upon input from server
+     * @param {string} customerName
+     */
+    const getCustomerName = (customerName) => {
+        setCustName(customerName.target.value);
+    }
+
+    const cancelOrder = () => {
+        setCart([]);
+        setTotalAmount(0);
+        setCustName("");
+    }
+
+    const submitOrder = () => {
+        if(Cust_Name === ""){
+            alert("Cannot submit order! Please enter customer's name!");
+        }else if(cart.length === 0){
+            alert("Cannot submit order! No menu items have been selected!")
+        }else{
+            setSubmitOpen(true)
+            setCart([]);
+            setTotalAmount(0);
+            setCustName("");
+        }
+    }
+
+    useEffect(() => {
+        fetchMenu();
+        fetchCategory();
+    }, []);
+
+    useEffect(() => {
+        console.log(products)
+    }, [products]);
+
+    useEffect(() => {
+        let newTotalAmount = 0;
+
+        cart.forEach(icart => {
+            newTotalAmount = newTotalAmount + parseFloat(icart.totalAmount);
+        })
+        setTotalAmount(newTotalAmount.toFixed(2));
+    }, [cart]);
+
+    return (
+        &lt;Mainlayout >
+            &lt;div className = "navbarArea">
+                &lt;h2>CATEGORIES&lt;/h2>
+                &lt;nav className='serverNavBar'>
+                    &lt;h2>CATEGORIES&lt;/h2>
+                    &lt;ul>
+                        &lt;button onClick={() => fetchMenu()}>Main Menu&lt;/button>
+                        {uniCate.map((product, key) =>
+                            &lt;button href="#" key={key} onClick={() => removeMenu(product)}>{product.Category}&lt;/button>
+                        )}
+                    &lt;/ul>
+                &lt;/nav>
+            &lt;/div>
+            &lt;div className="menuItems">
+                {isLoading ? &lt;img src={logo} style={{ width: "800px" }} alt="loading .. " /> : &lt;div className='row'>
+                    {menu.map((product, key) =>
+                        &lt;div key={key} className='col-lg-4  '>
+                            &lt;button className='poop border text-center text-uppercase fw-bold bg-secondary rounded' onClick={() => addItemtoCart(product)}>
+                                &lt;p className="font-weight-bold" style={{ fontWeight: "900" }}>{product.Name}&lt;/p>
+                            &lt;/button>
+                        &lt;/div>
+                    )}
+                &lt;/div>}
+            &lt;/div>
+            &lt;div className="orderSummary">
+                &lt;h2 className="px-2">Customer Name: &lt;/h2>
+                &lt;input type = "text" id = "customerName" onChange={getCustomerName} value = {Cust_Name}/>
+                &lt;div className="table-responsive bg-secondary rounded">
+                    &lt;table className="table ">
+                        &lt;thead>
+                            &lt;tr>
+                                &lt;th>Menu Item&lt;/th>
+                                &lt;th>Decrease&lt;/th>
+                                &lt;th>Quantity&lt;/th>
+                                &lt;th>Increase&lt;/th>
+                                &lt;th>Delete&lt;/th>
+                            &lt;/tr>
+                        &lt;/thead>
+                        &lt;tbody>
+                            {cart ? cart.map((cartItem, key) => &lt;tr key={key}>
+                                &lt;td>{cartItem.Name}&lt;/td>
+                                &lt;td> &lt;button onClick={() => decrementHandler(cartItem)} value="+" className="button-plus bg-primary border rounded-circle  icon-shape icon-sm  text-white " data-field="quantity">-&lt;/button>&lt;/td>
+                                &lt;td>{cartItem.orderQuantity}&lt;/td>
+                                &lt;td> &lt;button onClick={() => incrementHandler(cartItem)} value="+" className="button-plus bg-primary border rounded-circle  icon-shape icon-sm  text-white " data-field="quantity">+&lt;/button>&lt;/td>
+                                &lt;td >&lt;button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}>X&lt;/button>&lt;/td>
+                            &lt;/tr>) : "No Item In Cart"}
+                        &lt;/tbody>
+                    &lt;/table>
+                    &lt;div id = "submit" className="submitButton">
+                        &lt;button className="btn btn-primary" onClick={() => {submitOrder()}}>Submit Order&lt;/button>
+                            &lt;SubmitPopUp open={submitOpen} onClose={() => setSubmitOpen(false)}>
+                                &lt;h1>Order Submitted!&lt;/h1>
+                            &lt;/SubmitPopUp>
+                    &lt;/div>
+                    &lt;div className="cancelButton">
+                        &lt;button className="btn btn-primary" onClick={() => {setCancelOpen(true); cancelOrder(); fetchOrderID()}}>Cancel Order&lt;/button>
+                            &lt;CancelPopUp open={cancelOpen} onClose={() => setCancelOpen(false)}>
+                                &lt;h1>Order Cancelled!&lt;/h1>
+                            &lt;/CancelPopUp>
+                    &lt;/div>
+                &lt;/div>
+                &lt;h2 className="px-2">Total: ${totalAmount}&lt;/h2>
+            &lt;/div>
+        &lt;/Mainlayout >
+    )
+}
+
+export default Server_homescreen;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CancelPopUp">CancelPopUp</a></li><li><a href="global.html#Server_homescreen">Server_homescreen</a></li><li><a href="global.html#SubmitPopUp">SubmitPopUp</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Sun Dec 04 2022 11:55:47 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -52,6 +52,9 @@ app.post('/checkout', (req, res) => {
     const custName = req.body.Cust_Name;
     const recID = req.body.Recipe_ID;
     const quanity = req.body.orderQuantity;
+   
+   
+
     //need to get order number 
     //increment line number everytime
     //'INSERT INTO orders ( \"Line_Num\", \"Order_ID\", \"Cust_Name\", \"Recipe_ID\", \"orderQuantity\", \"Date\") VALUES ( '+Line_Num+', '+Order_ID+',  \''+custName+'\','+recID+','+quanity+', CAST( NOW() AS Date ));'
@@ -95,6 +98,14 @@ app.get('/getMenuItem', (req, res) => {
         });
 });
 
+app.get('/getInvItem', (req, res) => {
+    const invID = req.query.invID;
+    pool
+        .query('SELECT * FROM inventory WHERE "Inventory_ID" = '+invID+';', (err, result) =>{
+            res.send(result.rows);
+        });
+});
+
 app.get('/getItemRecipe', (req, res) => {
     const recID = req.query.recID;
     pool
@@ -107,14 +118,14 @@ app.get('/getSales', (req, res) => {
     const date1 = req.query.date1;
     const date2 = req.query.date2;
     pool
-        .query('SELECT orders.\"Recipe_ID\", recipe.\"Name\", SUM(\"orderQuantity\") as Quantity, SUM(\"Price\" * orders.\"orderQuantity\") as Price FROM orders INNER JOIN recipe ON orders.\"Recipe_ID\" = Recipe.\"Recipe_ID" WHERE "Date" BETWEEN \'' + date1 + '\' and \'' + date2 + '\' GROUP BY orders.\"Recipe_ID\", recipe.\"Name\" ORDER BY orders.\"Recipe_ID\";', (err, result) => {
+        .query('SELECT orders.\"Recipe_ID\", recipe.\"Name\", SUM(\"orderQuantity\") as Quantity, SUM(\"Price\" * orders.\"orderQuantity\") as Price FROM orders INNER JOIN recipe ON orders.\"Recipe_ID\" = Recipe.\"Recipe_ID\" WHERE \"Date\" BETWEEN \''+date1+'\' and \''+date2+'\' GROUP BY orders.\"Recipe_ID\", recipe.\"Name\" ORDER BY orders.\"Recipe_ID\";', (err, result) =>{
             res.send(result.rows);
         });
 });
 
 app.get('/getRestock', (req, res) => {
     pool
-        .query('SELECT * FROM inventory WHERE \"Quantity\" < onhand;', (err, result) => {
+        .query('SELECT * FROM inventory WHERE \"Quantity\" < onhand ORDER BY "Inventory_ID";', (err, result) =>{
             res.send(result.rows);
         });
 });
@@ -124,9 +135,10 @@ app.post('/addMenu', (req, res) => {
     const name = req.body.name;
     const price = req.body.price;
     const category = req.body.category;
+    const image = req.body.image;
     //console.log(name);
-    pool.query('INSERT INTO recipe (\"Recipe_ID\", \"Name\", \"Price\", \"Category\") VALUES (' + recID + ',\'' + name + '\',' + price + ',\'' + category + '\');', (err, result) => {
-        if (err) {
+    pool.query('INSERT INTO recipe (\"Recipe_ID\", \"Name\", \"Price\", \"Category\", image) VALUES ('+recID+',\''+name+'\','+price+',\''+category+'\', \''+image+'\');', (err, result) =>{
+        if(err){
             console.log(err);
         }
         else {
@@ -140,12 +152,27 @@ app.put('/updateItem', (req, res) => {
     const name = req.body.name;
     const price = req.body.price;
     const category = req.body.category;
-    console.log(recID, name, price, category);
-    pool.query('UPDATE recipe SET "Name" = \'' + name + '\' , "Price" = ' + price + ', \"Category\" = \'' + category + '\' WHERE \"Recipe_ID\" = ' + recID + ';', (err, result) => {
-        if (err) {
+    pool.query('UPDATE recipe SET "Name" = \''+name+'\' , "Price" = '+price+', \"Category\" = \''+category+'\' WHERE \"Recipe_ID\" = '+recID+';', (err, result) =>{
+        if(err){
             console.log(err);
         }
         else {
+            console.log('updated');
+        }
+    });
+});
+
+app.put('/updateInvItem', (req, res) => {
+    const invID = req.body.invID;
+    const name = req.body.name;
+    const quantity = req.body.quantity;
+    const date = req.body.date;
+    const onHand = req.body.onHand;
+    pool.query('UPDATE inventory SET "Inventory" = \''+name+'\' , "Quantity" = '+quantity+', \"OrderDate\" = \''+date+'\', onhand = '+onHand+' WHERE \"Inventory_ID\" = '+invID+';', (err, result) =>{
+        if(err){
+            console.log(err);
+        }
+        else{
             console.log('updated');
         }
     });
@@ -207,6 +234,15 @@ app.post('/updateRecipeItem', (req, res) => {
     });
 });
 
+app.post('/signup', (req, res) => {
+    const email = req.body.upemail;
+    const name = req.body.upname;
+    const pass = req.body.uppass;
+    pool.query("INSERT INTO accounts VALUES ('"+email+"','customer','"+name+"','"+pass+"');", (err, result) => {
+        console.log(err);
+    });
+});
+
 app.post('/deleteMenu', (req, res) => {
     const recID = req.body.recipeID;
     pool.query('DELETE FROM recipe WHERE "Recipe_ID" = ' + recID + ';', (err, result) => {
@@ -248,14 +284,74 @@ app.get('/server/getMenuItems', (req, res) => {
 app.get('/getAccountType', (req, res) => {
     const email = req.query.email;
     //console.log(email);
-    pool.query("SELECT type FROM accounts WHERE email = \'" + email + "\';", (err, result) => {
+    pool.query("SELECT name, type FROM accounts WHERE email = \'" + email + "\';", (err, result) => {
         res.send(result.rows);
     });
 });
 
-app.get('/getOrders', (req, res) => {
-    pool.query("SELECT * FROM orders ORDER BY \"Line_Num\" DESC LIMIT 100;", (err, result) => {
+app.get('/getOrders', (req,res) => {
+    const date1 = req.query.date1;
+    const date2 = req.query.date2;
+    pool.query('SELECT * FROM orders WHERE "Date" BETWEEN \''+date1+'\' and \''+date2+'\' ORDER BY \"Line_Num\" DESC LIMIT 1000;', (err, result) => {
         res.send(result.rows);
+    });
+});
+
+app.get('/updateInventoryAmt', (req,res) => {
+    const id = req.query.date1;
+    const amount = req.query.date2;
+    const date = new Date().toUTCString();
+    pool.query('UPDATE inventory SET "Quantity" = "Quantity" + '+amount+' WHERE "Inventory_ID" = '+id+';', (err, result) => {
+    });
+    pool.query('UPDATE inventory SET "OrderDate" = \''+date+'\' WHERE "Inventory_ID" = '+id+';', (err, result) => {
+    });
+});
+
+app.get('/newMin', (req,res) => {
+    const id = req.query.date1;
+    const amount = req.query.date2;
+    pool.query('UPDATE inventory SET "onhand" = '+amount+' WHERE "Inventory_ID" = '+id+';', (err, result) => {
+    });
+});
+
+app.get('/getExcess', (req,res) => {
+    const date1 = req.query.date1;
+    pool.query("SELECT inventory_id, inventory.\"Inventory\",total,inventory.\"Quantity\" FROM (SELECT inventory_id, SUM(itemquantity*quantity) AS total FROM (SELECT orders.\"Recipe_ID\", SUM(\"orderQuantity\") as itemquantity FROM orders INNER JOIN recipe ON orders.\"Recipe_ID\" = Recipe.\"Recipe_ID\" WHERE \"Date\" > '"+date1+"' GROUP BY orders.\"Recipe_ID\" ORDER BY \"Recipe_ID\") AS X INNER JOIN menuinv ON X.\"Recipe_ID\" = menuinv.recipe_id GROUP BY inventory_id ORDER BY inventory_id) AS Y INNER JOIN inventory ON inventory_id = inventory.\"Inventory_ID\" WHERE total/\"Quantity\" < .1 ORDER BY inventory_id;", (err, result) => {
+        res.send(result.rows);
+    });
+});
+
+app.get('/getEmployees', (req,res) => {
+    pool.query("SELECT * FROM accounts WHERE type = 'manager' OR type = 'server';", (err, result) => {
+        res.send(result.rows);
+    });
+});
+app.post('/addEmployee', (req, res) => {
+    const email = req.body.email;
+    const name = req.body.name;
+    const phone = req.body.phone;
+    const type = req.body.type;
+    const password = req.body.password;
+    pool.query("INSERT INTO accounts VALUES('"+email+"', '"+type+"', '"+name+"', '"+password+"', '"+phone+"');", (err, result) =>{
+    });
+});
+
+app.post('/deleteEmployee', (req, res) => {
+    const empID = req.body.employeeEmail;
+    pool.query('DELETE FROM accounts WHERE email = \''+empID+'\';', (err, result) =>{
+       // console.log(err);
+    });
+});
+
+app.post('/updateEmployee', (req, res) => {
+    const email = req.body.email;
+    const type = req.body.type;
+    pool.query('UPDATE accounts accounts SET type = \''+type+'\' WHERE email = \''+email+'\' ;', (err, result) =>{
+    });
+});
+
+app.post('/trigger', (req, res) => {
+    pool.query('DO $$ DECLARE x record; BEGIN FOR x IN (SELECT inventory_id,("Quantity"-amount) AS quantity FROM (SELECT inventory_id, ("orderQuantity" * quantity) AS amount from orders INNER JOIN menuinv ON orders."Recipe_ID" = menuinv.recipe_id WHERE "Line_Num" = (SELECT MAX("Line_Num") FROM orders)) AS amtUsed INNER JOIN inventory ON amtUsed.inventory_id = inventory."Inventory_ID") LOOP UPDATE inventory SET "Quantity" = x.quantity WHERE "Inventory_ID" = x.inventory_id; END LOOP; END $$', (err, result) =>{
     });
 });
 

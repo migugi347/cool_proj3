@@ -1,9 +1,8 @@
-$theme-colors: (
-    "primary": #00704A,
-
-    "secondary": #eac784,
-);
-
+:root{
+    --primary: #00704A;
+    --secondary: #eac784;
+    --sizer:16px;
+}
 
 .poop:hover {
     transform: scale(1.05);
@@ -13,6 +12,34 @@ $theme-colors: (
     transition: transform 0.2s ease;
 }
 
+.table{
+    background-color: var(--secondary);
+}
+.btn1{
+    font-size: 16px;
+    padding: 8px 12px;
+    margin-bottom: 0;
+    border-radius: 5px;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    background-color: var(--primary);
+    color: var(--secondary);
+}
+.btn1:hover{
+    color: white;
+}
 
 .login-form-cont {
     width: 100%;
@@ -23,7 +50,7 @@ $theme-colors: (
     padding-top: 100px;
     margin: auto;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0.05);
-
+    margin-bottom: -20vh;
     h3 {
         font-weight: 500;
         margin-bottom: 50px
@@ -89,7 +116,7 @@ $theme-colors: (
 }
 
 .icon-labels {
-    background-color: #eac784;
+    background-color:var(--secondary);
     border-radius: 40px;
     margin-left: 5px;
     margin-right: 5px;
@@ -174,7 +201,6 @@ $theme-colors: (
 }
 
 .header {
-    background-color: #00704A;
     text-align: center;
 }
 
@@ -196,11 +222,13 @@ main{
     padding: 0;
     box-sizing: border-box;
     position: fixed;
-    top: 124px;
+    top: 175px;
     left: 0px;
     width: 15%;
-    height: 85%;
+    height: 70%;
+    overflow-y: scroll;
     background-color: #00704A;
+    background-color: var(--primary);
 }
 
 .serverNavBar h2 {
@@ -216,17 +244,16 @@ main{
 .serverNavBar button{
     text-transform: uppercase;
     color: white;
-    background-color: #00704A;
+    background-color: --primary;
     text-align: center;
     position: relative;
     left: -32px;
     width: 15vw;
     list-style: none;
-    margin-top: 14px;
-    margin-bottom: 14px;
+    margin-top: 10px;
     padding: 22px;
-    border-bottom: 1px solid #013f2a;
-    border-top: 1px solid  #003d29;
+    border-bottom: 1px solid var(--primary);
+    border-top: 1px solid var(--primary);
     border-right: 1px solid rgba(0,0,0,0);
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 16px;
@@ -234,25 +261,26 @@ main{
 
 .serverNavBar button:hover{
     font-size: 17px;
-    background-color: #00281a;
-    border-bottom: 1px solid #03e99c;
-    border-top: 1px solid  #03e89b;
+    background-color: var(--primary);
+    border-bottom: 1px solid var(--secondary);
+    border-top: 1px solid  var(--secondary);
 }
 
 .navbarArea{
     color: rgba(0,0,0,0);
     float: left;
-    width: 15%;
+    width: 12%;
+    position: sticky;
 }
 
 .menuItems{
-    width: 56%;
+    width: 53%;
     float: left;
 }
 
 .menuItems button {
     height: 5.5vw;
-    width: 16vw;
+    width: 14vw;
     margin-top: 5px;
     margin-left: 0px;
     margin-right: 0px;
@@ -261,18 +289,26 @@ main{
 
 .orderSummary{
     float: left;
-    width: 24%;
-    margin-left: 1%;
+    position: sticky;
+    width: 34%;
 }
 
 .orderSummary table{
+    overflow-x: scroll;
     overflow-y:scroll;
     display:block;
-    height: 450px;
+    height: 300px;
+    width: 100%;
 }
 
 .orderSummary thead, td {
     text-align: center;
+}
+
+.orderSummary #customerName {
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
 }
 
 .submitButton {
@@ -292,6 +328,10 @@ main{
     margin-left:5px;
     height:5vh;
     width:5vh;
+}
+
+.dropdown-menu{
+    --bs-dropdown-link-active-bg: #FFF !important;
 }
 
 @import "~bootstrap/scss/bootstrap"

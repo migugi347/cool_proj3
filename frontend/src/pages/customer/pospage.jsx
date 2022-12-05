@@ -26,7 +26,7 @@ function Pospage() {
     const [Order_ID, setOrderID] = useState(0);
     const [lineNum, setlineNum] = useState([]);
     let currLineNum = 0;
-    const [Cust_Name, setCustName] = useState("default");
+    const [Cust_Name, setCustName] = useState(window.localStorage.getItem('name'));
 
     const uniCate = [...new Map(categories.map((m) => [m.Category, m])).values()];
     const [open, setOpen] = useState(false);
@@ -79,11 +79,6 @@ function Pospage() {
     }
 
     const decrementHandler = async (itemID) => {
-
-
-
-
-
         if (itemID.orderQuantity === 1) {
             removeProduct(itemID);
         }
@@ -113,22 +108,16 @@ function Pospage() {
             });
 
             setCart(newCart);
-
         }
-
-
     }
 
 
     const removeMenu = async (product) => {
-
         const newProducts = products.filter(menuItem => menuItem.Category === product.Category);
         setMenu(newProducts);
     }
 
     const fetchOrderID = async () => {
-
-
         await axios.get(API_URL + "/orderid").then((response) => {
             // setOrderID(response.data);
             const ord = response.data;
@@ -137,9 +126,6 @@ function Pospage() {
         });
 
         // const result = await axios.get('orderid');
-
-
-
     }
 
     const fetchLineNum = async () => {
@@ -173,6 +159,8 @@ function Pospage() {
             Recipe_ID: cartItem.Recipe_ID,
 
 
+        });
+        axios.post("/trigger", {
         });
     };
 
@@ -265,8 +253,10 @@ function Pospage() {
 
             const loggedInUser = localStorage.getItem("user")
             setAccount(JSON.parse(loggedInUser));
-
-            setCustName(account.name);
+            //console.log(loggedInUser);
+            const name = localStorage.getItem("name")
+            console.log(name);
+            //setCustName(loggedInUser.name);
 
 
         }
@@ -282,6 +272,7 @@ function Pospage() {
         fetchOrderID();
         fetchLineNum();
         fetchCategory();
+        fetchUser();
 
 
 
@@ -314,22 +305,18 @@ function Pospage() {
 
                             <div key={key} className='col-lg-4  '>
 
-                                <div className='poop border text-center text-uppercase fw-bold bg-secondary rounded' onClick={() => addItemtoCart(product)}>
-                                    <p className="font-weight-bold" style={{ fontWeight: "600" }}>{product.Name}</p>
+                                <div style={{backgroundColor:'var(--secondary)', margin:'5px'}} className='poop border text-center text-uppercase fw-bold rounded' onClick={() => addItemtoCart(product)}>
+                                    <p style={{marginTop:'5px',fontSize:'var(--sizer)'}} className="font-weight-bold">{product.Name}</p>
                                     <Magnifier src={product.image} className="img-fluid" alt={product.Name} ></Magnifier>
-                                    <p>${product.Price}</p>
+                                    <p style={{marginTop:'5px',fontSize:'var(--sizer)'}} >${product.Price}</p>
                                 </div>
                             </div>
                         )}
                     </div>}
-
-
                 </div>
-
-
-
+                
                 <div className="col-lg-2 " id="sideBar">
-                    <Button className=" bg-primary sticky-top " onClick={() => reSizeView(open)}
+                    <Button style={{backgroundColor:'var(--primary)',zIndex:'1'}} className="sticky-top " onClick={() => reSizeView(open)}
                         aria-controls="example-collapse-text"
                         aria-expanded={open}>
                         VIEW CART - {cart.length}
@@ -337,9 +324,9 @@ function Pospage() {
                     </Button>
 
                     {cart.length !== 0 ? <Collapse in={open} dimension="width" >
-                        <div className="position-sticky sticky-top top-30 mt-2" id="example-collapse-text">
-                            <div className="table-responsive bg-secondary rounded" >
-                                <table className="table " >
+                        <div style={{zIndex:'1'}} className="position-sticky sticky-top top-30 mt-2" id="example-collapse-text">
+                            <div style={{backgroundColor:'var(--secondary)'}} className="table-responsive rounded" >
+                                <table className="table">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -357,27 +344,27 @@ function Pospage() {
                                             <td>{cartItem.Price}</td>
                                             <td>
                                                 <div className="input-group   w-auto justify-content-space-evenly align-items-center  ">
-                                                    <input type="button" onClick={() => decrementHandler(cartItem)} value="-" className="button-minus bg-primary border rounded-circle  icon-shape icon-sm text-white " data-field="quantity"></input>
+                                                    <input style={{backgroundColor:'var(--primary)'}} type="button" onClick={() => decrementHandler(cartItem)} value="-" className="button-minus border rounded-circle  icon-shape icon-sm text-white " data-field="quantity"></input>
 
                                                     <div className=" flex-fill  mx-2"> {cartItem.orderQuantity}</div>
 
-                                                    <input type="button" onClick={() => incrementHandler(cartItem)} value="+" className="button-plus bg-primary border rounded-circle  icon-shape icon-sm  text-white " data-field="quantity"></input>
+                                                    <input style={{backgroundColor:'var(--primary)'}} type="button" onClick={() => incrementHandler(cartItem)} value="+" className="button-plus border rounded-circle  icon-shape icon-sm  text-white " data-field="quantity"></input>
                                                 </div>
                                             </td>
                                             <td>{cartItem.totalAmount.toFixed(2)}</td>
                                             <td >
-                                                <button className="btn bg-primary text-white   btn-danger btn-sm" onClick={() => removeProduct(cartItem)}> Remove</button>
+                                                <button style={{backgroundColor:'var(--primary)'}} className="btn text-white btn-danger btn-sm" onClick={() => removeProduct(cartItem)}> Remove</button>
                                             </td>
                                         </tr>) : ""}
 
                                     </tbody>
                                 </table>
-                                <h2 className="px-2">Total Amount: ${totalAmount}</h2>
+                                <h2  className="px-2">Total Amount: ${totalAmount}</h2>
                             </div>
 
                             <div className="mt-3">
                                 {totalAmount !== 0 ? <div>
-                                    <button className="btn btn-primary" onClick={() => checkoutPrompt()} >
+                                    <button className="btn1" onClick={() => checkoutPrompt()} >
                                         Check Out</button>
 
 
@@ -400,7 +387,7 @@ function Pospage() {
                 Your Order Number is #{Order_ID}</h3>
 
                 <p>ORDER SUMMARY</p>
-                <div className="table-responsive bg-secondary rounded">
+                <div style={{backgroundColor:'var(--secondary)'}} className="table-responsive rounded">
                     <table className="table">
                         <thead >
                             <tr>
@@ -433,14 +420,14 @@ function Pospage() {
 
             {
                 buttonPopup !== true ? <nav className=' navbar  fixed-bottom  justify-content-center  '  >
-                    <button className=" poop btn m-2  rounded-circle  my-2   bg-secondary" style={{ fontWeight: "600" }} onClick={() => fetchMenu()}>All Products</button>
+                    <button className=" poop btn m-2  rounded-circle  my-2" style={{ fontWeight: "600", backgroundColor:'var(--secondary)'}} onClick={() => fetchMenu()}>All Products</button>
 
                     {uniCate.map((product, key) => <div key={key}>
-                        <button className="  btn m-2 h-100  rounded-circle  my-2  bg-secondary"
+                        <button style={{backgroundColor:'var(--secondary)'}} className="  btn m-2 h-100  rounded-circle  my-2"
                             onClick={() => removeMenu(product)}>
                             <img src={product.image} className="poop-2 icon-nav" alt={product.Category} ></img>
                         </button>
-                        <p className="icon-labels ">    {product.Category}</p>
+                        <p style={{backgroundColor:'var(--secondary)'}} className="icon-labels">{product.Category}</p>
                     </div>
                     )}
 
@@ -453,3 +440,5 @@ function Pospage() {
 }
 
 export default Pospage
+
+

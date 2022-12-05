@@ -4,6 +4,7 @@ import Mainlayout from '../../layouts/Mainlayout';
 import logo from '../../layouts/images/coffee.gif';
 import SubmitPopUp from './submitPopUp';
 import CancelPopUp from './cancelPopUp';
+import { API_URL } from "../../API";
 
 /**
  * Graphical User Interface (GUI) for MSC Starbucks' servers. Allows
@@ -24,7 +25,9 @@ function Server_homescreen() {
     const [totalAmount, setTotalAmount] = useState(0); //clear
 
     const [Order_ID, setOrderID] = useState(0);
+    let currOrderID = 0;
     const [lineNum, setlineNum] = useState([]);
+    let currLineNum = 0;
     const [Cust_Name, setCustName] = useState(""); //clear
 
     const uniCate = [...new Map(categories.map((m) => [m.Category, m])).values()];
@@ -34,7 +37,7 @@ function Server_homescreen() {
 
     const fetchMenu = async () => {
         setIsLoading(true);
-        const result = await axios.get('user');
+        const result = await axios.get(API_URL + '/user');
         setProducts(await result.data);
         setMenu(await result.data);
         setIsLoading(false);
@@ -42,14 +45,14 @@ function Server_homescreen() {
 
     const fetchCategory = async () => {
         setIsLoading(true);
-        const result = await axios.get('user');
+        const result = await axios.get(API_URL + '/user');
         setCategories(await result.data);
 
         setIsLoading(false);
     }
 
     useEffect(() => {
-        axios.get("http://localhost:3001/user").then((response) => {
+        axios.get(API_URL + "/user").then((response) => {
             console.log(response.data);
         });
     }, []);
@@ -67,31 +70,37 @@ function Server_homescreen() {
     }
 
     const fetchOrderID = async () => {
-        console.log("start");
-
-        const result = await axios.get('orderid');
-        setOrderID(await result.data);
-        alert(Order_ID);
-
-        console.log("end");
+        await axios.get(API_URL + "/orderid").then((response) => {
+            const ord = response.data;
+            setOrderID(ord[0].var_order);
+        });
     }
  
 
     const fetchLineNum = async () => {
-        const result = await axios.get('linenum');
-        setlineNum(await result.data);
-        const newLine = lineNum + 1;
-        setlineNum(newLine);
+        await axios.get(API_URL + "/linenum").then((response) => {
+            setlineNum(response.data[0].var_line);
+        });
     }
 
     const checkoutItem = (cartItem) => {
-        fetchLineNum();
-        axios.post("http://localhost:3001/checkout", {
-            //fetch line
-            Line_Num: lineNum,
+        currLineNum = currLineNum + 1;
+
+        console.log(currLineNum);
+        console.log(Order_ID);
+        console.log(Cust_Name);
+        console.log(cartItem.orderQuantity);
+        console.log(cartItem.Recipe_ID);
+
+        axios.post(API_URL + "/checkout", {
+            Line_Num: currLineNum,
             Order_ID: Order_ID,
             Cust_Name: Cust_Name,
+            orderQuantity: cartItem.orderQuantity,
             Recipe_ID: cartItem.Recipe_ID,
+        });
+
+        axios.post("http://localhost:3001/trigger", {
         });
     };
 
@@ -160,10 +169,6 @@ function Server_homescreen() {
         addItemtoCart(itemID);
     }
 
-    /**
-     * stores customer's name upon input from server
-     * @param {string} customerName
-     */
     const getCustomerName = (customerName) => {
         setCustName(customerName.target.value);
     }
@@ -180,6 +185,15 @@ function Server_homescreen() {
         }else if(cart.length === 0){
             alert("Cannot submit order! No menu items have been selected!")
         }else{
+            currLineNum = lineNum;
+            cart.forEach(cartItem => {
+                checkoutItem(cartItem);
+    
+            });
+            currOrderID = Order_ID;
+            currOrderID += 1;
+            setlineNum(currLineNum);
+            setOrderID(currOrderID);
             setSubmitOpen(true)
             setCart([]);
             setTotalAmount(0);
@@ -190,10 +204,11 @@ function Server_homescreen() {
     useEffect(() => {
         fetchMenu();
         fetchCategory();
+        fetchOrderID();
+        fetchLineNum();
     }, []);
 
     useEffect(() => {
-        console.log(products)
     }, [products]);
 
     useEffect(() => {

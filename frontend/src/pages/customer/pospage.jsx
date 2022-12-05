@@ -160,6 +160,8 @@ function Pospage() {
 
 
         });
+        axios.post("/trigger", {
+        });
     };
 
 

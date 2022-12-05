@@ -240,7 +240,7 @@ function Server_homescreen() {
                     {menu.map((product, key) =>
                         <div key={key} className='col-lg-4'>
                             <button style={{backgroundColor:'var(--secondary)'}} className='poop border text-center text-uppercase fw-bold rounded' onClick={() => addItemtoCart(product)}>
-                                <p className="font-weight-bold" style={{ fontWeight: "900" }}>{product.Name}</p>
+                                <p className="font-weight-bold" style={{fontSize:('var(--sizer)'), fontWeight: "900" }}>{product.Name}</p>
                             </button>
                         </div>
                     )}
@@ -248,7 +248,7 @@ function Server_homescreen() {
             </div>
             <div style={{}} className="orderSummary">
                 <div style={{width:'30vw',backgroundColor:'var(--primary)',padding:'5px'}} className="table-responsive rounded">
-                    <h2 className="px-2">Customer Name: </h2>
+                    <h2 style={{color:'var(--secondary)'}} className="px-2">Customer Name: </h2>
                     <input type = "text" id = "customerName" onChange={getCustomerName} value = {Cust_Name}/>
                     <div style={{backgroundColor:'var(--secondary)',marginTop:'10px'}} className="table-responsive rounded">
                         <table style={{overflowX:'hidden'}} className="table ">
@@ -284,7 +284,7 @@ function Server_homescreen() {
                             </CancelPopUp>
                         </div>
                     </div>
-                    <h2 style={{marginTop:'5px'}} className="px-2">Total: ${totalAmount}</h2>
+                    <h2 style={{marginTop:'5px',color:'var(--secondary)'}} className="px-2">Total: ${totalAmount}</h2>
                 </div>
             </div>
             

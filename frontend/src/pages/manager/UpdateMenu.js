@@ -131,11 +131,11 @@ function UpdateMenu(){
                     {image.map((val) => (
                         <form>
                             <div style={{textAlign:'right'}}>
-                                <label>Name:</label>
+                                <label style={{fontSize:'var(--sizer)'}}>Name:</label>
                                 <input style={{margin:'5px'}} type="text" name="name" placeholder={val.Name} onChange = {(e)=>{setName(e.target.value);}}></input><br></br>
-                                <label>Price:</label>
+                                <label style={{fontSize:'var(--sizer)'}}>Price:</label>
                                 <input style={{margin:'5px'}} type="text" name="price" placeholder={val.Price.toFixed(2)} onChange = {(e)=>{setPrice(e.target.value);}}></input><br></br>
-                                <label>Category:</label>
+                                <label style={{fontSize:'var(--sizer)'}}>Category:</label>
                                 <input style={{margin:'5px'}} type="text" name="category" placeholder={val.Category} onChange = {(e)=>{setCategory(e.target.value);}}></input><br></br>
                             </div>
                             <button className='btn1 mt-2' onClick={()=>updateItem()}>Update Menu Item</button>
@@ -157,9 +157,9 @@ function UpdateMenu(){
                             <tbody>
                             {recipe.map((val) => (
                                 <tr>
-                                    <td>{val.inventory_id}</td>
-                                    <td>{val.Inventory}</td>
-                                    <td>{val.quantity}</td>
+                                    <td style={{fontSize:'var(--sizer)'}}>{val.inventory_id}</td>
+                                    <td style={{fontSize:'var(--sizer)'}}>{val.Inventory}</td>
+                                    <td style={{fontSize:'var(--sizer)'}}>{val.quantity}</td>
                                 </tr>
                             ))}
                             </tbody>

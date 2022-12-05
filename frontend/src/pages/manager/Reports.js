@@ -59,10 +59,10 @@ function Reports(){
               <tbody>
                 {sale.map((val) => (
                   <tr>
-                    <td>{val.Recipe_ID}</td>
-                    <td>{val.Name}</td>
-                    <td>{val.quantity}</td>
-                    <td>${val.price.toFixed(2)}</td>
+                    <td style={{fontSize:'var(--sizer)'}}>{val.Recipe_ID}</td>
+                    <td style={{fontSize:'var(--sizer)'}}>{val.Name}</td>
+                    <td style={{fontSize:'var(--sizer)'}}>{val.quantity}</td>
+                    <td style={{fontSize:'var(--sizer)'}}>${val.price.toFixed(2)}</td>
                   </tr>
                 ))}
               </tbody>

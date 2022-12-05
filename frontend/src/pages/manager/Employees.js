@@ -85,10 +85,10 @@ function Employees(){
                 <tbody>
                 {employees.map((val) => (
                     <tr>
-                    <td>{val.name}</td>
-                    <td>{val.email}</td>
-                    <td>{val.phone}</td>
-                    <td>{val.type}</td>
+                    <td style={{fontSize:'var(--sizer)'}}>{val.name}</td>
+                    <td style={{fontSize:'var(--sizer)'}}>{val.email}</td>
+                    <td style={{fontSize:'var(--sizer)'}}>{val.phone}</td>
+                    <td style={{fontSize:'var(--sizer)'}}>{val.type}</td>
                     </tr>
                 ))}
                 </tbody>

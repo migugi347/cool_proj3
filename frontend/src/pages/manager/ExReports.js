@@ -57,10 +57,10 @@ function ExReports(){
                 <tbody>
                   {sale.map((val) => (
                     <tr>
-                      <td>{val.inventory_id}</td>
-                      <td>{val.Inventory}</td>
-                      <td>{val.total}</td>
-                      <td>{val.Quantity}</td>
+                      <td style={{fontSize:'var(--sizer)'}}>{val.inventory_id}</td>
+                      <td style={{fontSize:'var(--sizer)'}}>{val.Inventory}</td>
+                      <td style={{fontSize:'var(--sizer)'}}>{val.total}</td>
+                      <td style={{fontSize:'var(--sizer)'}}>{val.Quantity}</td>
                     </tr>
                   ))}
                 </tbody>

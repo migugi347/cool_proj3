@@ -72,12 +72,12 @@ function Orders(){
             <tbody>
               {order.map((val) => (
                 <tr>
-                  <td>{val.Line_Num}</td>
-                  <td>{val.Order_ID}</td>
-                  <td>{val.Cust_Name}</td>
-                  <td>{val.Recipe_ID}</td>
-                  <td>{val.orderQuantity}</td>
-                  <td>{getDates(val.Date)}</td>
+                  <td style={{fontSize:'var(--sizer)'}}>{val.Line_Num}</td>
+                  <td style={{fontSize:'var(--sizer)'}}>{val.Order_ID}</td>
+                  <td style={{fontSize:'var(--sizer)'}}>{val.Cust_Name}</td>
+                  <td style={{fontSize:'var(--sizer)'}}>{val.Recipe_ID}</td>
+                  <td style={{fontSize:'var(--sizer)'}}>{val.orderQuantity}</td>
+                  <td style={{fontSize:'var(--sizer)'}}>{getDates(val.Date)}</td>
                 </tr>
               ))}
             </tbody>

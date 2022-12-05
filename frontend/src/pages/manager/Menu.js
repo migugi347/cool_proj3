@@ -77,10 +77,10 @@ return(
             <tbody>
               {menuitem.map((val) => (
                 <tr>
-                  <td>{val.Recipe_ID}</td>
-                  <td>{val.Name}</td>
-                  <td>${val.Price.toFixed(2)}</td>
-                  <td>{val.Category}</td>
+                  <td style={{fontSize:'var(--sizer)'}}>{val.Recipe_ID}</td>
+                  <td style={{fontSize:'var(--sizer)'}}>{val.Name}</td>
+                  <td style={{fontSize:'var(--sizer)'}}>${val.Price.toFixed(2)}</td>
+                  <td style={{fontSize:'var(--sizer)'}}>{val.Category}</td>
                 </tr>
               ))}
             </tbody>

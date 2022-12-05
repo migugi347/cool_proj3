@@ -80,11 +80,11 @@ function ReReports(){
                 <tbody>
                 {sale.map((val) => (
                     <tr>
-                    <td>{val.Inventory_ID}</td>
-                    <td>{val.Inventory}</td>
-                    <td>{val.Quantity}</td>
-                    <td>{getDates(val.OrderDate)}</td>
-                    <td>{val.onhand}</td>
+                    <td style={{fontSize:'var(--sizer)'}}>{val.Inventory_ID}</td>
+                    <td style={{fontSize:'var(--sizer)'}}>{val.Inventory}</td>
+                    <td style={{fontSize:'var(--sizer)'}}>{val.Quantity}</td>
+                    <td style={{fontSize:'var(--sizer)'}}>{getDates(val.OrderDate)}</td>
+                    <td style={{fontSize:'var(--sizer)'}}>{val.onhand}</td>
                     </tr>
                 ))}
                 </tbody>

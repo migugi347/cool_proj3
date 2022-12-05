@@ -51,11 +51,31 @@ class Mappage extends React.Component {
 		console.log("Dummy button fired.");
 	}
 	
+	FixPostcode(postcode) {
+		if (postcode.length != 5 && postcode.length != 9) {
+			this.setState({errorMsg: "Unknown postcode!"});
+			return postcode;
+		}
+		if (postcode.length == 9) {
+			return postcode.slice(0, 5) + "-" + postcode.slice(5, 9);
+		} else {
+			return postcode;
+		}
+	}
+	
 	renderAddressInput() {
 		if (this.state.position) {
 			if (this.state.stores) {
-				return (
+				const stores = this.state.stores;
+				return ( <>
 					<h1> List of Starbucks Restraunts </h1>
+					{stores.map((store, index) => 
+						<>
+						<p> <b>{(index+1).toString()}</b> {" " + store.street} </p>
+						<p> {store.city + ", " + store.state + " " + this.FixPostcode(store.postcode)} </p>
+						</>
+					)}
+					</>
 				);
 			} else {
 				const lat = this.state.position.lat;
@@ -105,7 +125,10 @@ class Mappage extends React.Component {
 		if (this.state.stores) {
 			const stores = this.state.stores;
 			return (<>{stores.map((store, index) =>
-                <Marker position={{lat: store.latittude, lng: store.longitude}} />
+                <Marker 
+					position={{lat: store.latittude, lng: store.longitude}} 
+					label={(index+1).toString()}
+				/>
             )}</>);
 		} else {
 			return (<></>);

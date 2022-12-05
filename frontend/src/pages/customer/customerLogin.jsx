@@ -60,6 +60,7 @@ export default function CustomerLogin(props) {
             setAccount(userObject);
 
             localStorage.setItem('user', JSON.stringify(userObject));
+            localStorage.setItem('name',userObject.name);
 
             navigate("/home", { replace: true });
         }
@@ -117,7 +118,6 @@ export default function CustomerLogin(props) {
                                     SUBMIT
                                 </Button>
                                 <div id="signInDiv" ></div>
-                                <Link to='/home' className='btn1'> START ORDER</Link>
                             </div>
                             <div className="text-center">
                                 Dont Have an Account?{" "}

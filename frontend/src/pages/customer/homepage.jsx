@@ -12,10 +12,12 @@ import youtube from '../../layouts/images/youtube.png'
 import Magnifier from "react-magnifier";
 
 function homepage() {
+    let x = window.localStorage.getItem('name');
     return (
         <Mainlayout>
 
             <div className='bg-light p-5 mt-4 rounded-5 '>
+                <h2>WELCOME {x}!</h2>
                 <h1>Starbucks Self Check-out</h1>
 
                 <Link to='/pos' className='btn1'> START ORDER</Link>

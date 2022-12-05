@@ -26,7 +26,7 @@ function Pospage() {
     const [Order_ID, setOrderID] = useState(0);
     const [lineNum, setlineNum] = useState([]);
     let currLineNum = 0;
-    const [Cust_Name, setCustName] = useState("default");
+    const [Cust_Name, setCustName] = useState(window.localStorage.getItem('name'));
 
     const uniCate = [...new Map(categories.map((m) => [m.Category, m])).values()];
     const [open, setOpen] = useState(false);
@@ -251,8 +251,10 @@ function Pospage() {
 
             const loggedInUser = localStorage.getItem("user")
             setAccount(JSON.parse(loggedInUser));
-
-            setCustName(account.name);
+            //console.log(loggedInUser);
+            const name = localStorage.getItem("name")
+            console.log(name);
+            //setCustName(loggedInUser.name);
 
 
         }
@@ -268,6 +270,7 @@ function Pospage() {
         fetchOrderID();
         fetchLineNum();
         fetchCategory();
+        fetchUser();
 
 
 

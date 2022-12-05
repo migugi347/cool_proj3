@@ -10,7 +10,6 @@ import Magnifier from "react-magnifier";
 import axios from "axios";
 import { API_URL } from "../../API";
 
-
 function Pospage() {
 
     const [products, setProducts] = useState([]);
@@ -58,7 +57,6 @@ function Pospage() {
 
     useEffect(() => {
         axios.get(API_URL + "/user").then((response) => {
-
         });
     }, []);
 

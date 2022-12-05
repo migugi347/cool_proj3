@@ -13,7 +13,7 @@ function UpdateMenu() {
     const [name, setName] = useState(image.Name);
     const [price, setPrice] = useState(image.Price);
     const [category, setCategory] = useState(image.Category);
-
+   
 
     useEffect(() => {
         var x = document.getElementById("recipeTable");

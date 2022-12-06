@@ -160,7 +160,7 @@ function Pospage() {
 
 
         });
-        axios.post("/trigger", {
+        axios.post(API_IURL + "/trigger", {
         });
     };
 

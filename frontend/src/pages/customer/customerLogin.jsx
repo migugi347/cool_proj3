@@ -285,7 +285,7 @@ export default function CustomerLogin(props) {
     }
 
     const signUp = () => {
-        axios.post("http://localhost:3001/signup",{
+        axios.post(API_URL+"/signup",{
             upname: upname,
             upemail: upemail,
             uppass: uppass

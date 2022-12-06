@@ -4,7 +4,7 @@ import Mainlayout from '../layouts/Mainlayout';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Axios from "axios";
 import axios from 'axios';
-import { API_URL } from "../../API";
+import { API_URL } from "../API";
 
 const defaultCenter = {
 	lat: 41.3851, lng: 2.1734

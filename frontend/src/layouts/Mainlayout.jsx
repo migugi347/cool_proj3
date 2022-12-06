@@ -134,7 +134,7 @@ function Mainlayout({ children }) {
 
 
                             <div style={{ display: "flex" }}>
-                                <Link to='/' className='btn1' style={{ marginLeft: "10px", backgroundColor: 'var(--secondary)', color: 'black', marginRight: "10px" }}>Locate Store</Link>
+                                <Link to='/map' className='btn1' style={{ marginLeft: "10px", backgroundColor: 'var(--secondary)', color: 'black', marginRight: "10px" }}>Locate Store</Link>
                                 {/* <Link to='/' className='btn1' style={{ backgroundColor: 'var(--secondary)', color: "black", marginLeft: "10px", marginRight: "10px" }}>Login</Link> */}
 
                                 <div id="google_translate_element"></div>

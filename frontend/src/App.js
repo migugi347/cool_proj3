@@ -18,6 +18,7 @@ import ReReports from './pages/manager/ReReports';
 import Orders from './pages/manager/Orders';
 import Employees from './pages/manager/Employees';
 import ServerHomeScreen from './pages/server/server_homescreen';
+import Map from './pages/map';
 
 /**
  * Main page for Starbucks POS web application.
@@ -42,6 +43,7 @@ function App() {
           <Route path ='/rereports' element={<ReReports/>} />
           <Route path = "/server" element = {<ServerHomeScreen/>} />
           <Route path = "/Employees" element = {<Employees/>} />
+          <Route path = "/map" element = {<Map/>} />
         </Routes>
       </Router>
     </>

@@ -354,6 +354,50 @@ app.post('/trigger', (req, res) => {
     pool.query('DO $$ DECLARE x record; BEGIN FOR x IN (SELECT inventory_id,("Quantity"-amount) AS quantity FROM (SELECT inventory_id, ("orderQuantity" * quantity) AS amount from orders INNER JOIN menuinv ON orders."Recipe_ID" = menuinv.recipe_id WHERE "Line_Num" = (SELECT MAX("Line_Num") FROM orders)) AS amtUsed INNER JOIN inventory ON amtUsed.inventory_id = inventory."Inventory_ID") LOOP UPDATE inventory SET "Quantity" = x.quantity WHERE "Inventory_ID" = x.inventory_id; END LOOP; END $$', (err, result) =>{
     });
 });
+app.get('/getLocations', (req,res) => {
+	const lat = req.query.lati;
+	const lng = req.query.longi;
+	const lat_high = parseFloat(lat) + 0.5;
+	const lat_low  = parseFloat(lat) - 0.5;
+	const lng_high = parseFloat(lng) + 0.5;
+	const lng_low  = parseFloat(lng) - 0.5;
+	//1 degree of latitude is ~69 miles
+	//1 degree of longitude is cos(radians(latitude)) * ~69
+	//we are going to assume that a span of 1 degree in both directions
+	//is good enough for now -Timothy 2Dec22
+	
+	const queryString = 'SELECT * FROM sbdirectory '+
+							'WHERE "longitude" BETWEEN '+lng_low+' AND '+lng_high+
+							 ' AND "latittude" BETWEEN '+lat_low+' AND '+lat_high+';';
+	pool.query(queryString, (err, result) => {
+		res.send(result.rows);
+	});
+});
+
+app.get('/getByZip', (req,res) => {
+	const zip = req.query.zip.slice(0,4) + '%';
+
+	const queryString = 'SELECT * FROM sbdirectory '+
+							'WHERE postcode LIKE \''+zip+'\';';
+	pool.query(queryString, (err, result) => {
+		res.send(result.rows);
+        //console.log(queryString);
+	});
+});
+
+app.get('/getByCity', (req,res) => {
+	const city = req.query.city.toLowerCase();
+    const state = req.query.state.toLowerCase();
+
+	const queryString = 'SELECT * FROM sbdirectory '+
+							'WHERE LOWER(city) LIKE \''+city+'\' AND LOWER(state) LIKE \''+state+'\';';
+	pool.query(queryString, (err, result) => {
+		res.send(result.rows);
+        //console.log(queryString);
+	});
+});
+
+//SELECT * FROM sbdirectory WHERE "city"='College Station' AND "state"='TX' AND "country"='US';
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);

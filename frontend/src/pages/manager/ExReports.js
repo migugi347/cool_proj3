@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { API_URL } from "../../API";
 
 function ExReports(){
     const [sale, sales] = useState([]);
@@ -14,7 +15,7 @@ function ExReports(){
     const tableRef = useRef(null);
 
     useEffect(() =>{
-      axios.get("http://localhost:3001/getExcess", {params: {date1: startDate}}).then((response) =>{
+      axios.get(API_URL + "/getExcess", {params: {date1: startDate}}).then((response) =>{
         sales(response.data);
       }); 
     },[startDate]); 

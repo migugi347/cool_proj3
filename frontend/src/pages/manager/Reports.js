@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { API_URL } from "../../API";
 
 function Reports(){
     const [sale, sales] = useState([]);
@@ -16,7 +17,7 @@ function Reports(){
     const tableRef = useRef(null);
 
     useEffect(() =>{
-      axios.get("http://localhost:3001/getSales", {params: {date1: startDate, date2:endDate}}).then((response) =>{
+      axios.get(API_URL + "/getSales", {params: {date1: startDate, date2:endDate}}).then((response) =>{
         sales(response.data);
       });
     },[startDate,endDate]);

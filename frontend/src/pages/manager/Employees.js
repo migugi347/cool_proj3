@@ -4,6 +4,7 @@ import axios from "axios";
 import {Link} from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { API_URL } from "../../API";
 
 
 function Employees(){
@@ -11,7 +12,7 @@ function Employees(){
     const tableRef = useRef(null);
     
     useEffect(() =>{
-        axios.get("http://localhost:3001/getEmployees", {params: {}}).then((response) =>{
+        axios.get(API_URL +"/getEmployees", {params: {}}).then((response) =>{
             getEmployees(response.data);
         });
     });
@@ -22,7 +23,7 @@ function Employees(){
         let phone = prompt('Enter employee phone #:')
         let password = prompt('Enter a password for employee:')
         let type = prompt("Enter employee type:")
-        axios.post("http://localhost:3001/addEmployee",{
+        axios.post(API_URL+"/addEmployee",{
             email: email,
             name: name,
             phone: phone,
@@ -33,7 +34,7 @@ function Employees(){
 
     const deleteEmployee = () =>{
         let employeeEmail = prompt("Enter employee's email to fire:")
-        axios.post("http://localhost:3001/deleteEmployee",{
+        axios.post(API_URL + "/deleteEmployee",{
             employeeEmail: employeeEmail
         });
     };
@@ -41,7 +42,7 @@ function Employees(){
     const updateEmployee = () =>{
         let employeeEmail = prompt("Enter employee's email to update:")
         let type = prompt("Enter new type:")
-        axios.post("http://localhost:3001/updateEmployee",{
+        axios.post(API_URL + "/updateEmployee",{
             email: employeeEmail,
             type:type
         });

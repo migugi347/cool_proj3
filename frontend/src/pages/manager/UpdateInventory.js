@@ -4,6 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import {Link} from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { API_URL } from "../../API";
 
 function UpdateInventory(){
     const [data, setData] = useState([]);
@@ -14,7 +15,7 @@ function UpdateInventory(){
     const [onHand, setOnhand] = useState(data.Category);
     
     const subs = () =>{
-        axios.get("http://localhost:3001/getInvItem", {params: {invID: invID}}).then((response) =>{
+        axios.get(API_URL + "/getInvItem", {params: {invID: invID}}).then((response) =>{
             setData(response.data);
         });
     };
@@ -44,7 +45,7 @@ function UpdateInventory(){
             c = date;
         if(onHand != null)
             d = onHand;
-        axios.put("http://localhost:3001/updateInvItem", {invID: invID, name: a, quantity:b, date: c, onHand: d}).then((response) =>{});
+        axios.put(API_URL + "/updateInvItem", {invID: invID, name: a, quantity:b, date: c, onHand: d}).then((response) =>{});
         alert("Updated"); 
     };
 

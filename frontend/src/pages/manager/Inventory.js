@@ -4,6 +4,7 @@ import axios from "axios";
 import {Link} from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { API_URL } from "../../API";
 
 function Inventory(){
     const [inventoryitem, inventory] = useState([]);
@@ -15,13 +16,13 @@ function Inventory(){
     const tableRef = useRef(null);
   
     useEffect(() =>{
-      axios.get("http://localhost:3001/getInventory").then((response) =>{
+      axios.get(API_URL + "/getInventory").then((response) =>{
         inventory(response.data);
       });
     });
   
     const subs = () =>{
-        axios.post("http://localhost:3001/addInventory",{
+        axios.post(API_URL + "/addInventory",{
         inventoryID: inventoryID,
         name: name,
         quantity: quantity,
@@ -40,7 +41,7 @@ function Inventory(){
 
     const dels = () =>{
       let inventoryID = prompt('Enter Inventory ID to be deleted:')
-      axios.post("http://localhost:3001/deleteInventory",{
+      axios.post(API_URL + "/deleteInventory",{
       inventoryID: inventoryID
     }); 
   };

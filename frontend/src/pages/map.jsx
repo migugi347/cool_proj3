@@ -4,6 +4,7 @@ import Mainlayout from '../layouts/Mainlayout';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Axios from "axios";
 import axios from 'axios';
+import { API_URL } from "../../API";
 
 const defaultCenter = {
 	lat: 41.3851, lng: 2.1734
@@ -50,7 +51,7 @@ class Mappage extends React.Component {
 	
 	findByZip(x) {
 		let lat,lng;
-		Axios.get("http://localhost:3001/getByZip", 
+		Axios.get(API_URL +"/getByZip", 
 				{params: {zip:x}}
 				).then((response) => {
 					lat=response.data[0].latittude;
@@ -64,7 +65,7 @@ class Mappage extends React.Component {
 
 	findByCity(x,y){
 		let lat,lng;
-		Axios.get("http://localhost:3001/getByCity", 
+		Axios.get(API_URL +"/getByCity", 
 				{params: {city:x,state:y}}
 				).then((response) => {
 					lat=response.data[0].latittude;
@@ -106,7 +107,7 @@ class Mappage extends React.Component {
 		else if(this.state.position){
 			const lat = this.state.position.lat;
 			const lng = this.state.position.lng;
-			Axios.get("http://localhost:3001/getLocations", 
+			Axios.get(API_URL +"/getLocations", 
 					{params: {lati: lat, longi: lng}}
 					).then((response) => {
 				this.setState({stores: response.data});

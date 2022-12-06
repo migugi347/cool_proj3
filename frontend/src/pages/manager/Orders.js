@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { API_URL } from "../../API";
 
 function Orders(){
     const [order, setOrders] = useState([]);
@@ -18,7 +19,7 @@ function Orders(){
     const tableRef = useRef(null);
 
     useEffect(() =>{
-      axios.get("http://localhost:3001/getOrders", {params: {date1: startDate, date2:endDate}}).then((response) =>{
+      axios.get(API_URL + "/getOrders", {params: {date1: startDate, date2:endDate}}).then((response) =>{
         setOrders(response.data);
       });
     },[startDate,endDate]);

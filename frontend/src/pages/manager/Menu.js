@@ -4,6 +4,7 @@ import axios from "axios";
 import {Link} from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { API_URL } from "../../API";
 
 function Menu(){
     const [menuitem, menu] = useState([]);
@@ -15,13 +16,13 @@ function Menu(){
     const tableRef = useRef(null);
   
     useEffect(() =>{
-      axios.get("http://localhost:3001/getMenu").then((response) =>{
+      axios.get(API_URL + "/getMenu").then((response) =>{
         menu(response.data);
       });
     });
   
     const subs = () =>{
-        axios.post("http://localhost:3001/addMenu",{
+        axios.post(API_URL + "/addMenu",{
         recipeID: recID,
         name: name,
         price: price,
@@ -32,7 +33,7 @@ function Menu(){
   
     const dels = () =>{
       let recID = prompt('Enter Recipe ID to be deleted:')
-      axios.post("http://localhost:3001/deleteMenu",{
+      axios.post(API_URL + "/deleteMenu",{
       recipeID: recID
     }); 
   };

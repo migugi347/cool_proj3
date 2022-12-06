@@ -4,6 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import {Link} from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { API_URL } from "../../API";
 
 function UpdateMenu(){
     const [image, images] = useState([]);
@@ -20,7 +21,7 @@ function UpdateMenu(){
     },[]);
 
     useEffect(() =>{
-        axios.get("http://localhost:3001/getItemRecipe", {params: {recID: recID}}).then((response) =>{
+        axios.get(API_URL + "/getItemRecipe", {params: {recID: recID}}).then((response) =>{
             recipes(response.data);
         });
     });
@@ -31,10 +32,10 @@ function UpdateMenu(){
     };
     
     const subs = () =>{
-        axios.get("http://localhost:3001/getMenuItem", {params: {recID: recID}}).then((response) =>{
+        axios.get(API_URL + "/getMenuItem", {params: {recID: recID}}).then((response) =>{
             images(response.data);
         });
-        axios.get("http://localhost:3001/getItemRecipe", {params: {recID: recID}}).then((response) =>{
+        axios.get(API_URL + "/getItemRecipe", {params: {recID: recID}}).then((response) =>{
             recipes(response.data);
         });
         displayRecipe();  
@@ -54,14 +55,14 @@ function UpdateMenu(){
             b = price;
         if(category != null)
             c = category;
-        axios.put("http://localhost:3001/updateItem", {recID: recID,name: a, price:b, category: c}).then((response) =>{});
+        axios.put(API_URL + "/updateItem", {recID: recID,name: a, price:b, category: c}).then((response) =>{});
         alert("Updated Menu"); 
     };
 
     const recipeInsert = () =>{
         let id = prompt("Please enter inventory id:");
         let quantity = prompt("Please enter the quantity");
-        axios.post("http://localhost:3001/addRecipeItem",{
+        axios.post(API_URL + "/addRecipeItem",{
             recipeID: recID,
             invenID: id,
             quantity: quantity
@@ -70,7 +71,7 @@ function UpdateMenu(){
 
     const recipeDelete = () =>{
         let id = prompt("Please enter inventory id:");
-        axios.post("http://localhost:3001/deleteRecipeItem",{
+        axios.post(API_URL + "/deleteRecipeItem",{
             recipeID: recID,
             invenID: id
         }); 
@@ -79,7 +80,7 @@ function UpdateMenu(){
     const recipeUpdate = () =>{
         let id = prompt("Please enter inventory id:");
         let val = prompt("Please enter new quantity:");
-        axios.post("http://localhost:3001/updateRecipeItem",{
+        axios.post(API_URL + "/updateRecipeItem",{
             recipeID: recID,
             invenID: id,
             quantity: val

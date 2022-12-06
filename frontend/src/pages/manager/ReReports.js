@@ -4,6 +4,7 @@ import axios from "axios";
 import {Link} from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { API_URL } from "../../API";
 
 
 function ReReports(){
@@ -11,7 +12,7 @@ function ReReports(){
     const tableRef = useRef(null);
     
     useEffect(() =>{
-        axios.get("http://localhost:3001/getRestock", {params: {}}).then((response) =>{
+        axios.get(API_URL + "/getRestock", {params: {}}).then((response) =>{
             sales(response.data);
         });
     });
@@ -27,7 +28,7 @@ function ReReports(){
     const updateQuantity = () => {
         let date1 = prompt("Please Enter Inventory ID:");
         let date2 = prompt("Please Enter Quantity Arrived:");
-        axios.get("http://localhost:3001/updateInventoryAmt", {params: {date1: date1, date2:date2}}).then((response) =>{
+        axios.get(API_URL + "/updateInventoryAmt", {params: {date1: date1, date2:date2}}).then((response) =>{
             sales(response.data);
         });
     };
@@ -35,7 +36,7 @@ function ReReports(){
     const updateMinimum = () => {
         let date1 = prompt("Please Enter Inventory ID:");
         let date2 = prompt("Please Enter New Minimum Amount:");
-        axios.get("http://localhost:3001/newMin", {params: {date1: date1, date2:date2}}).then((response) =>{
+        axios.get(API_URL + "/newMin", {params: {date1: date1, date2:date2}}).then((response) =>{
             sales(response.data);
         });
     };

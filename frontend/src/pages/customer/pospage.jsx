@@ -10,7 +10,14 @@ import Magnifier from "react-magnifier";
 import axios from "axios";
 import { API_URL } from "../../API";
 
-
+/**
+ * Graphical User Interface (GUI) that allows customers to easily navigate through menu items
+ * and categories, pick menu items they'd like, increase/decrease their quantity or remove them
+ * if necessary, and submit an order if done. Furthermore, the store's inventory is updated
+ * after an order is submitted. All categories and menu items (along with their respective 
+ * information) are all pulled directly from the database.
+ * @returns {HTML} - code displaying Customer Graphic User Interface
+ */
 function Pospage() {
 
     const [products, setProducts] = useState([]);
@@ -160,7 +167,7 @@ function Pospage() {
 
 
         });
-        axios.post(API_IURL + "/trigger", {
+        axios.post(API_URL + "/trigger", {
         });
     };
 

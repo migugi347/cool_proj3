@@ -269,6 +269,30 @@ app.get('/getLocations', (req,res) => {
 		res.send(result.rows);
 	});
 });
+
+app.get('/getByZip', (req,res) => {
+	const zip = req.query.zip.slice(0,4) + '%';
+
+	const queryString = 'SELECT * FROM sbdirectory '+
+							'WHERE postcode LIKE \''+zip+'\';';
+	pool.query(queryString, (err, result) => {
+		res.send(result.rows);
+        //console.log(queryString);
+	});
+});
+
+app.get('/getByCity', (req,res) => {
+	const city = req.query.city.toLowerCase();
+    const state = req.query.state.toLowerCase();
+
+	const queryString = 'SELECT * FROM sbdirectory '+
+							'WHERE LOWER(city) LIKE \''+city+'\' AND LOWER(state) LIKE \''+state+'\';';
+	pool.query(queryString, (err, result) => {
+		res.send(result.rows);
+        //console.log(queryString);
+	});
+});
+
 //SELECT * FROM sbdirectory WHERE "city"='College Station' AND "state"='TX' AND "country"='US';
 
 app.listen(port, () => {

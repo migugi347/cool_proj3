@@ -1,8 +1,9 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Link } from 'react-router-dom';
 import Mainlayout from '../layouts/Mainlayout';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Axios from "axios";
+import axios from 'axios';
 
 const defaultCenter = {
 	lat: 41.3851, lng: 2.1734
@@ -47,8 +48,30 @@ class Mappage extends React.Component {
 		}
 	}
 	
-	DummyLocationFinder() {
-		console.log("Dummy button fired.");
+	findByZip(x) {
+		let lat,lng;
+		Axios.get("http://localhost:3001/getByZip", 
+				{params: {zip:x}}
+				).then((response) => {
+					lat=response.data[0].latittude;
+					lng=response.data[0].longitude;
+					this.setState({position: {lat:lat ,lng:lng}});
+			this.setState({stores: response.data});
+		});
+		
+		
+	}
+
+	findByCity(x,y){
+		let lat,lng;
+		Axios.get("http://localhost:3001/getByCity", 
+				{params: {city:x,state:y}}
+				).then((response) => {
+					lat=response.data[0].latittude;
+					lng=response.data[0].longitude;
+					this.setState({position: {lat:lat ,lng:lng}});
+			this.setState({stores: response.data});
+		});
 	}
 	
 	FixPostcode(postcode) {
@@ -64,46 +87,46 @@ class Mappage extends React.Component {
 	}
 	
 	renderAddressInput() {
-		if (this.state.position) {
-			if (this.state.stores) {
-				const stores = this.state.stores;
-				return ( <>
-					<h1> List of Starbucks Restraunts </h1>
-					{stores.map((store, index) => 
-						<>
-							<p> 
-								<b>{(index+1).toString() + ") " + store.name}</b>
-								<p style={{margin:'0px'}}>{store.street}</p>
-								<p>{store.city + ", " + store.state + " " + this.FixPostcode(store.postcode)}</p>
-							</p>
-						</>
-					)}
+		if (this.state.stores) {
+			const stores = this.state.stores;
+			return ( <>
+				<h1> List of Starbucks Restraunts </h1>
+				{stores.map((store, index) => 
+					<>
+						<p> 
+							<b>{(index+1).toString() + ") " + store.name}</b>
+							<p style={{margin:'0px'}}>{store.street}</p>
+							<p>{store.city + ", " + store.state + " " + this.FixPostcode(store.postcode)}</p>
+						</p>
 					</>
-				);
-			} else {
-				const lat = this.state.position.lat;
-				const lng = this.state.position.lng;
-				Axios.get("http://localhost:3001/getLocations", 
-						{params: {lati: lat, longi: lng}}
-						).then((response) => {
-					this.setState({stores: response.data});
-				});
-				return (
-					<h1> Loading... </h1>
-				)
-			}
-		} else {
+				)}
+				</>
+			);
+		} 
+		else if(this.state.position){
+			const lat = this.state.position.lat;
+			const lng = this.state.position.lng;
+			Axios.get("http://localhost:3001/getLocations", 
+					{params: {lati: lat, longi: lng}}
+					).then((response) => {
+				this.setState({stores: response.data});
+			});
+			return (
+				<h1> Loading... </h1>
+			)
+		}
+		else {
 			return (
 				<>
 					<h1> Address Input Options </h1>
 					{ /*this error thing is totally broken, and I have no idea why*/ }
 					{ this.state.errorMsg && <h3 className="error"> { this.state.errorMsg } </h3> }
-					<p> City:  <input float="right" placeholder="City" /> </p>
-					<p> State: <input float="right" placeholder="State" /> </p>
-					<p> <button className="buttonGeoLocate" id="GetOriginCityState" onClick={() => this.DummyLocationFinder()}> City and State </button> </p>
+					<p> City:  <input id = "city" float="right" placeholder="College Station" /> </p>
+					<p> State: <input id ="state" statefloat="right" placeholder="TX" /> </p>
+					<p> <button className="buttonGeoLocate" id="GetOriginCityState" onClick={() => this.findByCity(document.getElementById('city').value,document.getElementById('state').value)}> City and State </button></p>
 					<p> OR </p>
-					<p> Zip:   <input float="right" placeholder="Zip Code" /> </p>
-					<p> <button className="buttonGeoLocate" id="GetOriginZip" onClick={() => this.DummyLocationFinder()}> Zip Code </button> </p>
+					<p> Zip:   <input id="zipEntry" float="right" placeholder="Zip Code"/> </p>
+					<p> <button className="buttonGeoLocate" id="GetOriginZip" onClick={() => this.findByZip(document.getElementById('zipEntry').value)}> Zip Code </button> </p>
 					<p> OR </p>
 					<p> <button className="buttonGeoLocate" id="GetOriginAuto" onClick={() => this.FindMe()}> Get Position Automatically </button> </p>
 					
@@ -118,6 +141,10 @@ class Mappage extends React.Component {
 		} else {
 			return defaultCenter;
 		}
+	}
+
+	setPosition(x,y){
+
 	}
 	
 	GenerateMarkers() {

@@ -100,7 +100,7 @@ function Server_homescreen() {
             Recipe_ID: cartItem.Recipe_ID,
         });
 
-        axios.post("http://localhost:3001/trigger", {
+        axios.post(API_URL + "/trigger", {
         });
     };
 

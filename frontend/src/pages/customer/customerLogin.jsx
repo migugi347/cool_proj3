@@ -38,6 +38,7 @@ function CustomerLogin(props) {
                 axios.get(API_URL + "/getAccountType", { params: { email: email } }).then((response) => {
                     setAccount(response.data[0].type);
                     setTempName(response.data[0].name);
+                    localStorage.setItem('type',response.data[0].type);
                     //console.log(tempname);
                 });
             } catch (error) {

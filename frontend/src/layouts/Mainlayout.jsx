@@ -39,6 +39,7 @@ function Mainlayout({ children }) {
         setAccount({});
         localStorage.removeItem('user');
         localStorage.removeItem('name');
+        localStorage.removeItem('type');
         navigate("/", { replace: true });
 
     }
@@ -107,6 +108,20 @@ function Mainlayout({ children }) {
         }
     };
 
+    let bro;
+    if(Object.keys(account).length == 0 && !localStorage.getItem("type")){
+        bro = '/home';
+    }
+    else if(localStorage.getItem("type") == "server"){
+        bro = '/server';
+    }
+    else if(localStorage.getItem("type") == "manager"){
+        bro = '/menu';
+    }
+    else if(localStorage.getItem("type") == "customer"){
+        bro = '/home';
+    }
+
     return (
         <div>
             <header>
@@ -114,7 +129,9 @@ function Mainlayout({ children }) {
                     < div className="container-fluid">
                         <div style={{}}>
                             <img style={{ width: "15%", height: "15%" }} src={Logo} alt="starbucks_logo" />
-                            <Link to="/home" className="navbar-brand text-light" style={{ fontWeight: 800 }}>    STARBUCKS</Link>
+                         
+                            <Link to={bro} className="navbar-brand text-light" style={{ fontWeight: 800 }}>    STARBUCKS</Link>
+                            
                         </div>
 
                         <div style={{ display: "flex" }}>

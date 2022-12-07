@@ -181,8 +181,6 @@ function Pospage() {
         setButtonPopup(true);
         reSizeView(open);
 
-        console.log(Cust_Name);
-
         //console.log(cart);
         // console.log(Order_ID)
         cart.forEach(cartItem => {
@@ -236,7 +234,7 @@ function Pospage() {
                 'totalAmount': product.Price,
             }
             setCart([...cart, addingItem]);
-            console.log(cart)
+            //console.log(cart)
         }
     }
 

@@ -85,13 +85,6 @@ function Server_homescreen() {
 
     const checkoutItem = async (cartItem) => {
         currLineNum = currLineNum + 1;
-
-        console.log(currLineNum);
-        console.log(Order_ID);
-        console.log(Cust_Name);
-        console.log(cartItem.orderQuantity);
-        console.log(cartItem.Recipe_ID);
-
         await axios.post(API_URL + "/checkout", {
             Line_Num: currLineNum,
             Order_ID: Order_ID,
@@ -135,7 +128,6 @@ function Server_homescreen() {
                 'totalAmount': product.Price,
             }
             setCart([...cart, addingItem]);
-            console.log(cart)
         }
     }
 

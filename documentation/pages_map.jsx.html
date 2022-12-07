@@ -1,4 +1,32 @@
-import React,{useState} from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/map.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/map.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React,{useState} from 'react';
 import { Link } from 'react-router-dom';
 import Mainlayout from '../layouts/Mainlayout';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
@@ -105,7 +133,7 @@ class Mappage extends React.Component {
 	 * @returns postcode
 	 */
 	FixPostcode(postcode) {
-		if (postcode.length != 5 && postcode.length != 9) {
+		if (postcode.length != 5 &amp;&amp; postcode.length != 9) {
 			this.setState({errorMsg: "Unknown postcode!"});
 			return postcode;
 		}
@@ -126,18 +154,18 @@ class Mappage extends React.Component {
 	renderAddressInput() {
 		if (this.state.stores) {
 			const stores = this.state.stores;
-			return ( <>
-				<h1> List of Starbucks Restraunts </h1>
+			return ( &lt;>
+				&lt;h1> List of Starbucks Restraunts &lt;/h1>
 				{stores.map((store, index) => 
-					<>
-						<p> 
-							<b>{(index+1).toString() + ") " + store.name}</b>
-							<p style={{margin:'0px'}}>{store.street}</p>
-							<p>{store.city + ", " + store.state + " " + this.FixPostcode(store.postcode)}</p>
-						</p>
-					</>
+					&lt;>
+						&lt;p> 
+							&lt;b>{(index+1).toString() + ") " + store.name}&lt;/b>
+							&lt;p style={{margin:'0px'}}>{store.street}&lt;/p>
+							&lt;p>{store.city + ", " + store.state + " " + this.FixPostcode(store.postcode)}&lt;/p>
+						&lt;/p>
+					&lt;/>
 				)}
-				</>
+				&lt;/>
 			);
 		} 
 		else if(this.state.position){
@@ -149,25 +177,25 @@ class Mappage extends React.Component {
 				this.setState({stores: response.data});
 			});
 			return (
-				<h1> Loading... </h1>
+				&lt;h1> Loading... &lt;/h1>
 			)
 		}
 		else {
 			return (
-				<>
-					<h1> Address Input Options </h1>
+				&lt;>
+					&lt;h1> Address Input Options &lt;/h1>
 					{ /*this error thing is totally broken, and I have no idea why*/ }
-					{ this.state.errorMsg && <h3 className="error"> { this.state.errorMsg } </h3> }
-					<p> City:  <input id = "city" float="right" placeholder="College Station" /> </p>
-					<p> State: <input id ="state" statefloat="right" placeholder="TX" /> </p>
-					<p> <button className="buttonGeoLocate" id="GetOriginCityState" onClick={() => this.findByCity(document.getElementById('city').value,document.getElementById('state').value)}> City and State </button></p>
-					<p> OR </p>
-					<p> Zip:   <input id="zipEntry" float="right" placeholder="Zip Code"/> </p>
-					<p> <button className="buttonGeoLocate" id="GetOriginZip" onClick={() => this.findByZip(document.getElementById('zipEntry').value)}> Zip Code </button> </p>
-					<p> OR </p>
-					<p> <button className="buttonGeoLocate" id="GetOriginAuto" onClick={() => this.FindMe()}> Get Position Automatically </button> </p>
+					{ this.state.errorMsg &amp;&amp; &lt;h3 className="error"> { this.state.errorMsg } &lt;/h3> }
+					&lt;p> City:  &lt;input id = "city" float="right" placeholder="College Station" /> &lt;/p>
+					&lt;p> State: &lt;input id ="state" statefloat="right" placeholder="TX" /> &lt;/p>
+					&lt;p> &lt;button className="buttonGeoLocate" id="GetOriginCityState" onClick={() => this.findByCity(document.getElementById('city').value,document.getElementById('state').value)}> City and State &lt;/button>&lt;/p>
+					&lt;p> OR &lt;/p>
+					&lt;p> Zip:   &lt;input id="zipEntry" float="right" placeholder="Zip Code"/> &lt;/p>
+					&lt;p> &lt;button className="buttonGeoLocate" id="GetOriginZip" onClick={() => this.findByZip(document.getElementById('zipEntry').value)}> Zip Code &lt;/button> &lt;/p>
+					&lt;p> OR &lt;/p>
+					&lt;p> &lt;button className="buttonGeoLocate" id="GetOriginAuto" onClick={() => this.FindMe()}> Get Position Automatically &lt;/button> &lt;/p>
 					
-				</>
+				&lt;/>
 			);
 		}
 	}
@@ -197,14 +225,14 @@ class Mappage extends React.Component {
 	GenerateMarkers() {
 		if (this.state.stores) {
 			const stores = this.state.stores;
-			return (<>{stores.map((store, index) =>
-                <Marker 
+			return (&lt;>{stores.map((store, index) =>
+                &lt;Marker 
 					position={{lat: store.latittude, lng: store.longitude}} 
 					label={(index+1).toString()}
 				/>
-            )}</>);
+            )}&lt;/>);
 		} else {
-			return (<></>);
+			return (&lt;>&lt;/>);
 		}
 	}
 
@@ -221,23 +249,23 @@ class Mappage extends React.Component {
 		};
 		
 		return (
-		<Mainlayout>
-			<div className="textSide" style={{marginBottom:'20px'}}>
+		&lt;Mainlayout>
+			&lt;div className="textSide" style={{marginBottom:'20px'}}>
 				{this.renderAddressInput()}	
-			</div>
-			<div className="mapcontainer">
-				<LoadScript
+			&lt;/div>
+			&lt;div className="mapcontainer">
+				&lt;LoadScript
 					googleMapsApiKey='AIzaSyAlpHWlQyFeFQTX2b3GgVaRBMcvXhzwQyo'>
-					<GoogleMap id="map"
+					&lt;GoogleMap id="map"
 						mapContainerStyle={mapStyles}
 						zoom={13}
 						center={this.GetPosition()}
 					>
 					{this.GenerateMarkers()}
-					</GoogleMap>
-				</LoadScript>
-			</div>
-		</Mainlayout>
+					&lt;/GoogleMap>
+				&lt;/LoadScript>
+			&lt;/div>
+		&lt;/Mainlayout>
 		)
 	}
 };
@@ -246,21 +274,21 @@ export default Mappage;
 /*
 function Square(props) {
   return (
-    <button className="square" onClick={props.onClick}>
+    &lt;button className="square" onClick={props.onClick}>
       {props.value}
-    </button>
+    &lt;/button>
   )
 }
 /* code above is equivalent to this
 class Square extends React.Component {
   render() {
     return (
-      <button 
+      &lt;button 
         className="square" 
         onClick={() => this.props.onClick()}
       >
         {this.props.value}
-      </button>
+      &lt;/button>
     );
   }
 } */
@@ -284,7 +312,7 @@ class Board extends React.Component {
   
   renderSquare(i) {
     return (
-      <Square 
+      &lt;Square 
         value={this.state.squares[i]}
         onClick={() => this.handleClick(i)}
       />);
@@ -300,24 +328,24 @@ class Board extends React.Component {
     }
 
     return (
-      <div>
-        <div className="status">{status}</div>
-        <div className="board-row">
+      &lt;div>
+        &lt;div className="status">{status}&lt;/div>
+        &lt;div className="board-row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}
           {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
+        &lt;/div>
+        &lt;div className="board-row">
           {this.renderSquare(3)}
           {this.renderSquare(4)}
           {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
+        &lt;/div>
+        &lt;div className="board-row">
           {this.renderSquare(6)}
           {this.renderSquare(7)}
           {this.renderSquare(8)}
-        </div>
-      </div>
+        &lt;/div>
+      &lt;/div>
     );
   }
 }
@@ -325,15 +353,15 @@ class Board extends React.Component {
 class Game extends React.Component {
   render() {
     return (
-      <div className="game">
-        <div className="game-board">
-          <Board />
-        </div>
-        <div className="game-info">
-          //<div>{/* status *///}</div>
-          //<ol>{/* TODO */}</ol>
-        /*</div>
-      </div>
+      &lt;div className="game">
+        &lt;div className="game-board">
+          &lt;Board />
+        &lt;/div>
+        &lt;div className="game-info">
+          //&lt;div>{/* status *///}&lt;/div>
+          //&lt;ol>{/* TODO */}&lt;/ol>
+        /*&lt;/div>
+      &lt;/div>
     );
   }
 }
@@ -349,9 +377,9 @@ function calculateWinner(squares) {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  for (let i = 0; i < lines.length; i++) {
+  for (let i = 0; i &lt; lines.length; i++) {
     const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+    if (squares[a] &amp;&amp; squares[a] === squares[b] &amp;&amp; squares[a] === squares[c]) {
       return squares[a];
     }
   }
@@ -361,5 +389,27 @@ function calculateWinner(squares) {
 // ========================================
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Game />);
-*/
+root.render(&lt;Game />);
+*/</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Mappage.html">Mappage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CancelPopUp">CancelPopUp</a></li><li><a href="global.html#CustomerLogin">CustomerLogin</a></li><li><a href="global.html#Employees">Employees</a></li><li><a href="global.html#ExReports">ExReports</a></li><li><a href="global.html#Inventory">Inventory</a></li><li><a href="global.html#Mainlayout">Mainlayout</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PopUp">PopUp</a></li><li><a href="global.html#Pospage">Pospage</a></li><li><a href="global.html#ReReports">ReReports</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#Server_homescreen">Server_homescreen</a></li><li><a href="global.html#SubmitPopUp">SubmitPopUp</a></li><li><a href="global.html#UpdateInventory">UpdateInventory</a></li><li><a href="global.html#UpdateMenu">UpdateMenu</a></li><li><a href="global.html#homepage">homepage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 19:21:08 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

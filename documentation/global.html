@@ -157,7 +157,7 @@ Used to route to different links (web pages) within the web application.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="App.js.html">App.js</a>, <a href="App.js.html#line23">line 23</a>
+        <a href="App.js.html">App.js</a>, <a href="App.js.html#line28">line 28</a>
     </li></ul></dd>
     
 
@@ -424,6 +424,1430 @@ Used to route to different links (web pages) within the web application.</p>
     
 
     
+    <h4 class="name" id="CustomerLogin"><span class="type-signature"></span>CustomerLogin<span class="signature">(props)</span><span class="type-signature"> &rarr; {HTML}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Displays the login page for the web application. Furthermore, allows users
+to login in using OAUTH login or a regular account (using email and password). Also, allows
+users to create an account if necessary and allows managers and servers
+to login into their respective systems. All account information is stored in the
+system's database.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>props</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTML</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>elements to be displayed by the login page</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_customer_customerLogin.jsx.html">pages/customer/customerLogin.jsx</a>, <a href="pages_customer_customerLogin.jsx.html#line214">line 214</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>code displaying the login page</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="Employees"><span class="type-signature"></span>Employees<span class="signature">()</span><span class="type-signature"> &rarr; {HTML}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Page that displays all employees and their respective information.
+This information includes their name, email, phone number, and position.
+Furthermore, the web page provides the manager options to add new employees,
+edit current employee information, fire current employees, and export the employee
+table to Excel. All employee information is stored in the system's database and, as
+a result, pulled and modified as needed.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_manager_Employees.js.html">pages/manager/Employees.js</a>, <a href="pages_manager_Employees.js.html#line18">line 18</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>code displaying Employees page for Manager Graphical User Interface</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="ExReports"><span class="type-signature"></span>ExReports<span class="signature">()</span><span class="type-signature"> &rarr; {HTML}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Page that displays the excess report containing all inventory items, their
+current quantity in the inventory, and the quantity used since a specific date.
+Furthermore, the date can be set by the manager and also exported to Excel.
+All inventory information is stored in the system's database and, as a result,
+pulled  directly from the database in order to populate the Excess Report.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_manager_ExReports.js.html">pages/manager/ExReports.js</a>, <a href="pages_manager_ExReports.js.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>code that displays the Excess Report for the Manager Graphical User Interface</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="Inventory"><span class="type-signature"></span>Inventory<span class="signature">()</span><span class="type-signature"> &rarr; {HTML}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Page that displays the store's current inventory. This includes all menu items,
+their name, quantity, on hand quantity, and acquired date. Furthermore, managers
+have the options to add new inventory items, delete current inventory items, update
+current inventory items, or export the Inventory table to Excel. All inventory information
+is stored in the system's database and, as a result, is pulled directly from the database
+and modified as needed.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_manager_Inventory.js.html">pages/manager/Inventory.js</a>, <a href="pages_manager_Inventory.js.html#line18">line 18</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>code that displays Inventory page for Manager Graphical User Interface</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="Mainlayout"><span class="type-signature"></span>Mainlayout<span class="signature">(children)</span><span class="type-signature"> &rarr; {HTML}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Layout that displays upper and low navigation bars, and determines how
+all web pages are displayed and designed. Furthermore, also contains
+important functionality such as the option to log out/in, Google Translate,
+option to go to Google Maps web page, and options to change the contrast, font size, and background color.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>children</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTML</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>elements be displayed by the main layout</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="layouts_Mainlayout.jsx.html">layouts/Mainlayout.jsx</a>, <a href="layouts_Mainlayout.jsx.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>HTML code displaying main layout of web page</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="Menu"><span class="type-signature"></span>Menu<span class="signature">()</span><span class="type-signature"> &rarr; {HTML}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Page that displays the store's current menu. This includes all menu items,
+their IDs, names, prices, and the categories they belong to. Furthermore,
+provides managers the options to add new menu items, delete or update current
+menu items, and export the Menu table to Excel. All menu information is stored
+in the system's database and, as a result, is pulled from the database and modified
+as needed.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_manager_Menu.js.html">pages/manager/Menu.js</a>, <a href="pages_manager_Menu.js.html#line18">line 18</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>code that displays the Menu page for the Manager Graphical User Interface</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="Orders"><span class="type-signature"></span>Orders<span class="signature">()</span><span class="type-signature"> &rarr; {HTML}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Page that displays the last 1000 orders made between two specific dates.
+These dates are chosen and inputted by the manager in order them to analyze the
+orders as they please. Also, allows managers to export the orders table to
+Excel if desired. All orders information is stored in the database and, as a result,
+pulled  directly from the database in order to populate the table.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_manager_Orders.js.html">pages/manager/Orders.js</a>, <a href="pages_manager_Orders.js.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>code displaying Orders page in Manager Graphical User Interface</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="PopUp"><span class="type-signature"></span>PopUp<span class="signature">(props)</span><span class="type-signature"> &rarr; {HTML}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Pop-up that displays a customer's order number and order summary. Furthermore,
+when done, ends a customer's order.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>props</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTML</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>elements to be displayed by pop-up page</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_PopUp.jsx.html">components/PopUp.jsx</a>, <a href="components_PopUp.jsx.html#line11">line 11</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>code displaying order summary pop-up page</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="Pospage"><span class="type-signature"></span>Pospage<span class="signature">()</span><span class="type-signature"> &rarr; {HTML}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Graphical User Interface (GUI) that allows customers to easily navigate through menu items
+and categories, pick menu items they'd like, increase/decrease their quantity or remove them
+if necessary, and submit an order if done. Furthermore, the store's inventory is updated
+after an order is submitted. All categories and menu items (along with their respective
+information) are all pulled directly from the database.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_customer_pospage.jsx.html">pages/customer/pospage.jsx</a>, <a href="pages_customer_pospage.jsx.html#line21">line 21</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>code displaying Customer Graphic User Interface</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="ReReports"><span class="type-signature"></span>ReReports<span class="signature">()</span><span class="type-signature"> &rarr; {HTML}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Page the displays the restock report for all inventory items who's current quantity
+is less than the minimum required. The table includes the inventory item's ID, name,
+current quantity, last restock date, and the minimum quantity required. Furthermore,
+options are provided to the manager to restock a specific inventory item, modify
+the minimum quantity required for a specific inventory item, or export the table to Excel.
+All inventory items' information are stored in the database and, as a result,
+pulled  directly from the database in order to populate the table and modify it as needed.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_manager_ReReports.js.html">pages/manager/ReReports.js</a>, <a href="pages_manager_ReReports.js.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>code displaying the Restock Report page for the Manager Graphical User Interface</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="Reports"><span class="type-signature"></span>Reports<span class="signature">()</span><span class="type-signature"> &rarr; {HTML}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Page that displays the sales report for all menu items. The sales report includes
+the menu item's ID, name, quantity sold, and total dollar amount sold. Furthermore,
+managers have the option to narrow down the report to two specific dates of their choosing.
+Also, they can export the table to Excel is desired. All sales information is stored in the database and, as a result,
+pulled  directly from the database in order to populate the table.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_manager_Reports.js.html">pages/manager/Reports.js</a>, <a href="pages_manager_Reports.js.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>code displaying the Sales Report page for the Manager Graphical User Interface</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="Server_homescreen"><span class="type-signature"></span>Server_homescreen<span class="signature">()</span><span class="type-signature"> &rarr; {HTML}</span></h4>
     
 
@@ -481,7 +1905,7 @@ once an order has been submitted successfully.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pages_server_server_homescreen.jsx.html">pages/server/server_homescreen.jsx</a>, <a href="pages_server_server_homescreen.jsx.html#line17">line 17</a>
+        <a href="pages_server_server_homescreen.jsx.html">pages/server/server_homescreen.jsx</a>, <a href="pages_server_server_homescreen.jsx.html#line18">line 18</a>
     </li></ul></dd>
     
 
@@ -511,7 +1935,7 @@ once an order has been submitted successfully.</p>
         
 <div class="param-desc">
     <ul>
-<li>HTML code displaying Graphical User Interface</li>
+<li>HTML code displaying Server Graphical User Interface</li>
 </ul>
 </div>
 
@@ -743,6 +2167,348 @@ once an order has been submitted successfully.</p>
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="UpdateInventory"><span class="type-signature"></span>UpdateInventory<span class="signature">()</span><span class="type-signature"> &rarr; {HTML}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Page that allows managers to update an inventory item. This is done by inputting the
+inventory item information necessary when prompted. Directly modifies the inventory item's
+information in the system's database.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_manager_UpdateInventory.js.html">pages/manager/UpdateInventory.js</a>, <a href="pages_manager_UpdateInventory.js.html#line15">line 15</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>code displaying the Update Inventory page for the Manager Graphical User Interface</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="UpdateMenu"><span class="type-signature"></span>UpdateMenu<span class="signature">()</span><span class="type-signature"> &rarr; {HTML}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Page that allows managers to update a menu item. This is done by inputting the
+menu item information necessary when prompted. Directly modifies the menu item's
+information in the system's database.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_manager_UpdateMenu.js.html">pages/manager/UpdateMenu.js</a>, <a href="pages_manager_UpdateMenu.js.html#line15">line 15</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>code displaying the Update Menu page for the Manager Graphical User Interface</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="homepage"><span class="type-signature"></span>homepage<span class="signature">()</span><span class="type-signature"> &rarr; {HTML}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Page that welcomes customer to web application by displaying their name,
+advertisements and company information, and giving them the option to begin
+their order.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_customer_homepage.jsx.html">pages/customer/homepage.jsx</a>, <a href="pages_customer_homepage.jsx.html#line20">line 20</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>code displaying customer home page</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
     
 
     
@@ -758,13 +2524,13 @@ once an order has been submitted successfully.</p>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CancelPopUp">CancelPopUp</a></li><li><a href="global.html#Server_homescreen">Server_homescreen</a></li><li><a href="global.html#SubmitPopUp">SubmitPopUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Mappage.html">Mappage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CancelPopUp">CancelPopUp</a></li><li><a href="global.html#CustomerLogin">CustomerLogin</a></li><li><a href="global.html#Employees">Employees</a></li><li><a href="global.html#ExReports">ExReports</a></li><li><a href="global.html#Inventory">Inventory</a></li><li><a href="global.html#Mainlayout">Mainlayout</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PopUp">PopUp</a></li><li><a href="global.html#Pospage">Pospage</a></li><li><a href="global.html#ReReports">ReReports</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#Server_homescreen">Server_homescreen</a></li><li><a href="global.html#SubmitPopUp">SubmitPopUp</a></li><li><a href="global.html#UpdateInventory">UpdateInventory</a></li><li><a href="global.html#UpdateMenu">UpdateMenu</a></li><li><a href="global.html#homepage">homepage</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Sun Dec 04 2022 11:55:47 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 19:21:08 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

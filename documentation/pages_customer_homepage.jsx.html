@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/customer/homepage.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/customer/homepage.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react'
+import { Link } from 'react-router-dom'
+import Mainlayout from '../../layouts/Mainlayout'
+import home1 from '../../layouts/images/home1.png'
+import home2 from '../../layouts/images/home2.png'
+import home3 from '../../layouts/images/home3.png'
+import home4 from '../../layouts/images/home4.png'
+import instagram from '../../layouts/images/instagram.png'
+import twitter from '../../layouts/images/twitter.png'
+import facebook from '../../layouts/images/facebook.png'
+import youtube from '../../layouts/images/youtube.png'
+import Magnifier from "react-magnifier";
+
+/**
+ * Page that welcomes customer to web application by displaying their name, 
+ * advertisements and company information, and giving them the option to begin
+ * their order.
+ * @returns {HTML} - code displaying customer home page
+ */
+function homepage() {
+    let x = window.localStorage.getItem('name');
+    return (
+        &lt;Mainlayout>
+
+            &lt;div className='bg-light p-5 mt-4 rounded-5 '>
+                &lt;h2>WELCOME {x}!&lt;/h2>
+                &lt;h1>Starbucks Self Check-out&lt;/h1>
+
+                &lt;Link to='/pos' className='btn1'> START ORDER&lt;/Link>
+            &lt;/div>
+            &lt;div>
+                &lt;Magnifier style={{width:'84vw', marginTop:'15px'}} src ={home1}>&lt;/Magnifier>
+                &lt;Magnifier style={{width:'84vw', marginTop:'15px'}} src ={home2}>&lt;/Magnifier>
+                &lt;Magnifier style={{width:'84vw', marginTop:'15px'}} src ={home3}>&lt;/Magnifier>
+                &lt;Magnifier style={{width:'84vw', marginTop:'15px'}} src ={home4}>&lt;/Magnifier>
+            &lt;/div>
+            &lt;div style={{textAlign:'center', display:'flex',marginTop:'50px'}}>
+                &lt;p>*Excludes taxes and gratuities. At participating stores. Some restrictions apply. 
+                    150 Stars deposited after first qualifying Starbucks purchase. Flights purchased close to 
+                    departure may not earn double Stars. Stars may not be earned on purchases of alcohol, 
+                    Starbucks Cards and Starbucks Card reloads. For details, visit deltastarbucks.com/terms.&lt;/p>
+            &lt;/div>
+            &lt;ul style={{  height: '100%', width: '100%',display: 'flex',justifyContent: 'center', alignItems: 'center', marginTop:'7vh',marginBottom:'-20vh'}}>
+                &lt;a href='https://www.instagram.com/starbucks/'>&lt;img src = {instagram} className='footerImage'>&lt;/img>&lt;/a>
+                &lt;a href='https://www.facebook.com/Starbucks/'>&lt;img src = {facebook} className='footerImage'>&lt;/img>&lt;/a>
+                &lt;a href='https://twitter.com/starbucks/'>&lt;img src = {twitter} className='footerImage'>&lt;/img>&lt;/a>
+                &lt;a href='https://www.youtube.com/@starbucks/featured'>&lt;img src = {youtube} className='footerImage'>&lt;/img>&lt;/a>
+            &lt;/ul>
+        &lt;/Mainlayout>
+    )
+}
+
+export default homepage</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Mappage.html">Mappage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CancelPopUp">CancelPopUp</a></li><li><a href="global.html#CustomerLogin">CustomerLogin</a></li><li><a href="global.html#Employees">Employees</a></li><li><a href="global.html#ExReports">ExReports</a></li><li><a href="global.html#Inventory">Inventory</a></li><li><a href="global.html#Mainlayout">Mainlayout</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PopUp">PopUp</a></li><li><a href="global.html#Pospage">Pospage</a></li><li><a href="global.html#ReReports">ReReports</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#Server_homescreen">Server_homescreen</a></li><li><a href="global.html#SubmitPopUp">SubmitPopUp</a></li><li><a href="global.html#UpdateInventory">UpdateInventory</a></li><li><a href="global.html#UpdateMenu">UpdateMenu</a></li><li><a href="global.html#homepage">homepage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 19:21:08 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

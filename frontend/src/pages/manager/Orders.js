@@ -8,6 +8,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { API_URL } from "../../API";
 
+/**
+ * Page that displays the last 1000 orders made between two specific dates.
+ * These dates are chosen and inputted by the manager in order them to analyze the 
+ * orders as they please. Also, allows managers to export the orders table to 
+ * Excel if desired. All orders information is stored in the database and, as a result, 
+ * pulled  directly from the database in order to populate the table.
+ * @returns {HTML} - code displaying Orders page in Manager Graphical User Interface
+ */
 function Orders(){
     const [order, setOrders] = useState([]);
 

@@ -8,7 +8,14 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 //const localUser = JSON.parse(localStorage.getItem('user') || '{}');
 
-
+/**
+ * Layout that displays upper and low navigation bars, and determines how 
+ * all web pages are displayed and designed. Furthermore, also contains
+ * important functionality such as the option to log out/in, Google Translate, 
+ * option to go to Google Maps web page, and options to change the contrast, font size, and background color.
+ * @param {HTML} children - elements be displayed by the main layout
+ * @returns {HTML} - HTML code displaying main layout of web page
+ */
 function Mainlayout({ children }) {
 
 

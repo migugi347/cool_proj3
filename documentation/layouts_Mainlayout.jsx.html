@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: layouts/Mainlayout.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: layouts/Mainlayout.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from 'react-router-dom'
+import Logo from './images/SB_logo.png';
+import { ChromePicker } from 'react-color'
+import "../style.scss"
+import Dropdown from 'react-bootstrap/Dropdown';
+
+
+//const localUser = JSON.parse(localStorage.getItem('user') || '{}');
+
+/**
+ * Layout that displays upper and low navigation bars, and determines how 
+ * all web pages are displayed and designed. Furthermore, also contains
+ * important functionality such as the option to log out/in, Google Translate, 
+ * option to go to Google Maps web page, and options to change the contrast, font size, and background color.
+ * @param {HTML} children - elements be displayed by the main layout
+ * @returns {HTML} - HTML code displaying main layout of web page
+ */
+function Mainlayout({ children }) {
+
+
+
+    const [account, setAccount] = useState({});
+    const navigate = useNavigate();
+    const signedIn = Object.keys(account).length > 0;
+
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+
+            setAccount(loggedInUser);
+        }
+    }, []);
+
+
+
+
+    function handleSignOut(event) {
+        setAccount({});
+        localStorage.removeItem('user');
+        localStorage.removeItem('name');
+        navigate("/", { replace: true });
+
+    }
+
+    // const google = window.google;
+    // useEffect(() => {
+    //     var addScript = document.createElement('script');
+    //     addScript.setAttribute('src', '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit');
+    //     document.body.appendChild(addScript);
+    //     window.googleTranslateElementInit = googleTranslateElementInit;
+    // }, [])
+
+    // const googleTranslateElementInit = () => {
+    //     new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
+    // }
+
+    const googleTranslateElementInit = () => {
+        new window.google.translate.TranslateElement({
+            pageLanguage: "en",
+            autoDisplay: false,
+            includedLanguages: 'ar,en,es,jv,ko,pa,pt,ru,zh-CN',
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+        },
+            "google_translate_element"
+        );
+    };
+    useEffect(() => {
+        var addScript = document.createElement("script");
+        addScript.setAttribute(
+            "src",
+            "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+        );
+        document.body.appendChild(addScript);
+        window.googleTranslateElementInit = googleTranslateElementInit;
+    }, []);
+
+    const [color, setColor] = useState('#fff')
+    const [showColorPicker, setShowColorPicker] = useState(false)
+    const [highContrast, setHighContrast] = useState(false)
+
+    const colorchange = (newcolor) => {
+        let root = document.querySelector('body');
+        root.style.setProperty('background-color', newcolor);
+    };
+
+    const [s, setfontSize] = useState(16);
+    const changeFontSize = (x) => {
+        const root = document.querySelector(':root');
+        if (x === 0) {
+            setfontSize(s + 2);
+            root.style.setProperty('--sizer', `${s}px`);
+        }
+        if (x === 1) {
+            setfontSize(s - 2);
+            root.style.setProperty('--sizer', `${s}px`);
+        }
+    };
+
+    const changeContrast = (x) => {
+        //console.log(highContrast);
+        const root = document.querySelector(':root');
+        const body = document.querySelector('body');
+        setHighContrast(highContrast => !highContrast)
+        if (!highContrast &amp;&amp; x === 1) {
+            root.style.setProperty('--primary', '#1c3866');
+            root.style.setProperty('--secondary', 'pink');
+            body.style.setProperty('background-color', '#808080')
+        }
+        if (highContrast &amp;&amp; x === 1) {
+            root.style.setProperty('--primary', 'black');
+            root.style.setProperty('--secondary', 'yellow');
+            body.style.setProperty('background-color', 'green')
+        }
+        if (x === 2) {
+            root.style.setProperty('--primary', '#00704A');
+            root.style.setProperty('--secondary', '#eac784');
+            body.style.setProperty('background-color', 'white')
+        }
+    };
+
+    return (
+        &lt;div>
+            &lt;header>
+                &lt;nav style={{ backgroundColor: 'var(--primary)' }} className='navbar navbar-light mb-2'>
+                    &lt; div className="container-fluid">
+                        &lt;div style={{}}>
+                            &lt;img style={{ width: "15%", height: "15%" }} src={Logo} alt="starbucks_logo" />
+                            &lt;Link to="/home" className="navbar-brand text-light" style={{ fontWeight: 800 }}>    STARBUCKS&lt;/Link>
+                        &lt;/div>
+
+                        &lt;div style={{ display: "flex" }}>
+
+
+
+
+                            {Object.keys(account).length > 0 &amp;&amp;
+                                &lt;button onClick={(e) => handleSignOut(e)} className='btn1' style={{ backgroundColor: 'var(--secondary)', color: "black", marginLeft: "10px", marginRight: "10px" }} >Log Out&lt;/button>
+                            }
+
+
+
+                            &lt;div style={{ display: "flex" }}>
+                                &lt;Link to='/map' className='btn1' style={{ marginLeft: "10px", backgroundColor: 'var(--secondary)', color: 'black', marginRight: "10px" }}>Locate Store&lt;/Link>
+                                {/* &lt;Link to='/' className='btn1' style={{ backgroundColor: 'var(--secondary)', color: "black", marginLeft: "10px", marginRight: "10px" }}>Login&lt;/Link> */}
+
+                                &lt;div id="google_translate_element">&lt;/div>
+                                &lt;Dropdown autoClose="outside">
+                                    &lt;Dropdown.Toggle variant="success" id="dropdown-autoclose-outside" style={{ backgroundColor: 'var(--secondary)', color: "black", marginLeft: "10px" }}>Settings&lt;/Dropdown.Toggle>
+                                    &lt;Dropdown.Menu>
+                                        &lt;Dropdown.Item >
+                                            &lt;button className='btn1' style={{ width: '200px' }} onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}>
+                                                {showColorPicker ? 'Close Color Changer' : 'Change Background'}
+                                            &lt;/button>
+                                        &lt;/Dropdown.Item>
+                                        &lt;Dropdown.Item >
+                                            &lt;button className='btn1' style={{ width: '200px' }} onClick={() => changeContrast(1)}>
+                                                {highContrast ? 'High Contrast' : 'Low Contrast'}
+                                            &lt;/button>
+                                        &lt;/Dropdown.Item>
+                                        &lt;Dropdown.Item >
+                                            &lt;button className='btn1' style={{ width: '200px' }} onClick={() => changeContrast(2)}>
+                                                Original Color Scheme
+                                            &lt;/button>
+                                        &lt;/Dropdown.Item>
+                                        &lt;Dropdown.Item >
+                                            &lt;h6>Font Size:&lt;/h6>
+                                            &lt;button style={{ padding: '0', height: '30px', width: '30px', fontSize: '20px' }} className='btn1' onClick={() => changeFontSize(1)}>-&lt;/button>
+                                            &lt;button style={{ padding: '0', height: '30px', width: '30px', fontSize: '20px', marginLeft: '10px' }} className='btn1' onClick={() => changeFontSize(0)}>+&lt;/button>
+                                        &lt;/Dropdown.Item>
+                                    &lt;/Dropdown.Menu>
+                                &lt;/Dropdown>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/nav>
+                &lt;div style={{ float: 'right' }}>
+                    {showColorPicker &amp;&amp; (
+                        &lt;ChromePicker
+                            color={color}
+                            onChange={updatedColor => colorchange(updatedColor.hex)}
+                        />
+                    )}
+                &lt;/div>
+            &lt;/header>
+            &lt;main>
+                &lt;div className='container mt-3 mb-5'>
+                    {children}
+                &lt;/div>
+            &lt;/main>
+            &lt;div>
+                &lt;nav style={{ backgroundColor: 'var(--primary)' }} className=' navbar fixed-bottom'>
+
+                &lt;/nav>
+            &lt;/div>
+        &lt;/div>
+    )
+}
+
+export default Mainlayout</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Mappage.html">Mappage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CancelPopUp">CancelPopUp</a></li><li><a href="global.html#CustomerLogin">CustomerLogin</a></li><li><a href="global.html#Employees">Employees</a></li><li><a href="global.html#ExReports">ExReports</a></li><li><a href="global.html#Inventory">Inventory</a></li><li><a href="global.html#Mainlayout">Mainlayout</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PopUp">PopUp</a></li><li><a href="global.html#Pospage">Pospage</a></li><li><a href="global.html#ReReports">ReReports</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#Server_homescreen">Server_homescreen</a></li><li><a href="global.html#SubmitPopUp">SubmitPopUp</a></li><li><a href="global.html#UpdateInventory">UpdateInventory</a></li><li><a href="global.html#UpdateMenu">UpdateMenu</a></li><li><a href="global.html#homepage">homepage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 19:21:08 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/manager/Reports.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/manager/Reports.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useState,useEffect,useRef} from "react";
+import Mainlayout from '../../layouts/Mainlayout';
+import axios from "axios";
+import {Link} from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { API_URL } from "../../API";
+
+/**
+ * Page that displays the sales report for all menu items. The sales report includes
+ * the menu item's ID, name, quantity sold, and total dollar amount sold. Furthermore, 
+ * managers have the option to narrow down the report to two specific dates of their choosing.
+ * Also, they can export the table to Excel is desired. All sales information is stored in the database and, as a result, 
+ * pulled  directly from the database in order to populate the table.
+ * @returns {HTML} - code displaying the Sales Report page for the Manager Graphical User Interface
+ */
+function Reports(){
+    const [sale, sales] = useState([]);
+    const date1 = new Date('September 1, 2022 00:00:00');
+    const date2 = new Date();
+    const [startDate, setStartDate] = useState(date1);
+    const [endDate, setEndDate] = useState(date2);
+    const tableRef = useRef(null);
+
+    useEffect(() =>{
+      axios.get(API_URL + "/getSales", {params: {date1: startDate, date2:endDate}}).then((response) =>{
+        sales(response.data);
+      });
+    },[startDate,endDate]);
+
+    return(
+      &lt;Mainlayout>
+      &lt;div className = "header" style={{backgroundColor:'var(--primary)'}}>
+          &lt;Dropdown style={{}}>
+            &lt;Link to='/menu' className='btn1'> Menu&lt;/Link>
+            &lt;Link to='/inventory' className='btn1'> Inventory&lt;/Link>
+            &lt;Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: 'var(--primary)', color:"var(--secondary)"}}>Reports&lt;/Dropdown.Toggle>
+            &lt;Dropdown.Menu>
+                &lt;Dropdown.Item >
+                  &lt;Link to='/reports' className='btn1' style={{width:'150px'}}> Sales Report&lt;/Link>
+                &lt;/Dropdown.Item>
+                &lt;Dropdown.Item>
+                  &lt;Link to='/exreports' className='btn1' style={{width:'150px'}}> Excess Report&lt;/Link>
+                &lt;/Dropdown.Item>
+                &lt;Dropdown.Item>
+                  &lt;Link to='/rereports' className='btn1' style={{width:'150px'}}> Restock Report&lt;/Link>
+                &lt;/Dropdown.Item>
+            &lt;/Dropdown.Menu>
+            &lt;Link to='/orders' className='btn1'> Orders&lt;/Link>
+            &lt;Link to='/employees' className='btn1'> Employees&lt;/Link>
+          &lt;/Dropdown>
+        &lt;/div>
+        &lt;div className = "anotherContainer">
+        &lt;h3>Sales Report&lt;/h3>
+        &lt;div style={{height:'80vh', overflowX:'hidden',overflowY:'scroll'}}>
+          &lt;div className="table-responsive rounded" style={{backgroundColor:'var(--secondary)'}}> 
+            &lt;table  ref={tableRef} className="table" style={{textAlign:'center'}}>
+              &lt;thead>
+                &lt;tr>
+                  &lt;th>ID&lt;/th>
+                  &lt;th>NAME&lt;/th>
+                  &lt;th>QUANTITY&lt;/th>
+                  &lt;th>PRICE&lt;/th>
+                &lt;/tr>
+              &lt;/thead>
+              &lt;tbody>
+                {sale.map((val) => (
+                  &lt;tr>
+                    &lt;td style={{fontSize:'var(--sizer)'}}>{val.Recipe_ID}&lt;/td>
+                    &lt;td style={{fontSize:'var(--sizer)'}}>{val.Name}&lt;/td>
+                    &lt;td style={{fontSize:'var(--sizer)'}}>{val.quantity}&lt;/td>
+                    &lt;td style={{fontSize:'var(--sizer)'}}>${val.price.toFixed(2)}&lt;/td>
+                  &lt;/tr>
+                ))}
+              &lt;/tbody>
+            &lt;/table>
+          &lt;/div>
+        &lt;/div>
+        &lt;/div>
+        &lt;div style={{marginBottom:'-15vh'}}>
+          &lt;h3>Start Date:&lt;/h3>&lt;DatePicker selected={startDate} maxDate={new Date()} onChange={(date) => setStartDate(date)}/>
+          &lt;h3>End Date:&lt;/h3>&lt;DatePicker selected={endDate} maxDate={new Date()} onChange={(date) => setEndDate(date)}/>
+        &lt;/div>
+        &lt;DownloadTableExcel
+                    filename="Sales Report"
+                    sheet="sheet1"
+                    currentTableRef={tableRef.current}
+                >
+             &lt;button style={{float:'right'}} className='btn1'> Export to Excel&lt;/button>
+        &lt;/DownloadTableExcel>
+        &lt;/Mainlayout>
+    );
+}
+export default Reports;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Mappage.html">Mappage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CancelPopUp">CancelPopUp</a></li><li><a href="global.html#CustomerLogin">CustomerLogin</a></li><li><a href="global.html#Employees">Employees</a></li><li><a href="global.html#ExReports">ExReports</a></li><li><a href="global.html#Inventory">Inventory</a></li><li><a href="global.html#Mainlayout">Mainlayout</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PopUp">PopUp</a></li><li><a href="global.html#Pospage">Pospage</a></li><li><a href="global.html#ReReports">ReReports</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#Server_homescreen">Server_homescreen</a></li><li><a href="global.html#SubmitPopUp">SubmitPopUp</a></li><li><a href="global.html#UpdateInventory">UpdateInventory</a></li><li><a href="global.html#UpdateMenu">UpdateMenu</a></li><li><a href="global.html#homepage">homepage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 19:21:08 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

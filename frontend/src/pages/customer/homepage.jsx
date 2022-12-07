@@ -11,6 +11,12 @@ import facebook from '../../layouts/images/facebook.png'
 import youtube from '../../layouts/images/youtube.png'
 import Magnifier from "react-magnifier";
 
+/**
+ * Page that welcomes customer to web application by displaying their name, 
+ * advertisements and company information, and giving them the option to begin
+ * their order.
+ * @returns {HTML} - code displaying customer home page
+ */
 function homepage() {
     let x = window.localStorage.getItem('name');
     return (

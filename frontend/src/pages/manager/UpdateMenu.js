@@ -6,6 +6,12 @@ import {Link} from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { API_URL } from "../../API";
 
+/**
+ * Page that allows managers to update a menu item. This is done by inputting the
+ * menu item information necessary when prompted. Directly modifies the menu item's
+ * information in the system's database.
+ * @returns {HTML} - code displaying the Update Menu page for the Manager Graphical User Interface
+ */
 function UpdateMenu(){
     const [image, images] = useState([]);
     const [recipe, recipes] = useState([]);

@@ -6,6 +6,15 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { API_URL } from "../../API";
 
+/**
+ * Page that displays the store's current inventory. This includes all menu items, 
+ * their name, quantity, on hand quantity, and acquired date. Furthermore, managers
+ * have the options to add new inventory items, delete current inventory items, update
+ * current inventory items, or export the Inventory table to Excel. All inventory information
+ * is stored in the system's database and, as a result, is pulled directly from the database
+ * and modified as needed.
+ * @returns {HTML} - code that displays Inventory page for Manager Graphical User Interface
+ */
 function Inventory(){
     const [inventoryitem, inventory] = useState([]);
     const [name, setName] = useState("");

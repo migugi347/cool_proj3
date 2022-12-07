@@ -6,6 +6,12 @@ import {Link} from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { API_URL } from "../../API";
 
+/**
+ * Page that allows managers to update an inventory item. This is done by inputting the
+ * inventory item information necessary when prompted. Directly modifies the inventory item's
+ * information in the system's database.
+ * @returns {HTML} - code displaying the Update Inventory page for the Manager Graphical User Interface
+ */
 function UpdateInventory(){
     const [data, setData] = useState([]);
     const [invID, setInvID] = useState(0);

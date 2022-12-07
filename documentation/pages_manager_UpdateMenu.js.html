@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/manager/UpdateMenu.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/manager/UpdateMenu.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useState, useEffect} from "react";
+import Mainlayout from '../../layouts/Mainlayout';
+import { Form, Button } from "react-bootstrap";
+import axios from "axios";
+import {Link} from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { API_URL } from "../../API";
+
+/**
+ * Page that allows managers to update a menu item. This is done by inputting the
+ * menu item information necessary when prompted. Directly modifies the menu item's
+ * information in the system's database.
+ * @returns {HTML} - code displaying the Update Menu page for the Manager Graphical User Interface
+ */
+function UpdateMenu(){
+    const [image, images] = useState([]);
+    const [recipe, recipes] = useState([]);
+    const [recID, setrecID] = useState(0);
+    const [name, setName] = useState(image.Name);
+    const [price, setPrice] = useState(image.Price);
+    const [category, setCategory] = useState(image.Category);
+   
+
+    useEffect(() =>{
+        var x = document.getElementById("recipeTable");
+        x.style.display = "none";
+    },[]);
+
+    useEffect(() =>{
+        axios.get(API_URL + "/getItemRecipe", {params: {recID: recID}}).then((response) =>{
+            recipes(response.data);
+        });
+    });
+
+    const displayRecipe = () =>{
+        var x = document.getElementById("recipeTable");
+        x.style.display = "block";
+    };
+    
+    const subs = () =>{
+        axios.get(API_URL + "/getMenuItem", {params: {recID: recID}}).then((response) =>{
+            images(response.data);
+        });
+        axios.get(API_URL + "/getItemRecipe", {params: {recID: recID}}).then((response) =>{
+            recipes(response.data);
+        });
+        displayRecipe();  
+    };
+
+    const updateItem = () =>{
+       var a,b,c;
+       // eslint-disable-next-line 
+        image.map(val => {
+           a = val.Name;
+           b = val.Price;
+           c = val.Category;
+        });
+        if(name != null)
+            a = name;
+        if(price != null)
+            b = price;
+        if(category != null)
+            c = category;
+        axios.put(API_URL + "/updateItem", {recID: recID,name: a, price:b, category: c}).then((response) =>{});
+        alert("Updated Menu"); 
+    };
+
+    const recipeInsert = () =>{
+        let id = prompt("Please enter inventory id:");
+        let quantity = prompt("Please enter the quantity");
+        axios.post(API_URL + "/addRecipeItem",{
+            recipeID: recID,
+            invenID: id,
+            quantity: quantity
+        }); 
+    };
+
+    const recipeDelete = () =>{
+        let id = prompt("Please enter inventory id:");
+        axios.post(API_URL + "/deleteRecipeItem",{
+            recipeID: recID,
+            invenID: id
+        }); 
+    };
+
+    const recipeUpdate = () =>{
+        let id = prompt("Please enter inventory id:");
+        let val = prompt("Please enter new quantity:");
+        axios.post(API_URL + "/updateRecipeItem",{
+            recipeID: recID,
+            invenID: id,
+            quantity: val
+        }); 
+    };
+
+
+
+    return(
+       &lt;Mainlayout>
+        &lt;div className = "header" style={{backgroundColor:'var(--primary)'}}>
+          &lt;Dropdown style={{}}>
+            &lt;Link to='/menu' className='btn1'> Menu&lt;/Link>
+            &lt;Link to='/inventory' className='btn1'> Inventory&lt;/Link>
+            &lt;Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: 'var(--primary)', color:"var(--secondary)"}}>Reports&lt;/Dropdown.Toggle>
+            &lt;Dropdown.Menu>
+                &lt;Dropdown.Item >
+                  &lt;Link to='/reports' className='btn1' style={{width:'150px'}}> Sales Report&lt;/Link>
+                &lt;/Dropdown.Item>
+                &lt;Dropdown.Item>
+                  &lt;Link to='/exreports' className='btn1' style={{width:'150px'}}> Excess Report&lt;/Link>
+                &lt;/Dropdown.Item>
+                &lt;Dropdown.Item>
+                  &lt;Link to='/rereports' className='btn1' style={{width:'150px'}}> Restock Report&lt;/Link>
+                &lt;/Dropdown.Item>
+            &lt;/Dropdown.Menu>
+            &lt;Link to='/orders' className='btn1'> Orders&lt;/Link>
+            &lt;Link to='/employees' className='btn1'> Employees&lt;/Link>
+          &lt;/Dropdown>
+        &lt;/div>
+            
+            &lt;div>
+                &lt;Form style={{marginTop:'3vh'}}>
+                    &lt;label>Recipe_ID:&lt;/label>
+                    &lt;input type="text" name="recID" onChange = {(e)=>{setrecID(e.target.value);}}>&lt;/input>
+                &lt;/Form>
+                &lt;Button className='btn mt-2' style={{backgroundColor:'var(--primary)', color:'var(--secondary)'}} onClick={()=>subs()}>SELECT&lt;/Button>
+            &lt;/div>
+
+            &lt;div style={{display:'flex', justifyContent:'center', textAlign:'center', marginBottom:'-20vh', marginTop:'5vh'}}>
+                &lt;div>
+                    {image.map((val) => (
+                        // eslint-disable-next-line 
+                        &lt;img  style={{width:"30vw",height:'30vw'}} src = {val.image} className="img">&lt;/img>
+                    ))}
+                &lt;/div>
+            
+                &lt;div style={{margin:'10vh'}}>
+                    {image.map((val) => (
+                        &lt;form>
+                            &lt;div style={{textAlign:'right'}}>
+                                &lt;label style={{fontSize:'var(--sizer)'}}>Name:&lt;/label>
+                                &lt;input style={{margin:'5px'}} type="text" name="name" placeholder={val.Name} onChange = {(e)=>{setName(e.target.value);}}>&lt;/input>&lt;br>&lt;/br>
+                                &lt;label style={{fontSize:'var(--sizer)'}}>Price:&lt;/label>
+                                &lt;input style={{margin:'5px'}} type="text" name="price" placeholder={val.Price.toFixed(2)} onChange = {(e)=>{setPrice(e.target.value);}}>&lt;/input>&lt;br>&lt;/br>
+                                &lt;label style={{fontSize:'var(--sizer)'}}>Category:&lt;/label>
+                                &lt;input style={{margin:'5px'}} type="text" name="category" placeholder={val.Category} onChange = {(e)=>{setCategory(e.target.value);}}>&lt;/input>&lt;br>&lt;/br>
+                            &lt;/div>
+                            &lt;button className='btn1 mt-2' onClick={()=>updateItem()}>Update Menu Item&lt;/button>
+                        &lt;/form>
+                    ))}
+                &lt;/div>
+
+                &lt;div className = "recipeTable" id ="recipeTable">
+                    &lt;h3>Recipe Table&lt;/h3>
+                    &lt;div className="table-responsive rounded" style={{backgroundColor:'var(--secondary)'}}> 
+                        &lt;table className="table">
+                            &lt;thead>
+                            &lt;tr>
+                                &lt;th>INVENTORY ID&lt;/th>
+                                &lt;th>INGREDIENT NAME&lt;/th>
+                                &lt;th>QUANTITY&lt;/th>
+                            &lt;/tr>
+                            &lt;/thead>
+                            &lt;tbody>
+                            {recipe.map((val) => (
+                                &lt;tr>
+                                    &lt;td style={{fontSize:'var(--sizer)'}}>{val.inventory_id}&lt;/td>
+                                    &lt;td style={{fontSize:'var(--sizer)'}}>{val.Inventory}&lt;/td>
+                                    &lt;td style={{fontSize:'var(--sizer)'}}>{val.quantity}&lt;/td>
+                                &lt;/tr>
+                            ))}
+                            &lt;/tbody>
+                        &lt;/table>
+                    &lt;/div>
+                    &lt;button className='btn1 m-2' onClick={()=>recipeInsert()}>Insert&lt;/button>
+                    &lt;button className='btn1 m-2' onClick={()=>recipeDelete()}>Delete&lt;/button>
+                    &lt;button className='btn1 m-2' onClick={()=>recipeUpdate()}>Update&lt;/button>
+                &lt;/div>
+            &lt;/div>
+            
+        &lt;/Mainlayout>
+    )
+};
+export default UpdateMenu;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Mappage.html">Mappage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CancelPopUp">CancelPopUp</a></li><li><a href="global.html#CustomerLogin">CustomerLogin</a></li><li><a href="global.html#Employees">Employees</a></li><li><a href="global.html#ExReports">ExReports</a></li><li><a href="global.html#Inventory">Inventory</a></li><li><a href="global.html#Mainlayout">Mainlayout</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PopUp">PopUp</a></li><li><a href="global.html#Pospage">Pospage</a></li><li><a href="global.html#ReReports">ReReports</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#Server_homescreen">Server_homescreen</a></li><li><a href="global.html#SubmitPopUp">SubmitPopUp</a></li><li><a href="global.html#UpdateInventory">UpdateInventory</a></li><li><a href="global.html#UpdateMenu">UpdateMenu</a></li><li><a href="global.html#homepage">homepage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 19:21:08 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

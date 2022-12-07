@@ -6,7 +6,15 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { API_URL } from "../../API";
 
-
+/**
+ * Page that displays all employees and their respective information.
+ * This information includes their name, email, phone number, and position.
+ * Furthermore, the web page provides the manager options to add new employees, 
+ * edit current employee information, fire current employees, and export the employee
+ * table to Excel. All employee information is stored in the system's database and, as
+ * a result, pulled and modified as needed.
+ * @returns {HTML} - code displaying Employees page for Manager Graphical User Interface
+ */
 function Employees(){
     const [employees, getEmployees] = useState([]);
     const tableRef = useRef(null);

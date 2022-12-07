@@ -156,7 +156,7 @@ function Pospage() {
 
 
 
-        axios.post(API_URL + "/checkout", {
+        await axios.post(API_URL + "/checkout", {
 
             //fetch line
             Line_Num: currLineNum,
@@ -167,7 +167,7 @@ function Pospage() {
 
 
         });
-        axios.post(API_URL + "/trigger", {
+        await axios.post(API_URL + "/trigger", {
         });
     };
 

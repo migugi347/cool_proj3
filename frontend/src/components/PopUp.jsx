@@ -1,8 +1,13 @@
-
 import React from 'react'
 import "../style.scss"
 import { Link } from 'react-router-dom'
 
+/**
+ * Pop-up that displays a customer's order number and order summary. Furthermore,
+ * when done, ends a customer's order.
+ * @param {HTML} props - elements to be displayed by pop-up page
+ * @returns {HTML} - code displaying order summary pop-up page
+ */
 function PopUp(props) {
     return (props.trigger) ? (
         <div className='popup'>

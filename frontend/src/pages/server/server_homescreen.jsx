@@ -13,7 +13,7 @@ import { API_URL } from "../../API";
  * Program pulls the menu items and categories from the project's database,
  * uses that information to populate the page, and updates the database in the end
  * once an order has been submitted successfully.
- * @returns {HTML} - HTML code displaying Graphical User Interface
+ * @returns {HTML} - HTML code displaying Server Graphical User Interface
  */
 function Server_homescreen() {
     const [products, setProducts] = useState([]);
@@ -83,7 +83,7 @@ function Server_homescreen() {
         });
     }
 
-    const checkoutItem = (cartItem) => {
+    const checkoutItem = async (cartItem) => {
         currLineNum = currLineNum + 1;
 
         console.log(currLineNum);
@@ -92,7 +92,7 @@ function Server_homescreen() {
         console.log(cartItem.orderQuantity);
         console.log(cartItem.Recipe_ID);
 
-        axios.post(API_URL + "/checkout", {
+        await axios.post(API_URL + "/checkout", {
             Line_Num: currLineNum,
             Order_ID: Order_ID,
             Cust_Name: Cust_Name,
@@ -100,7 +100,7 @@ function Server_homescreen() {
             Recipe_ID: cartItem.Recipe_ID,
         });
 
-        axios.post(API_URL + "/trigger", {
+        await axios.post(API_URL + "/trigger", {
         });
     };
 

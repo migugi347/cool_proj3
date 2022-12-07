@@ -6,6 +6,15 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { API_URL } from "../../API";
 
+/**
+ * Page that displays the store's current menu. This includes all menu items, 
+ * their IDs, names, prices, and the categories they belong to. Furthermore, 
+ * provides managers the options to add new menu items, delete or update current
+ * menu items, and export the Menu table to Excel. All menu information is stored
+ * in the system's database and, as a result, is pulled from the database and modified
+ * as needed.
+ * @returns {HTML} - code that displays the Menu page for the Manager Graphical User Interface
+ */
 function Menu(){
     const [menuitem, menu] = useState([]);
     const [name, setName] = useState("");

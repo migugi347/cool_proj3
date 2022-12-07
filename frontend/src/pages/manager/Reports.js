@@ -8,6 +8,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { API_URL } from "../../API";
 
+/**
+ * Page that displays the sales report for all menu items. The sales report includes
+ * the menu item's ID, name, quantity sold, and total dollar amount sold. Furthermore, 
+ * managers have the option to narrow down the report to two specific dates of their choosing.
+ * Also, they can export the table to Excel is desired. All sales information is stored in the database and, as a result, 
+ * pulled  directly from the database in order to populate the table.
+ * @returns {HTML} - code displaying the Sales Report page for the Manager Graphical User Interface
+ */
 function Reports(){
     const [sale, sales] = useState([]);
     const date1 = new Date('September 1, 2022 00:00:00');

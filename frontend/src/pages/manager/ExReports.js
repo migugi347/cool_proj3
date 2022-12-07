@@ -8,6 +8,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { API_URL } from "../../API";
 
+/**
+ * Page that displays the excess report containing all inventory items, their
+ * current quantity in the inventory, and the quantity used since a specific date.
+ * Furthermore, the date can be set by the manager and also exported to Excel.
+ * All inventory information is stored in the system's database and, as a result, 
+ * pulled  directly from the database in order to populate the Excess Report.
+ * @returns {HTML} - code that displays the Excess Report for the Manager Graphical User Interface
+ */
 function ExReports(){
     const [sale, sales] = useState([]);
     const date1 = new Date('October 28, 2022 00:00:00');

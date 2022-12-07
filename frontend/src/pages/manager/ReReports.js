@@ -6,7 +6,16 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { API_URL } from "../../API";
 
-
+/**
+ * Page the displays the restock report for all inventory items who's current quantity
+ * is less than the minimum required. The table includes the inventory item's ID, name,
+ * current quantity, last restock date, and the minimum quantity required. Furthermore, 
+ * options are provided to the manager to restock a specific inventory item, modify
+ * the minimum quantity required for a specific inventory item, or export the table to Excel.
+ * All inventory items' information are stored in the database and, as a result, 
+ * pulled  directly from the database in order to populate the table and modify it as needed.
+ * @returns {HTML} - code displaying the Restock Report page for the Manager Graphical User Interface
+ */
 function ReReports(){
     const [sale, sales] = useState([]);
     const tableRef = useRef(null);

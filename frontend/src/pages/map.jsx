@@ -4,6 +4,7 @@ import Mainlayout from '../layouts/Mainlayout';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Axios from "axios";
 import axios from 'axios';
+import CustomerLogin from './customer/customerLogin';
 import { API_URL } from "../API";
 
 const defaultCenter = {
@@ -157,7 +158,6 @@ class Mappage extends React.Component {
 					<p> <button className="buttonGeoLocate" id="GetOriginZip" onClick={() => this.findByZip(document.getElementById('zipEntry').value)}> Zip Code </button> </p>
 					<p> OR </p>
 					<p> <button className="buttonGeoLocate" id="GetOriginAuto" onClick={() => this.FindMe()}> Get Position Automatically </button> </p>
-					
 				</>
 			);
 		}
@@ -174,10 +174,6 @@ class Mappage extends React.Component {
 		} else {
 			return defaultCenter;
 		}
-	}
-
-	setPosition(x,y){
-
 	}
 	
 	/**
@@ -217,6 +213,7 @@ class Mappage extends React.Component {
 				{this.renderAddressInput()}	
 			</div>
 			<div className="mapcontainer">
+				<Link id = "loginButton" to='/' className='btn1' style={{width:'150px'}}>Return to Login</Link>
 				<LoadScript
 					googleMapsApiKey='AIzaSyAlpHWlQyFeFQTX2b3GgVaRBMcvXhzwQyo'>
 					<GoogleMap id="map"

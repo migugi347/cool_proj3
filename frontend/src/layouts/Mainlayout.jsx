@@ -121,6 +121,9 @@ function Mainlayout({ children }) {
     else if(localStorage.getItem("type") == "customer"){
         bro = '/home';
     }
+    else{
+        bro = '/home';   
+    }
 
     return (
         <div>

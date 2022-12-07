@@ -85,7 +85,7 @@ function Server_homescreen() {
 
     const checkoutItem = async (cartItem) => {
         currLineNum = currLineNum + 1;
-        await axios.post(API_URL + "/checkout", {
+        axios.post(API_URL + "/checkout", {
             Line_Num: currLineNum,
             Order_ID: Order_ID,
             Cust_Name: Cust_Name,

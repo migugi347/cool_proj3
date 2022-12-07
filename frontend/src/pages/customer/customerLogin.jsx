@@ -121,23 +121,24 @@ function CustomerLogin(props) {
                             <h3 >Log In</h3>
 
                             <div className="form-group mt-3">
-                                <label>Email address</label>
+                                <label style={{width: '290px'}}>Email address
                                 <input
                                     type="email"
                                     className="form-control mt-1"
                                     placeholder="name@email.com"
                                     onChange={(e) => { setEmail("" + e.target.value); }}
                                     required
-                                />
+                                /> </label>
                             </div>
                             <div className="form-group mt-3 ">
-                                <label>Password</label>
+                                <label style={{width: '290px'}}>Password
                                 <input
                                     type="password"
                                     className="form-control mt-1"
                                     placeholder="Password"
                                     required
                                 />
+                                </label>
                             </div>
                             <div className="d-grid gap-2 mt-3">
                                 <Button size="md" className="d-grid gap-2 mt-4 mb-2 btn-block text-white" type="submit" style={{ fontWeight: 800,backgroundColor:'var(--primary)'}}>
@@ -171,16 +172,17 @@ function CustomerLogin(props) {
                         <h3 >Sign Up</h3>
 
                         <div className="form-group mt-3">
-                            <label>Full Name</label>
+                            <label style={{width: '350px'}}>Full Name
                             <input
                                 className="form-control mt-1"
                                 placeholder="First and Last Name"
                                 required
                                 onChange = {(e)=>{setUpName(e.target.value);}}
                             />
+                            </label>
                         </div>
                         <div className="form-group mt-3">
-                            <label>Email address</label>
+                            <label style={{width: '350px'}}>Email address
                             <input
                                 type="email"
                                 className="form-control mt-1"
@@ -188,9 +190,10 @@ function CustomerLogin(props) {
                                 required
                                 onChange = {(e)=>{setUpEmail(e.target.value);}}
                             />
+                            </label>
                         </div>
                         <div className="form-group mt-3 text-le">
-                            <label>Password</label>
+                            <label style={{width: '350px'}}>Password
                             <input
                                 type="password"
                                 className="form-control mt-1"
@@ -198,6 +201,7 @@ function CustomerLogin(props) {
                                 required
                                 onChange = {(e)=>{setUpPass(e.target.value);}}
                             />
+                            </label>
                         </div>
                         <div className="d-grid gap-2 mt-3">
                             <Button onClick={()=>signUp()} size="md" className="d-grid gap-2 mt-4 mb-3 btn-block bg-primary text-white" type="submit" style={{ fontWeight: 800 }}>

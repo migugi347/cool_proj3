@@ -213,7 +213,6 @@ class Mappage extends React.Component {
 				{this.renderAddressInput()}	
 			</div>
 			<div className="mapcontainer">
-				<Link id = "loginButton" to='/' className='btn1' style={{width:'150px'}}>Return to Login</Link>
 				<LoadScript
 					googleMapsApiKey='AIzaSyAlpHWlQyFeFQTX2b3GgVaRBMcvXhzwQyo'>
 					<GoogleMap id="map"

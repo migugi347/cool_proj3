@@ -110,7 +110,7 @@ function Mainlayout({ children }) {
 
     let bro;
     if(Object.keys(account).length == 0 && !localStorage.getItem("type")){
-        bro = '/home';
+        bro = '/';
     }
     else if(localStorage.getItem("type") == "server"){
         bro = '/server';
